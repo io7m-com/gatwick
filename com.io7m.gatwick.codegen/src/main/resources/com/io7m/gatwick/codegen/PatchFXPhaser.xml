@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXPhaser"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="TYPE"
+                       Offset="0x0000"
+                       Type="PatchFXPhaser.Type"/>
+
+  <ParameterEnumerated Name="STAGE"
+                       Offset="0x0001"
+                       Type="PatchFXPhaser.Stage"/>
+
+  <ParameterRate118 Name="RATE"
+                    Offset="0x0002"/>
+
+  <ParameterNumeric Name="DEPTH"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="RESONANCE"
+                    Offset="0x0004"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="MANUAL"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="WAVEFORM"
+                       Offset="0x0006"
+                       Type="PatchFXPhaser.Waveform"/>
+
+  <ParameterRate118AndOff Name="STEP RATE"
+                          Offset="0x0007"/>
+
+  <ParameterEnumerated Name="BI-PHASE"
+                       Offset="0x0008"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="SEPARATION"
+                    Offset="0x0009"
+                    MinInclusive="0"
+                    MaxInclusive="12"/>
+
+  <ParameterNumeric Name="LOW DAMP"
+                    Offset="0x000a"
+                    MinInclusive="28"
+                    MaxInclusive="128"
+                    LogicalMinInclusive="-100"
+                    LogicalMaxInclusive="0"/>
+
+  <ParameterNumeric Name="HIGH DAMP"
+                    Offset="0x000c"
+                    MinInclusive="28"
+                    MaxInclusive="128"
+                    LogicalMinInclusive="-100"
+                    LogicalMaxInclusive="0"/>
+
+  <ParameterEnumerated Name="LOW CUT"
+                       Offset="0x000e"
+                       Type="PatchFXPhaser.LowCut"/>
+
+  <ParameterEnumerated Name="HIGH CUT"
+                       Offset="0x000f"
+                       Type="PatchFXPhaser.HighCut"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x0010"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DIRECT MIX"
+                    Offset="0x0011"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

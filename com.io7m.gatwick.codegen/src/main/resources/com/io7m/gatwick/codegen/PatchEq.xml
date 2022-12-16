@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchEQ"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="SW"
+                       Offset="0x0000"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="TYPE"
+                       Offset="0x0001"
+                       Type="PatchEQ.Type"/>
+
+  <ParameterNumeric Name="LOW GAIN"
+                    Offset="0x0002"
+                    MinInclusive="12"
+                    MaxInclusive="52"/>
+
+  <ParameterNumeric Name="HIGH GAIN"
+                    Offset="0x0003"
+                    MinInclusive="12"
+                    MaxInclusive="52"/>
+
+  <ParameterNumeric Name="LEVEL"
+                    Offset="0x0004"
+                    MinInclusive="12"
+                    MaxInclusive="52"/>
+
+  <ParameterEnumerated Name="LOW-MID FREQ"
+                       Offset="0x0005"
+                       Type="PatchEQ.LowMidFreq"/>
+
+  <ParameterEnumerated Name="LOW-MID Q"
+                       Offset="0x0006"
+                       Type="PatchEQ.Q"/>
+
+  <ParameterNumeric Name="LOW-MID GAIN"
+                    Offset="0x0007"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterEnumerated Name="HIGH-MID FREQ"
+                       Offset="0x0008"
+                       Type="PatchEQ.HighMidFreq"/>
+
+  <ParameterEnumerated Name="HIGH-MID Q"
+                       Offset="0x0009"
+                       Type="PatchEQ.Q"/>
+
+  <ParameterNumeric Name="HIGH-MID GAIN"
+                    Offset="0x000a"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterEnumerated Name="LOW CUT"
+                       Offset="0x000b"
+                       Type="PatchEQ.LowCut"/>
+
+  <ParameterEnumerated Name="HIGH CUT"
+                       Offset="0x000c"
+                       Type="PatchEQ.HighCut"/>
+
+  <ParameterNumeric Name="LEVEL 2"
+                    Offset="0x000d"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="31.5hz"
+                    Offset="0x000e"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="63hz"
+                    Offset="0x000f"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="125hz"
+                    Offset="0x0010"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="250hz"
+                    Offset="0x0011"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="500hz"
+                    Offset="0x0012"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="1khz"
+                    Offset="0x0013"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="2khz"
+                    Offset="0x0014"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="4khz"
+                    Offset="0x0015"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="8khz"
+                    Offset="0x0016"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+  <ParameterNumeric Name="16khz"
+                    Offset="0x0017"
+                    MinInclusive="12"
+                    MaxInclusive="52"
+                    LogicalMinInclusive="-20"
+                    LogicalMaxInclusive="20"/>
+
+</Structure>

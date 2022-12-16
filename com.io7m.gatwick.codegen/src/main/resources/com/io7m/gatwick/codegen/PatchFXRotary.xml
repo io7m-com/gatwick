@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXRotary"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="SPEED SELECT"
+                       Offset="0x0000"
+                       Type="PatchFXRotary.Speed"/>
+
+  <ParameterRate118 Name="SLOW RATE"
+                    Offset="0x0001"/>
+
+  <ParameterRate118 Name="FAST RATE"
+                    Offset="0x0002"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="RISE TIME"
+                    Offset="0x0004"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="FALL TIME"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="MIC DISTANCE"
+                    Offset="0x0006"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="ROTOR/HORN"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DRIVE"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DIRECT MIX"
+                    Offset="0x0009"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

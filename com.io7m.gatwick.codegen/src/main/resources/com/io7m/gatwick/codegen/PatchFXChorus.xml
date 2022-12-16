@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXChorus"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="TYPE"
+                       Offset="0x0000"
+                       Type="PatchFXChorus.Type"/>
+
+  <ParameterNumeric Name="DIRECT LEVEL"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="OUTPUT MODE"
+                       Offset="0x0002"
+                       Type="PatchFXChorus.OutputMode"/>
+
+  <ParameterNumeric Name="SWEETNESS"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="BELL"
+                    Offset="0x0004"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="PREAMP SW"
+                       Offset="0x0005"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="PREAMP GAIN"
+                    Offset="0x0006"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="PREAMP LEVEL"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterRate118 Name="RATE"
+                    Offset="0x0008"/>
+
+  <ParameterNumeric Name="DEPTH"
+                    Offset="0x0009"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="PRE DELAY"
+                    Offset="0x000a"
+                    MinInclusive="0"
+                    MaxInclusive="80"
+                    LogicalMinInclusive="0"
+                    LogicalMaxInclusive="40"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x000b"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="WAVEFORM"
+                       Offset="0x000c"
+                       Type="PatchFXChorus.Waveform"/>
+
+  <ParameterEnumerated Name="LOW CUT"
+                       Offset="0x000d"
+                       Type="PatchFXChorus.LowCut"/>
+
+  <ParameterEnumerated Name="HIGH CUT"
+                       Offset="0x000e"
+                       Type="PatchFXChorus.HighCut"/>
+
+  <!-- 1 -->
+
+  <ParameterRate118 Name="RATE 1"
+                    Offset="0x000f"/>
+
+  <ParameterNumeric Name="DEPTH 1"
+                    Offset="0x0010"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="PRE DELAY 1"
+                    Offset="0x0011"
+                    MinInclusive="0"
+                    MaxInclusive="80"
+                    LogicalMinInclusive="0"
+                    LogicalMaxInclusive="40"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL 1"
+                    Offset="0x0012"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="WAVEFORM 1"
+                       Offset="0x0013"
+                       Type="PatchFXChorus.Waveform"/>
+
+  <ParameterEnumerated Name="LOW CUT 1"
+                       Offset="0x0014"
+                       Type="PatchFXChorus.LowCut"/>
+
+  <ParameterEnumerated Name="HIGH CUT 1"
+                       Offset="0x0015"
+                       Type="PatchFXChorus.HighCut"/>
+
+  <!-- 2 -->
+
+  <ParameterRate118 Name="RATE 2"
+                    Offset="0x0016"/>
+
+  <ParameterNumeric Name="DEPTH 2"
+                    Offset="0x0017"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="PRE DELAY 2"
+                    Offset="0x0018"
+                    MinInclusive="0"
+                    MaxInclusive="80"
+                    LogicalMinInclusive="0"
+                    LogicalMaxInclusive="40"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL 2"
+                    Offset="0x0019"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="WAVEFORM 2"
+                       Offset="0x001a"
+                       Type="PatchFXChorus.Waveform"/>
+
+  <ParameterEnumerated Name="LOW CUT 2"
+                       Offset="0x001b"
+                       Type="PatchFXChorus.LowCut"/>
+
+  <ParameterEnumerated Name="HIGH CUT 2"
+                       Offset="0x001c"
+                       Type="PatchFXChorus.HighCut"/>
+
+</Structure>

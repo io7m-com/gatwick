@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchCommon"
+           xmlns="urn:com.io7m.gatwick:1">
+  <ParameterString Name="Patch Name"
+                   Offset="0x0000"
+                   Length="16"/>
+
+  <ParameterEnumerated Name="Num1 Function"
+                       Offset="0x0023"
+                       Type="PATCH Num1 FUNCTION"/>
+  <ParameterEnumerated Name="Num1 Mode"
+                       Offset="0x0024"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Num2 Function"
+                       Offset="0x0025"
+                       Type="PATCH Num2 FUNCTION"/>
+  <ParameterEnumerated Name="Num2 Mode"
+                       Offset="0x0026"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Num3 Function"
+                       Offset="0x0027"
+                       Type="PATCH Num3 FUNCTION"/>
+  <ParameterEnumerated Name="Num3 Mode"
+                       Offset="0x0028"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Num4 Function"
+                       Offset="0x0029"
+                       Type="PATCH Num4 FUNCTION"/>
+  <ParameterEnumerated Name="Num4 Mode"
+                       Offset="0x002a"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Num5 Function"
+                       Offset="0x002b"
+                       Type="PATCH Num5 FUNCTION"/>
+  <ParameterEnumerated Name="Num5 Mode"
+                       Offset="0x002c"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="BankDown Function"
+                       Offset="0x002d"
+                       Type="PATCH BankDown FUNCTION"/>
+  <ParameterEnumerated Name="BankDown Mode"
+                       Offset="0x002e"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="BankUp Function"
+                       Offset="0x002f"
+                       Type="PATCH BankUp FUNCTION"/>
+  <ParameterEnumerated Name="BankUp Mode"
+                       Offset="0x0030"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Ctl1 Function"
+                       Offset="0x0031"
+                       Type="PATCH Ctl1 FUNCTION"/>
+  <ParameterEnumerated Name="Ctl1 Mode"
+                       Offset="0x0032"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Ctl2 Function"
+                       Offset="0x0033"
+                       Type="PATCH Ctl2 FUNCTION"/>
+  <ParameterEnumerated Name="Ctl2 Mode"
+                       Offset="0x0034"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Ctl3 Function"
+                       Offset="0x0035"
+                       Type="PATCH Ctl3 FUNCTION"/>
+  <ParameterEnumerated Name="Ctl3 Mode"
+                       Offset="0x0036"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Ctl4 Function"
+                       Offset="0x0037"
+                       Type="PATCH Ctl4 FUNCTION"/>
+  <ParameterEnumerated Name="Ctl4 Mode"
+                       Offset="0x0038"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Ctl5 Function"
+                       Offset="0x0039"
+                       Type="PATCH Ctl5 FUNCTION"/>
+  <ParameterEnumerated Name="Ctl5 Mode"
+                       Offset="0x003a"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Ctl6 Function"
+                       Offset="0x003b"
+                       Type="PATCH Ctl6 FUNCTION"/>
+  <ParameterEnumerated Name="Ctl6 Mode"
+                       Offset="0x003c"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Ctl7 Function"
+                       Offset="0x003d"
+                       Type="PATCH Ctl7 FUNCTION"/>
+  <ParameterEnumerated Name="Ctl7 Mode"
+                       Offset="0x003e"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="CNum Function"
+                       Offset="0x003f"
+                       Type="PATCH CNum FUNCTION"/>
+  <ParameterEnumerated Name="CNum Mode"
+                       Offset="0x0040"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Exp1Sw Function"
+                       Offset="0x0041"
+                       Type="PATCH Exp1Sw FUNCTION"/>
+  <ParameterEnumerated Name="Exp1Sw Mode"
+                       Offset="0x0042"
+                       Type="PATCH FUNCTION MODE"/>
+
+  <ParameterEnumerated Name="Exp1 Function"
+                       Offset="0x0043"
+                       Type="PATCH Exp1 FUNCTION"/>
+  <ParameterEnumerated Name="Exp2 Function"
+                       Offset="0x0044"
+                       Type="PATCH Exp2 FUNCTION"/>
+  <ParameterEnumerated Name="Exp3 Function"
+                       Offset="0x0045"
+                       Type="PATCH Exp3 FUNCTION"/>
+
+  <ParameterEnumerated Name="AMP CTL BPM1"
+                       Offset="0x0046"
+                       Type="PATCH AMP CTL BPM1"/>
+
+  <ParameterEnumerated Name="AMP CTL BPM2"
+                       Offset="0x0048"
+                       Type="PATCH AMP CTL BPM2"/>
+</Structure>

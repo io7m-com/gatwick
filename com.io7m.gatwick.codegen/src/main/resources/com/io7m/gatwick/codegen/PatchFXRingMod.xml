@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXRingMod"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="INTELLIGENT"
+                       Offset="0x0000"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="FREQUENCY"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterRate118 Name="FREQ MOD RATE"
+                    Offset="0x0002"/>
+
+  <ParameterNumeric Name="FREQ MOD DEPTH"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x0004"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DIRECT MIX"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

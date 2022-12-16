@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchPreamp"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="SW"
+                       Offset="0x0000"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="TYPE"
+                       Offset="0x0001"
+                       Type="PatchPreamp.Type"/>
+
+  <ParameterNumeric Name="GAIN"
+                    Offset="0x0002"
+                    MinInclusive="0"
+                    MaxInclusive="120"/>
+
+  <ParameterNumeric Name="SAG"
+                    Offset="0x0003"
+                    MinInclusive="6"
+                    MaxInclusive="26"
+                    LogicalMinInclusive="-10"
+                    LogicalMaxInclusive="10"/>
+
+  <ParameterNumeric Name="RESONANCE"
+                    Offset="0x0004"
+                    MinInclusive="6"
+                    MaxInclusive="26"
+                    LogicalMinInclusive="-10"
+                    LogicalMaxInclusive="10"/>
+
+  <ParameterNumeric Name="LEVEL"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="BASS"
+                    Offset="0x0006"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="MIDDLE"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="TREBLE"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="PRESENCE"
+                    Offset="0x0009"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="BRIGHT"
+                       Offset="0x000a"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="GAIN SW"
+                       Offset="0x000b"
+                       Type="PatchPreamp.Gain"/>
+
+  <ParameterEnumerated Name="SOLO SW"
+                       Offset="0x000c"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="SOLO LEVEL"
+                    Offset="0x000d"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

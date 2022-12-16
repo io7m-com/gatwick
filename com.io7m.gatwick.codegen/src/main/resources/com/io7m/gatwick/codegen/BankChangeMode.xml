@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="BANK CHANGE MODE"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="WAIT"
+        Value="0"/>
+  <Case Name="IMMEDIATE"
+        Value="1"/>
+</Enumeration>

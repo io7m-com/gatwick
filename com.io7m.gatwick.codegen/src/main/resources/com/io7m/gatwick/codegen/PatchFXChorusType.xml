@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXChorus.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="MONO"
+        Value="0"/>
+  <Case Name="STEREO 1 "
+        Value="1"/>
+  <Case Name="STEREO 2 "
+        Value="2"/>
+  <Case Name="DUAL"
+        Value="3"/>
+  <Case Name="PRIME"
+        Value="4"/>
+  <Case Name="CE-1 CHORUS "
+        Value="5"/>
+  <Case Name="CE-1 VIBRATO"
+        Value="6"/>
+</Enumeration>

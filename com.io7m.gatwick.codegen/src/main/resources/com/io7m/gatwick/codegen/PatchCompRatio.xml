@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchComp.Ratio"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="1:1"
+        Value="0"/>
+  <Case Name="1.2:1"
+        Value="1"/>
+  <Case Name="1.4:1"
+        Value="2"/>
+  <Case Name="1.6:1"
+        Value="3"/>
+  <Case Name="1.8:1"
+        Value="4"/>
+  <Case Name="2:1"
+        Value="5"/>
+  <Case Name="2.3:1"
+        Value="6"/>
+  <Case Name="2.6:1"
+        Value="7"/>
+  <Case Name="3:1"
+        Value="8"/>
+  <Case Name="3.5:1"
+        Value="9"/>
+  <Case Name="4:1"
+        Value="10"/>
+  <Case Name="5:1"
+        Value="11"/>
+  <Case Name="6:1"
+        Value="12"/>
+  <Case Name="8:1"
+        Value="13"/>
+  <Case Name="10:1"
+        Value="14"/>
+  <Case Name="12:1"
+        Value="15"/>
+  <Case Name="20:1"
+        Value="16"/>
+  <Case Name="INF:1"
+        Value="17"/>
+</Enumeration>

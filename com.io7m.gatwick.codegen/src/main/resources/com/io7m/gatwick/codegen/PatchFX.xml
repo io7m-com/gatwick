@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFX"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="FX SW"
+                       Offset="0x0000"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="FX TYPE"
+                       Offset="0x0001"
+                       Type="PatchFX.Type"/>
+
+</Structure>

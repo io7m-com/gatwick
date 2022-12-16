@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXOctave.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="MONO"
+        Value="0"/>
+  <Case Name="POLY"
+        Value="1"/>
+</Enumeration>

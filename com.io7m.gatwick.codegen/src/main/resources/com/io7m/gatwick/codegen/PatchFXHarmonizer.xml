@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXHarmonizer"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="VOICE"
+                       Offset="0x0000"
+                       Type="PatchFXHarmonizer.Voice"/>
+
+  <ParameterEnumerated Name="HR1:HARMONY"
+                       Offset="0x0001"
+                       Type="PatchFXHarmonizer.Harmony"/>
+
+  <ParameterEnumerated Name="HR2:HARMONY"
+                       Offset="0x0002"
+                       Type="PatchFXHarmonizer.Harmony"/>
+
+  <ParameterNumeric Name="HR1:LEVEL"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterRate318 Name="HR1:PRE-DELAY"
+                    Offset="0x0007"/>
+
+  <ParameterNumeric Name="HR1:FEEDBACK"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DIRECT LEVEL"
+                    Offset="0x0009"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="HR2:LEVEL"
+                    Offset="0x000a"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterRate318 Name="HR2:PRE-DELAY"
+                    Offset="0x000e"/>
+
+  <ParameterNumeric Name="HR1:C"
+                    Offset="0x000f"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:Db"
+                    Offset="0x0010"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:D"
+                    Offset="0x0011"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:Eb"
+                    Offset="0x0012"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:E"
+                    Offset="0x0013"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:F"
+                    Offset="0x0014"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:F#"
+                    Offset="0x0015"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:G"
+                    Offset="0x0016"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:Ab"
+                    Offset="0x0017"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:A"
+                    Offset="0x0018"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:Bb"
+                    Offset="0x0019"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR1:B"
+                    Offset="0x001a"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+
+  <ParameterNumeric Name="HR2:C"
+                    Offset="0x001b"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:Db"
+                    Offset="0x001c"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:D"
+                    Offset="0x001d"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:Eb"
+                    Offset="0x001e"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:E"
+                    Offset="0x001f"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:F"
+                    Offset="0x0020"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:F#"
+                    Offset="0x0021"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:G"
+                    Offset="0x0022"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:Ab"
+                    Offset="0x0023"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:A"
+                    Offset="0x0024"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:Bb"
+                    Offset="0x0025"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+  <ParameterNumeric Name="HR2:B"
+                    Offset="0x0026"
+                    MinInclusive="0"
+                    MaxInclusive="48"/>
+
+</Structure>

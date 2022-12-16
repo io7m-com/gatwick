@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXAGSim"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterNumeric Name="BODY"
+                    Offset="0x0000"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="LOW"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="100"
+                    LogicalMinInclusive="-50"
+                    LogicalMaxInclusive="50"/>
+
+  <ParameterNumeric Name="HIGH"
+                    Offset="0x0002"
+                    MinInclusive="0"
+                    MaxInclusive="100"
+                    LogicalMinInclusive="-50"
+                    LogicalMaxInclusive="50"/>
+
+  <ParameterNumeric Name="LEVEL"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

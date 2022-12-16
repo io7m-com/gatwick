@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="SystemEfct"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterNumeric Name="UNUSED"
+                    Offset="0x0000"
+                    MinInclusive="0"
+                    MaxInclusive="0"/>
+</Structure>

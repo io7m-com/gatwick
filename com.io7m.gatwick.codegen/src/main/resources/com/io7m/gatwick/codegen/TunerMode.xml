@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="TUNER MODE"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="NORMAL"
+        Value="0"/>
+  <Case Name="STREAM"
+        Value="1"/>
+</Enumeration>

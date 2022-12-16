@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXRotary.Speed"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="SLOW"
+        Value="0"/>
+  <Case Name="FAST"
+        Value="1"/>
+</Enumeration>

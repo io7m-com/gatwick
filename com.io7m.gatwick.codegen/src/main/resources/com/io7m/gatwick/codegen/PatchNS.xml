@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchNS"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="SW"
+                       Offset="0x0000"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="THRESHOLD"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="RELEASE"
+                    Offset="0x0002"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="DETECT"
+                       Offset="0x0003"
+                       Type="PatchNS.Detect"/>
+
+</Structure>

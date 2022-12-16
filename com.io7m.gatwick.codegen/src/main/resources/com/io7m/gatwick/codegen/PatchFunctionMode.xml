@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PATCH FUNCTION MODE"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="TOGGLE"
+        Value="0"/>
+  <Case Name="MOMENT"
+        Value="1"/>
+</Enumeration>

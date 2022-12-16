@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchDelay"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="SW"
+                       Offset="0x0000"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="TIME"
+                    Offset="0x0001"
+                    MinInclusive="1"
+                    MaxInclusive="2018"/>
+
+  <ParameterNumeric Name="FEEDBACK"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="HIGH CUT"
+                       Offset="0x0006"
+                       Type="PatchDelay.HighCut"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="120"/>
+
+  <ParameterNumeric Name="DIRECT LEVEL"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="120"/>
+
+</Structure>

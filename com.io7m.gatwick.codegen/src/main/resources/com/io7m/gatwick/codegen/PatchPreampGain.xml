@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchPreamp.Gain"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="LOW"
+        Value="0"/>
+  <Case Name="MIDDLE"
+        Value="1"/>
+  <Case Name="HIGH"
+        Value="2"/>
+</Enumeration>

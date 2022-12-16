@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXFeedbacker"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="MODE"
+                       Offset="0x0000"
+                       Type="PatchFXFeedbacker.Mode"/>
+
+  <ParameterEnumerated Name="TRIGGER"
+                       Offset="0x0001"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="DEPTH"
+                    Offset="0x0002"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="RISE TIME"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="OCT RISE TIME"
+                    Offset="0x0004"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="FEEDBACK"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="OCT FEEBACK"
+                    Offset="0x0006"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="VIB RATE"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="VIB DEPTH"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

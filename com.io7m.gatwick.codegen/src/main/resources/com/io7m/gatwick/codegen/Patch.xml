@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="Patch"
+           xmlns="urn:com.io7m.gatwick:1">
+  <StructureReference Name="common"
+                      Offset="0x0000_0000"
+                      Type="PatchCommon"/>
+  <StructureReference Name="stompBox"
+                      Offset="0x0000_0100"
+                      Type="PatchStompBox"/>
+  <StructureReference Name="led"
+                      Offset="0x0000_0200"
+                      Type="PatchLed"/>
+
+  <StructureReference Name="assign 1"
+                      Offset="0x0000_0300"
+                      Type="Assign"/>
+  <StructureReference Name="assign 2"
+                      Offset="0x0000_0340"
+                      Type="Assign"/>
+  <StructureReference Name="assign 3"
+                      Offset="0x0000_0380"
+                      Type="Assign"/>
+  <StructureReference Name="assign 4"
+                      Offset="0x0000_03c0"
+                      Type="Assign"/>
+  <StructureReference Name="assign 5"
+                      Offset="0x0000_0400"
+                      Type="Assign"/>
+  <StructureReference Name="assign 6"
+                      Offset="0x0000_0440"
+                      Type="Assign"/>
+  <StructureReference Name="assign 7"
+                      Offset="0x0000_0480"
+                      Type="Assign"/>
+  <StructureReference Name="assign 8"
+                      Offset="0x0000_04c0"
+                      Type="Assign"/>
+  <StructureReference Name="assign 9"
+                      Offset="0x0000_0500"
+                      Type="Assign"/>
+  <StructureReference Name="assign 10"
+                      Offset="0x0000_0540"
+                      Type="Assign"/>
+  <StructureReference Name="assign 11"
+                      Offset="0x0000_0580"
+                      Type="Assign"/>
+  <StructureReference Name="assign 12"
+                      Offset="0x0000_05c0"
+                      Type="Assign"/>
+  <StructureReference Name="assign 13"
+                      Offset="0x0000_0600"
+                      Type="Assign"/>
+  <StructureReference Name="assign 14"
+                      Offset="0x0000_0640"
+                      Type="Assign"/>
+  <StructureReference Name="assign 15"
+                      Offset="0x0000_0680"
+                      Type="Assign"/>
+  <StructureReference Name="assign 16"
+                      Offset="0x0000_06c0"
+                      Type="Assign"/>
+
+  <StructureReference Name="efct"
+                      Offset="0x0000_1000"
+                      Type="PatchEfct"/>
+
+  <StructureReference Name="comp"
+                      Offset="0x0000_1200"
+                      Type="PatchComp"/>
+
+  <StructureReference Name="dist1"
+                      Offset="0x0000_1300"
+                      Type="PatchDist"/>
+
+  <StructureReference Name="dist2"
+                      Offset="0x0000_1400"
+                      Type="PatchDist"/>
+
+  <StructureReference Name="preampA"
+                      Offset="0x0000_1500"
+                      Type="PatchPreamp"/>
+
+  <StructureReference Name="preampB"
+                      Offset="0x0000_1600"
+                      Type="PatchPreamp"/>
+
+  <StructureReference Name="ns1"
+                      Offset="0x0000_1700"
+                      Type="PatchNS"/>
+
+  <StructureReference Name="ns2"
+                      Offset="0x0000_1800"
+                      Type="PatchNS"/>
+
+  <StructureReference Name="eq1"
+                      Offset="0x0000_1900"
+                      Type="PatchEQ"/>
+
+  <StructureReference Name="eq2"
+                      Offset="0x0000_1a00"
+                      Type="PatchEQ"/>
+
+  <StructureReference Name="eq3"
+                      Offset="0x0000_1b00"
+                      Type="PatchEQ"/>
+
+  <StructureReference Name="eq4"
+                      Offset="0x0000_1c00"
+                      Type="PatchEQ"/>
+
+  <StructureReference Name="delay1"
+                      Offset="0x0000_1d00"
+                      Type="PatchDelay"/>
+
+  <StructureReference Name="delay2"
+                      Offset="0x0000_1e00"
+                      Type="PatchDelay"/>
+
+  <StructureReference Name="delay3"
+                      Offset="0x0000_1f00"
+                      Type="PatchDelay"/>
+
+  <StructureReference Name="delay4"
+                      Offset="0x0000_2000"
+                      Type="PatchDelay"/>
+
+  <StructureReference Name="mstDelay"
+                      Offset="0x0000_2100"
+                      Type="PatchMstDelay"/>
+
+  <StructureReference Name="chorus"
+                      Offset="0x0000_2200"
+                      Type="PatchChorus"/>
+
+  <!-- FX 1 -->
+
+  <StructureReference Name="fx1"
+                      Offset="0x0000_2300"
+                      Type="PatchFX"/>
+
+  <StructureReference Name="fx1AGSim"
+                      Offset="0x0000_2400"
+                      Type="PatchFXAGSim"/>
+
+  <StructureReference Name="fx1AcReso"
+                      Offset="0x0000_2500"
+                      Type="PatchFXAcReso"/>
+
+  <StructureReference Name="fx1AWah"
+                      Offset="0x0000_2600"
+                      Type="PatchFXAWah"/>
+
+  <StructureReference Name="fx1Chorus"
+                      Offset="0x0000_2700"
+                      Type="PatchFXChorus"/>
+
+  <StructureReference Name="fx1CVibe"
+                      Offset="0x0000_2800"
+                      Type="PatchFXCVibe"/>
+
+  <StructureReference Name="fx1Comp"
+                      Offset="0x0000_2900"
+                      Type="PatchFXComp"/>
+
+  <StructureReference Name="fx1Defretter"
+                      Offset="0x0000_2a00"
+                      Type="PatchFXDefretter"/>
+
+  <StructureReference Name="fx1Feedbacker"
+                      Offset="0x0000_2b00"
+                      Type="PatchFXFeedbacker"/>
+
+  <StructureReference Name="fx1Flanger"
+                      Offset="0x0000_2c00"
+                      Type="PatchFXFlanger"/>
+
+  <StructureReference Name="fx1Harmonizer"
+                      Offset="0x0000_2d00"
+                      Type="PatchFXHarmonizer"/>
+
+  <StructureReference Name="fx1Humanizer"
+                      Offset="0x0000_2e00"
+                      Type="PatchFXHumanizer"/>
+
+  <StructureReference Name="fx1Octave"
+                      Offset="0x0000_2f00"
+                      Type="PatchFXOctave"/>
+
+  <StructureReference Name="fx1Overtone"
+                      Offset="0x0000_3000"
+                      Type="PatchFXOvertone"/>
+
+  <StructureReference Name="fx1Pan"
+                      Offset="0x0000_3100"
+                      Type="PatchFXPan"/>
+
+  <StructureReference Name="fx1Phaser"
+                      Offset="0x0000_3200"
+                      Type="PatchFXPhaser"/>
+
+  <StructureReference Name="fx1PitchShift"
+                      Offset="0x0000_3300"
+                      Type="PatchFXPitchShift"/>
+
+  <StructureReference Name="fx1RingMod"
+                      Offset="0x0000_3400"
+                      Type="PatchFXRingMod"/>
+
+  <StructureReference Name="fx1Rotary"
+                      Offset="0x0000_3500"
+                      Type="PatchFXRotary"/>
+
+  <StructureReference Name="fx1SitarSim"
+                      Offset="0x0000_3600"
+                      Type="PatchFXSitarSim"/>
+
+  <StructureReference Name="fx1Slicer"
+                      Offset="0x0000_3700"
+                      Type="PatchFXSlicer"/>
+
+  <StructureReference Name="fx1SlowGear"
+                      Offset="0x0000_3800"
+                      Type="PatchFXSlowGear"/>
+
+  <StructureReference Name="fx1SoundHold"
+                      Offset="0x0000_3900"
+                      Type="PatchFXSoundHold"/>
+
+  <StructureReference Name="fx1SBend"
+                      Offset="0x0000_3a00"
+                      Type="PatchFXSBend"/>
+
+  <StructureReference Name="fx1Tremolo"
+                      Offset="0x0000_3b00"
+                      Type="PatchFXTremolo"/>
+
+  <StructureReference Name="fx1TWah"
+                      Offset="0x0000_3c00"
+                      Type="PatchFXTWah"/>
+
+  <StructureReference Name="fx1Vibrato"
+                      Offset="0x0000_3d00"
+                      Type="PatchFXVibrato"/>
+
+</Structure>

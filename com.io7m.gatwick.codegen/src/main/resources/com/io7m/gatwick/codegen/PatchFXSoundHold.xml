@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXSoundHold"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="TRIGGER"
+                       Offset="0x0000"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="RISE TIME"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x0002"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

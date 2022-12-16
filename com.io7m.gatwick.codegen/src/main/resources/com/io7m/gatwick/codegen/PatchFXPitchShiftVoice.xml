@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXPitchShift.Voice"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="1VOICE"
+        Value="0"/>
+  <Case Name="2MONO"
+        Value="1"/>
+  <Case Name="2STEREO"
+        Value="2"/>
+</Enumeration>

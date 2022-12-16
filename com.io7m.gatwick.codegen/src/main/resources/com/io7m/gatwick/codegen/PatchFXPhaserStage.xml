@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXPhaser.Stage"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="2_STAGE"
+        Value="0"/>
+  <Case Name="4_STAGE"
+        Value="1"/>
+  <Case Name="8_STAGE"
+        Value="2"/>
+  <Case Name="16_STAGE"
+        Value="3"/>
+  <Case Name="24_STAGE"
+        Value="4"/>
+</Enumeration>

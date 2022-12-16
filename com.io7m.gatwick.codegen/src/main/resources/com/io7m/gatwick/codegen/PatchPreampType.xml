@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchPreamp.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="TRANSPARENT"
+        Value="0"/>
+  <Case Name="NATURAL"
+        Value="1"/>
+  <Case Name="BOUTIQUE"
+        Value="2"/>
+  <Case Name="SUPREME"
+        Value="3"/>
+  <Case Name="MAXIMUM"
+        Value="4"/>
+  <Case Name="JUGGERNAUT"
+        Value="5"/>
+  <Case Name="X-CRUNCH"
+        Value="6"/>
+  <Case Name="X-HI GAIN"
+        Value="7"/>
+  <Case Name="X-MODDED"
+        Value="8"/>
+  <Case Name="JC-120"
+        Value="9"/>
+  <Case Name="TWIN COMBO"
+        Value="10"/>
+  <Case Name="DELUXE COMBO"
+        Value="11"/>
+  <Case Name="TWEED COMBO"
+        Value="12"/>
+  <Case Name="DIAMOND AMP"
+        Value="13"/>
+  <Case Name="BRIT STACK"
+        Value="14"/>
+  <Case Name="RECTI STACK"
+        Value="15"/>
+</Enumeration>

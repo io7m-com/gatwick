@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXPhaser.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="PRIME"
+        Value="0"/>
+  <Case Name="SCRIPT"
+        Value="1"/>
+</Enumeration>

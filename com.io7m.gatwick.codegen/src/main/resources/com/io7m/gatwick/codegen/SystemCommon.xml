@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="SystemCommon"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterNumeric Name="Patch Number"
+                    Offset="0x0000"
+                    MinInclusive="0"
+                    MaxInclusive="499"/>
+
+  <ParameterEnumerated Name="TUNER MODE"
+                       Offset="0x0004"
+                       Type="TUNER MODE"/>
+
+  <ParameterEnumerated Name="TUNER TYPE"
+                       Offset="0x0005"
+                       Type="TUNER TYPE"/>
+
+  <ParameterEnumerated Name="BANK CHANGE MODE"
+                       Offset="0x0006"
+                       Type="BANK CHANGE MODE"/>
+
+  <ParameterNumeric Name="BANK EXTENT MIN"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="99"/>
+
+  <ParameterNumeric Name="BANK EXTENT MAX"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="99"/>
+
+  <ParameterNumeric Name="METRONOME BPM"
+                    Offset="0x0009"
+                    MinInclusive="200"
+                    MaxInclusive="2500"/>
+
+  <ParameterEnumerated Name="METRONOME BEAT"
+                       Offset="0x000d"
+                       Type="METRONOME BEAT"/>
+
+  <ParameterNumeric Name="N/A (fixed 0)"
+                    Offset="0x000e"
+                    MinInclusive="0"
+                    MaxInclusive="0"/>
+
+  <ParameterEnumerated Name="AMP CTL1"
+                       Offset="0x000f"
+                       Type="AMP CTL"/>
+
+  <ParameterEnumerated Name="AMP CTL2"
+                       Offset="0x0010"
+                       Type="AMP CTL"/>
+
+  <ParameterEnumerated Name="EXP1 HOLD"
+                       Offset="0x0011"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="EXP2 HOLD"
+                       Offset="0x0012"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="EXP3 HOLD"
+                       Offset="0x0013"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="N/A (fixed 1)"
+                    Offset="0x0014"
+                    MinInclusive="0"
+                    MaxInclusive="0"/>
+
+  <ParameterEnumerated Name="AUTO OFF"
+                       Offset="0x0015"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="LED LUMINANCE"
+                       Offset="0x0016"
+                       Type="LED LUMINANCE"/>
+
+  <ParameterNumeric Name="N/A (fixed 2)"
+                    Offset="0x0017"
+                    MinInclusive="0"
+                    MaxInclusive="0"/>
+
+  <ParameterEnumerated Name="KNOB LOCK"
+                       Offset="0x0018"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="KNOB1 SETTING"
+                    Offset="0x0019"
+                    MinInclusive="0"
+                    MaxInclusive="1024"/>
+
+  <ParameterNumeric Name="KNOB2 SETTING"
+                    Offset="0x001d"
+                    MinInclusive="0"
+                    MaxInclusive="1024"/>
+
+  <ParameterNumeric Name="KNOB3 SETTING"
+                    Offset="0x0021"
+                    MinInclusive="0"
+                    MaxInclusive="1024"/>
+
+  <ParameterNumeric Name="KNOB4 SETTING"
+                    Offset="0x0025"
+                    MinInclusive="0"
+                    MaxInclusive="1024"/>
+
+  <ParameterNumeric Name="KNOB5 SETTING"
+                    Offset="0x0029"
+                    MinInclusive="0"
+                    MaxInclusive="1024"/>
+
+  <ParameterNumeric Name="KNOB6 SETTING"
+                    Offset="0x002d"
+                    MinInclusive="0"
+                    MaxInclusive="1024"/>
+</Structure>

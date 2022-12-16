@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:g="urn:com.io7m.gatwick:1"
+        targetNamespace="urn:com.io7m.gatwick:1">
+
+  <import namespace="http://www.w3.org/XML/1998/namespace"
+          schemaLocation="xml.xsd"/>
+
+  <attributeGroup name="StandardXMLAttributes">
+    <annotation>
+      <documentation xml:lang="en">
+        The standard elements expected to appear in XML texts.
+      </documentation>
+    </annotation>
+    <attribute ref="xml:base"/>
+    <attribute ref="xml:lang"/>
+  </attributeGroup>
+
+  <simpleType name="HexInteger">
+    <restriction base="string">
+      <pattern value="0x[0-9a-f]{4}(_[0-9a-f]{4})?"/>
+    </restriction>
+  </simpleType>
+
+  <element name="ParameterRate118">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="ParameterRate118AndOff">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="ParameterRate318">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="ParameterNumeric">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+
+      <attribute name="MinInclusive"
+                 type="integer"
+                 use="required"/>
+      <attribute name="MaxInclusive"
+                 type="integer"
+                 use="required"/>
+
+      <attribute name="LogicalMinInclusive"
+                 type="integer"
+                 use="optional"/>
+      <attribute name="LogicalMaxInclusive"
+                 type="integer"
+                 use="optional"/>
+    </complexType>
+  </element>
+
+  <element name="ParameterEnumerated">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+      <attribute name="Type"
+                 type="string"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="ParameterString">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+      <attribute name="Length"
+                 type="unsignedInt"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="StructureReference">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+      <attribute name="Type"
+                 type="string"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="Structure">
+    <complexType>
+      <sequence minOccurs="1"
+                maxOccurs="unbounded">
+        <choice>
+          <element ref="g:ParameterEnumerated"/>
+          <element ref="g:ParameterNumeric"/>
+          <element ref="g:ParameterRate118"/>
+          <element ref="g:ParameterRate118AndOff"/>
+          <element ref="g:ParameterRate318"/>
+          <element ref="g:ParameterString"/>
+          <element ref="g:StructureReference"/>
+        </choice>
+      </sequence>
+
+      <attributeGroup ref="g:StandardXMLAttributes"/>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+    </complexType>
+
+    <unique name="StructureNameUnique">
+      <selector xpath="*"/>
+      <field xpath="@Name"/>
+    </unique>
+    <unique name="StructureOffsetUnique">
+      <selector xpath="*"/>
+      <field xpath="@Offset"/>
+    </unique>
+  </element>
+
+  <element name="Case">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Value"
+                 type="integer"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="Enumeration">
+    <complexType>
+      <sequence minOccurs="1"
+                maxOccurs="unbounded">
+        <element ref="g:Case"/>
+      </sequence>
+
+      <attributeGroup ref="g:StandardXMLAttributes"/>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+    </complexType>
+
+    <unique name="CaseNameUnique">
+      <selector xpath="g:Case"/>
+      <field xpath="@Name"/>
+    </unique>
+    <unique name="CaseValueUnique">
+      <selector xpath="g:Case"/>
+      <field xpath="@Value"/>
+    </unique>
+  </element>
+
+  <element name="Types">
+    <complexType>
+      <sequence minOccurs="0"
+                maxOccurs="unbounded">
+        <choice>
+          <element ref="g:Enumeration"/>
+          <element ref="g:Structure"/>
+        </choice>
+      </sequence>
+    </complexType>
+    <key name="EnumerationTypeKey">
+      <selector xpath="g:Enumeration"/>
+      <field xpath="@Name"/>
+    </key>
+    <key name="StructureTypeKey">
+      <selector xpath="g:Structure"/>
+      <field xpath="@Name"/>
+    </key>
+  </element>
+
+  <element name="Definitions">
+    <complexType>
+      <sequence>
+        <element ref="g:Types"/>
+        <element ref="g:StructureReference"/>
+      </sequence>
+    </complexType>
+
+    <keyref name="ParameterEnumeratedTypeRef"
+            refer="g:EnumerationTypeKey">
+      <selector xpath=".//g:ParameterEnumerated"/>
+      <field xpath="@Type"/>
+    </keyref>
+
+    <keyref name="StructureReferenceTypeRef"
+            refer="g:StructureTypeKey">
+      <selector xpath=".//g:StructureReference"/>
+      <field xpath="@Type"/>
+    </keyref>
+
+    <keyref name="StructureReferenceTypeRefRoot"
+            refer="g:StructureTypeKey">
+      <selector xpath="g:StructureReference"/>
+      <field xpath="@Type"/>
+    </keyref>
+  </element>
+
+</schema>

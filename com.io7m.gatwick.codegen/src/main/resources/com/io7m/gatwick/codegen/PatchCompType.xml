@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchComp.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="BOSS COMP"
+        Value="0"/>
+  <Case Name="X-COMP"
+        Value="1"/>
+  <Case Name="D-COMP"
+        Value="2"/>
+  <Case Name="ORANGE"
+        Value="3"/>
+  <Case Name="STEREO COMP"
+        Value="4"/>
+</Enumeration>

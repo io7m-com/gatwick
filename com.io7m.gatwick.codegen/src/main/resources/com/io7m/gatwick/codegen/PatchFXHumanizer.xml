@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXHumanizer"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="MODE"
+                       Offset="0x0000"
+                       Type="PatchFXHumanizer.Mode"/>
+
+  <ParameterEnumerated Name="VOWEL1"
+                       Offset="0x0001"
+                       Type="PatchFXHumanizer.Vowel"/>
+
+  <ParameterEnumerated Name="VOWEL2"
+                       Offset="0x0002"
+                       Type="PatchFXHumanizer.Vowel"/>
+
+  <ParameterNumeric Name="SENS"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterRate118 Name="RATE"
+                    Offset="0x0004"/>
+
+  <ParameterNumeric Name="DEPTH"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="MANUAL"
+                    Offset="0x0006"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="LEVEL"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

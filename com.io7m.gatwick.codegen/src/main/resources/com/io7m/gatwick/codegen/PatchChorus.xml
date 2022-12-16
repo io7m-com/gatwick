@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchChorus"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="SW"
+                       Offset="0x0000"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="TYPE"
+                       Offset="0x0001"
+                       Type="PatchChorus.Type"/>
+
+  <ParameterRate118 Name="RATE"
+                    Offset="0x0002"/>
+
+  <ParameterNumeric Name="DEPTH"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="PRE-DELAY"
+                    Offset="0x0004"
+                    MinInclusive="0"
+                    MaxInclusive="80"
+                    LogicalMinInclusive="0"
+                    LogicalMaxInclusive="40"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="WAVEFORM"
+                       Offset="0x0006"
+                       Type="PatchChorus.Waveform"/>
+
+  <ParameterEnumerated Name="LOW CUT"
+                       Offset="0x0007"
+                       Type="PatchChorus.LowCut"/>
+
+  <ParameterEnumerated Name="HIGH CUT"
+                       Offset="0x0008"
+                       Type="PatchChorus.HighCut"/>
+
+  <!-- 1 -->
+
+  <ParameterRate118 Name="RATE 1"
+                    Offset="0x0009"/>
+
+  <ParameterNumeric Name="DEPTH 1"
+                    Offset="0x000a"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="PRE-DELAY 1"
+                    Offset="0x000b"
+                    MinInclusive="0"
+                    MaxInclusive="80"
+                    LogicalMinInclusive="0"
+                    LogicalMaxInclusive="40"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL 1"
+                    Offset="0x000c"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="WAVEFORM 1"
+                       Offset="0x000d"
+                       Type="PatchChorus.Waveform"/>
+
+  <ParameterEnumerated Name="LOW CUT 1"
+                       Offset="0x000e"
+                       Type="PatchChorus.LowCut"/>
+
+  <ParameterEnumerated Name="HIGH CUT 1"
+                       Offset="0x000f"
+                       Type="PatchChorus.HighCut"/>
+
+  <!-- 2 -->
+
+  <ParameterRate118 Name="RATE 2"
+                    Offset="0x0010"/>
+
+  <ParameterNumeric Name="DEPTH 2"
+                    Offset="0x0011"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="PRE-DELAY 2"
+                    Offset="0x0012"
+                    MinInclusive="0"
+                    MaxInclusive="80"
+                    LogicalMinInclusive="0"
+                    LogicalMaxInclusive="40"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL 2"
+                    Offset="0x0013"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="WAVEFORM 2"
+                       Offset="0x0014"
+                       Type="PatchChorus.Waveform"/>
+
+  <ParameterEnumerated Name="LOW CUT 2"
+                       Offset="0x0015"
+                       Type="PatchChorus.LowCut"/>
+
+  <ParameterEnumerated Name="HIGH CUT 2"
+                       Offset="0x0016"
+                       Type="PatchChorus.HighCut"/>
+
+  <ParameterNumeric Name="DIRECT LEVEL"
+                    Offset="0x0017"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="OUTPUT MODE"
+                       Offset="0x0018"
+                       Type="PatchChorus.OutputMode"/>
+
+</Structure>

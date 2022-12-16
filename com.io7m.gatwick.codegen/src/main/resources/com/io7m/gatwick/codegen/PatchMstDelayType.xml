@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchMstDelay.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="MONO"
+        Value="0"/>
+  <Case Name="PAN"
+        Value="1"/>
+  <Case Name="STEREO1"
+        Value="2"/>
+  <Case Name="STEREO2"
+        Value="3"/>
+  <Case Name="ANALOG"
+        Value="4"/>
+  <Case Name="ANALOG ST"
+        Value="5"/>
+  <Case Name="TAPE"
+        Value="6"/>
+  <Case Name="REVERSE"
+        Value="7"/>
+  <Case Name="SHIMMER"
+        Value="8"/>
+  <Case Name="DUAL"
+        Value="9"/>
+  <Case Name="WARP"
+        Value="10"/>
+  <Case Name="TWIST"
+        Value="11"/>
+</Enumeration>

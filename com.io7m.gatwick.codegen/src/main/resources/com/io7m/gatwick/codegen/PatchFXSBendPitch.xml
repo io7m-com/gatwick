@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXSBend.Pitch"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="-3OCT"
+        Value="0"/>
+  <Case Name="-2OCT"
+        Value="1"/>
+  <Case Name="-1OCT"
+        Value="2"/>
+  <Case Name="+1OCT"
+        Value="3"/>
+  <Case Name="+2OCT"
+        Value="4"/>
+  <Case Name="+3OCT"
+        Value="5"/>
+  <Case Name="+4OCT"
+        Value="6"/>
+</Enumeration>

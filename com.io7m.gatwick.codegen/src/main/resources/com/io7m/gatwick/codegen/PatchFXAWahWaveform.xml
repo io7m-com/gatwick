@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXAWah.Waveform"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="TRI"
+        Value="0"/>
+  <Case Name="SINE"
+        Value="1"/>
+</Enumeration>

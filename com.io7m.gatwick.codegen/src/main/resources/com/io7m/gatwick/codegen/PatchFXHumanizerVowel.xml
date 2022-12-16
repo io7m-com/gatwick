@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXHumanizer.Vowel"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="A"
+        Value="0"/>
+  <Case Name="E"
+        Value="1"/>
+  <Case Name="I"
+        Value="2"/>
+  <Case Name="O"
+        Value="3"/>
+  <Case Name="U"
+        Value="4"/>
+</Enumeration>

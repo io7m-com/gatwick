@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchNS.Detect"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="INPUT"
+        Value="0"/>
+  <Case Name="NS INPUT"
+        Value="1"/>
+  <Case Name="FV OUT"
+        Value="2"/>
+</Enumeration>

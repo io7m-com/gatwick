@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXFlanger.Separation"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="DEGREES_0"
+        Value="0"/>
+  <Case Name="DEGREES_15"
+        Value="1"/>
+  <Case Name="DEGREES_30"
+        Value="2"/>
+  <Case Name="DEGREES_45"
+        Value="3"/>
+  <Case Name="DEGREES_60"
+        Value="4"/>
+  <Case Name="DEGREES_75"
+        Value="5"/>
+  <Case Name="DEGREES_90"
+        Value="6"/>
+  <Case Name="DEGREES_105"
+        Value="7"/>
+  <Case Name="DEGREES_120"
+        Value="8"/>
+  <Case Name="DEGREES_135"
+        Value="9"/>
+  <Case Name="DEGREES_150"
+        Value="10"/>
+  <Case Name="DEGREES_165"
+        Value="11"/>
+  <Case Name="DEGREES_180"
+        Value="12"/>
+</Enumeration>

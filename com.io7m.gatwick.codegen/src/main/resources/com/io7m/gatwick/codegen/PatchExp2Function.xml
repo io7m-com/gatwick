@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PATCH Exp2 FUNCTION"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="OFF"
+        Value="0"/>
+  <Case Name="FOOT VOLUME"
+        Value="1"/>
+  <Case Name="PEDAL FX"
+        Value="2"/>
+  <Case Name="FV/PEDAL FX"
+        Value="3"/>
+</Enumeration>

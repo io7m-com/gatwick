@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXHumanizer.Mode"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="PICKING"
+        Value="0"/>
+  <Case Name="AUTO"
+        Value="1"/>
+</Enumeration>

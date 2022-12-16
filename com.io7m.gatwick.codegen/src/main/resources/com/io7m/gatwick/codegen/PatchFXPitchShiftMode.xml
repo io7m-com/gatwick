@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXPitchShift.Mode"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="FAST"
+        Value="0"/>
+  <Case Name="MEDIUM"
+        Value="1"/>
+  <Case Name="SLOW"
+        Value="2"/>
+  <Case Name="MONO"
+        Value="3"/>
+</Enumeration>

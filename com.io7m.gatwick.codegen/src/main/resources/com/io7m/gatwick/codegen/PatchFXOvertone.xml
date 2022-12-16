@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXOvertone"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterNumeric Name="LOWER LEVEL"
+                    Offset="0x0000"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="UPPER LEVEL"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="UNISON LEVEL"
+                    Offset="0x0002"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DIRECT LEVEL"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DETUNE"
+                    Offset="0x0004"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="OUTPUT MODE"
+                       Offset="0x0005"
+                       Type="PatchFXOvertone.OutputMode"/>
+
+  <ParameterNumeric Name="LOW"
+                    Offset="0x0006"
+                    MinInclusive="14"
+                    MaxInclusive="114"
+                    LogicalMinInclusive="-50"
+                    LogicalMaxInclusive="50"/>
+
+  <ParameterNumeric Name="HIGH"
+                    Offset="0x0007"
+                    MinInclusive="14"
+                    MaxInclusive="114"
+                    LogicalMinInclusive="-50"
+                    LogicalMaxInclusive="50"/>
+
+</Structure>

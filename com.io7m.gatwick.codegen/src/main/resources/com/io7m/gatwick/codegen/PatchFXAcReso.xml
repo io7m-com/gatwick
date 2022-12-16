@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXAcReso"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="TYPE"
+                       Offset="0x0000"
+                       Type="PatchFXAcReso.Type"/>
+
+  <ParameterNumeric Name="RESONANCE"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="TONE"
+                    Offset="0x0002"
+                    MinInclusive="14"
+                    MaxInclusive="114"
+                    LogicalMinInclusive="-50"
+                    LogicalMaxInclusive="50"/>
+
+  <ParameterNumeric Name="LEVEL"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

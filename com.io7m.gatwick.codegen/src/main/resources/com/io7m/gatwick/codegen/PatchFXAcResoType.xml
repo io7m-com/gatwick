@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchFXAcReso.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="NATURAL"
+        Value="0"/>
+  <Case Name="WIDE"
+        Value="1"/>
+  <Case Name="BRIGHT"
+        Value="2"/>
+</Enumeration>
