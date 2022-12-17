@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXFlangerBass"
+           ExpectedSize="0x0010"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterRate118 Name="RATE"
+                    Offset="0x0000"/>
+
+  <ParameterNumeric Name="DEPTH"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="RESONANCE"
+                    Offset="0x0002"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="MANUAL"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="TURBO"
+                       Offset="0x0004"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="WAVEFORM"
+                       Offset="0x0005"
+                       Type="PatchFXFlanger.Waveform"/>
+
+  <ParameterRate118AndOff Name="STEP RATE"
+                          Offset="0x0006"/>
+
+  <ParameterEnumerated Name="SEPARATION"
+                       Offset="0x0007"
+                       Type="PatchFXFlanger.Separation"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="LOW DAMP"
+                    Offset="0x0009"
+                    MinInclusive="28"
+                    MaxInclusive="128"
+                    LogicalMinInclusive="-100"
+                    LogicalMaxInclusive="0"/>
+
+  <ParameterNumeric Name="HIGH DAMP"
+                    Offset="0x000b"
+                    MinInclusive="28"
+                    MaxInclusive="128"
+                    LogicalMinInclusive="-100"
+                    LogicalMaxInclusive="0"/>
+
+  <ParameterLowCut Name="LOW CUT"
+                   Offset="0x000d"/>
+
+  <ParameterHighCut Name="HIGH CUT"
+                    Offset="0x000e"/>
+
+  <ParameterNumeric Name="DIRECT MIX"
+                    Offset="0x000f"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

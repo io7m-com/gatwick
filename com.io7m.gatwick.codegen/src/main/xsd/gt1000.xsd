@@ -163,9 +163,14 @@
       </sequence>
 
       <attributeGroup ref="g:StandardXMLAttributes"/>
+
       <attribute name="Name"
                  type="string"
                  use="required"/>
+
+      <attribute name="ExpectedSize"
+                 type="g:HexInteger"
+                 use="optional"/>
     </complexType>
 
     <unique name="StructureNameUnique">

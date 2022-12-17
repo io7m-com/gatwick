@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Structure Name="PatchMstDelay"
+           ExpectedSize="0x002f"
            xmlns="urn:com.io7m.gatwick:1">
 
   <ParameterEnumerated Name="SW"
@@ -174,5 +175,18 @@
                     Offset="0x002b"
                     MinInclusive="0"
                     MaxInclusive="100"/>
+
+  <ParameterNumeric Name="WOW &amp; FLUTTER"
+                    Offset="0x002c"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="DRUM ECHO:HEAD"
+                       Offset="0x002d"
+                       Type="PatchMstDelay.DrumEchoHead"/>
+
+  <ParameterEnumerated Name="SELECTOR"
+                       Offset="0x002e"
+                       Type="PatchMstDelay.Selector"/>
 
 </Structure>

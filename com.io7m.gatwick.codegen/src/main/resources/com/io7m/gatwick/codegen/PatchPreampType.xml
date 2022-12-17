@@ -34,4 +34,18 @@
         Value="14"/>
   <Case Name="RECTI STACK"
         Value="15"/>
+  <Case Name="MATCH COMBO"
+        Value="16"/>
+  <Case Name="BG COMBO"
+        Value="17"/>
+  <Case Name="ORNG STACK"
+        Value="18"/>
+  <Case Name="BGNR UB METAL"
+        Value="19"/>
+  <Case Name="NATURAL BASS"
+        Value="20"/>
+  <Case Name="X-DRIVE BASS"
+        Value="21"/>
+  <Case Name="CONCERT"
+        Value="22"/>
 </Enumeration>

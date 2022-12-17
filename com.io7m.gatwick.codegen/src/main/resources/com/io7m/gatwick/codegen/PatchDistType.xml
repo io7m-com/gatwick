@@ -50,4 +50,26 @@
         Value="22"/>
   <Case Name="MUFF FUZZ"
         Value="23"/>
+  <Case Name="CENTA OD"
+        Value="24"/>
+  <Case Name="HM-2"
+        Value="25"/>
+  <Case Name="METAL CORE"
+        Value="26"/>
+  <Case Name="BASS OD"
+        Value="27"/>
+  <Case Name="BASS DS"
+        Value="28"/>
+  <Case Name="BASS MT"
+        Value="29"/>
+  <Case Name="BASS FUZZ"
+        Value="30"/>
+  <Case Name="HI BAND DRIVE"
+        Value="31"/>
+  <Case Name="X-BASS OD"
+        Value="32"/>
+  <Case Name="BASS DRV"
+        Value="33"/>
+  <Case Name="BASS DI"
+        Value="34"/>
 </Enumeration>

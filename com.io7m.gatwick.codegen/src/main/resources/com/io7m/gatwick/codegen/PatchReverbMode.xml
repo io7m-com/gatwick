@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchReverb.Mode"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="MONO"
+        Value="0"/>
+  <Case Name="STEREO1"
+        Value="1"/>
+  <Case Name="STEREO2"
+        Value="2"/>
+</Enumeration>

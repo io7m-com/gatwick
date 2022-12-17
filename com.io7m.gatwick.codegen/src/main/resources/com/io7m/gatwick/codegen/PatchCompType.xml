@@ -12,4 +12,6 @@
         Value="3"/>
   <Case Name="STEREO COMP"
         Value="4"/>
+  <Case Name="X-BASS COMP"
+        Value="5"/>
 </Enumeration>

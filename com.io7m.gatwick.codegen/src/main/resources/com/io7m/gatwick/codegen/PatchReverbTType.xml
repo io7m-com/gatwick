@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchReverb.TType"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="HALL"
+        Value="0"/>
+  <Case Name="PLATE"
+        Value="1"/>
+  <Case Name="ROOM"
+        Value="2"/>
+</Enumeration>

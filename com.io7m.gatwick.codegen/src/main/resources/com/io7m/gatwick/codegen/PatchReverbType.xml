@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchReverb.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="HALL1"
+        Value="0"/>
+  <Case Name="HALL2"
+        Value="1"/>
+  <Case Name="PLATE"
+        Value="2"/>
+  <Case Name="ROOM1"
+        Value="3"/>
+  <Case Name="ROOM2"
+        Value="4"/>
+  <Case Name="AMBIENCE"
+        Value="5"/>
+  <Case Name="SPRING"
+        Value="6"/>
+  <Case Name="SHIMMER"
+        Value="7"/>
+  <Case Name="DUAL"
+        Value="8"/>
+  <Case Name="TERA ECHO"
+        Value="9"/>
+</Enumeration>

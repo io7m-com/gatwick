@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXOctaveBass"
+           ExpectedSize="0x0003"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterNumeric Name="-2OCT"
+                    Offset="0x0006"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="-1OCT"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DIRECT LEVEL"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

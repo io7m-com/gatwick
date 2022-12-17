@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchPedalFX.Type"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="PEDAL BEND"
+        Value="0"/>
+  <Case Name="WAH"
+        Value="1"/>
+</Enumeration>

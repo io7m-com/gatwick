@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchPedalFX.WahType"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="CRY WAH"
+        Value="0"/>
+  <Case Name="VO WAH"
+        Value="1"/>
+  <Case Name="FAT WAH"
+        Value="2"/>
+  <Case Name="LIGHT WAH"
+        Value="3"/>
+  <Case Name="7STRING WAH"
+        Value="4"/>
+  <Case Name="RESO WAH"
+        Value="5"/>
+  <Case Name="BASS WAH"
+        Value="6"/>
+</Enumeration>

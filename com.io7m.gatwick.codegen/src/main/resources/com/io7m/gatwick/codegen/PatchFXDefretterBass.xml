@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXDefretterBass"
+           ExpectedSize="0x0005"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterNumeric Name="SENS"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="ATTACK"
+                    Offset="0x0008"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="TONE"
+                    Offset="0x0009"
+                    MinInclusive="14"
+                    MaxInclusive="114"
+                    LogicalMinInclusive="-50"
+                    LogicalMaxInclusive="50"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x000a"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DIRECT MIX"
+                    Offset="0x000b"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

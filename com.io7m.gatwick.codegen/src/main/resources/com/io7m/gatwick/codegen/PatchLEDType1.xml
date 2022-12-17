@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchLed.Type1"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="OFF"
+        Value="0"/>
+  <Case Name="RED"
+        Value="1"/>
+  <Case Name="BLUE"
+        Value="2"/>
+  <Case Name="LIGHT BLUE"
+        Value="3"/>
+  <Case Name="ORANGE"
+        Value="4"/>
+  <Case Name="GREEN"
+        Value="5"/>
+  <Case Name="YELLOW"
+        Value="6"/>
+  <Case Name="WHITE"
+        Value="7"/>
+  <Case Name="PURPLE"
+        Value="8"/>
+  <Case Name="PINK"
+        Value="9"/>
+  <Case Name="CYAN"
+        Value="10"/>
+</Enumeration>

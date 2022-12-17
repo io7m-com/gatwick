@@ -54,4 +54,18 @@
         Value="24"/>
   <Case Name="VIBRATO"
         Value="25"/>
+  <Case Name="CHORUS BASS"
+        Value="26"/>
+  <Case Name="DEFRETTER BASS"
+        Value="27"/>
+  <Case Name="FLANGER BASS"
+        Value="28"/>
+  <Case Name="OCTAVE BASS"
+        Value="29"/>
+  <Case Name="SLOW GEAR BASS"
+        Value="30"/>
+  <Case Name="TOUCH WAH BASS"
+        Value="31"/>
+  <Case Name="DISTORTION"
+        Value="32"/>
 </Enumeration>

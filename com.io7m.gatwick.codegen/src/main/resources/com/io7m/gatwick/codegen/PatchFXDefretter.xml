@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Structure Name="PatchFXDefretter"
+           ExpectedSize="0x0007"
            xmlns="urn:com.io7m.gatwick:1">
 
   <ParameterNumeric Name="SENS"

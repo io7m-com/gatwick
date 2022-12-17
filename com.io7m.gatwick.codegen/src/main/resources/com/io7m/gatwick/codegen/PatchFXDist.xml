@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXDist"
+           ExpectedSize="0x0008"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="TYPE"
+                       Offset="0x0000"
+                       Type="PatchDist.Type"/>
+
+  <ParameterNumeric Name="DRIVE"
+                    Offset="0x0001"
+                    MinInclusive="0"
+                    MaxInclusive="120"/>
+
+  <ParameterNumeric Name="TONE"
+                    Offset="0x0002"
+                    MinInclusive="14"
+                    MaxInclusive="114"
+                    LogicalMinInclusive="-50"
+                    LogicalMaxInclusive="50"/>
+
+  <ParameterNumeric Name="LEVEL"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="BOTTOM"
+                    Offset="0x0004"
+                    MinInclusive="14"
+                    MaxInclusive="114"
+                    LogicalMinInclusive="-50"
+                    LogicalMaxInclusive="50"/>
+
+  <ParameterNumeric Name="DIRECT MIX"
+                    Offset="0x0005"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterEnumerated Name="SOLO SW"
+                       Offset="0x0006"
+                       Type="OnOff"/>
+
+  <ParameterNumeric Name="SOLO LEVEL"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>

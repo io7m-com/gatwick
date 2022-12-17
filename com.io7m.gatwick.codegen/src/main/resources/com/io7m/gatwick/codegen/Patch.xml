@@ -243,4 +243,234 @@
                       Offset="0x0000_3d00"
                       Type="PatchFXVibrato"/>
 
+  <!-- FX 2 -->
+
+  <StructureReference Name="fx2"
+                      Offset="0x0000_3e00"
+                      Type="PatchFX"/>
+
+  <StructureReference Name="fx2AGSim"
+                      Offset="0x0000_3f00"
+                      Type="PatchFXAGSim"/>
+
+  <StructureReference Name="fx2AcReso"
+                      Offset="0x0000_4000"
+                      Type="PatchFXAcReso"/>
+
+  <StructureReference Name="fx2AWah"
+                      Offset="0x0000_4100"
+                      Type="PatchFXAWah"/>
+
+  <StructureReference Name="fx2Chorus"
+                      Offset="0x0000_4200"
+                      Type="PatchFXChorus"/>
+
+  <StructureReference Name="fx2CVibe"
+                      Offset="0x0000_4300"
+                      Type="PatchFXCVibe"/>
+
+  <StructureReference Name="fx2Comp"
+                      Offset="0x0000_4400"
+                      Type="PatchFXComp"/>
+
+  <StructureReference Name="fx2Defretter"
+                      Offset="0x0000_4500"
+                      Type="PatchFXDefretter"/>
+
+  <StructureReference Name="fx2Feedbacker"
+                      Offset="0x0000_4600"
+                      Type="PatchFXFeedbacker"/>
+
+  <StructureReference Name="fx2Flanger"
+                      Offset="0x0000_4700"
+                      Type="PatchFXFlanger"/>
+
+  <StructureReference Name="fx2Harmonizer"
+                      Offset="0x0000_4800"
+                      Type="PatchFXHarmonizer"/>
+
+  <StructureReference Name="fx2Humanizer"
+                      Offset="0x0000_4900"
+                      Type="PatchFXHumanizer"/>
+
+  <StructureReference Name="fx2Octave"
+                      Offset="0x0000_4a00"
+                      Type="PatchFXOctave"/>
+
+  <StructureReference Name="fx2Overtone"
+                      Offset="0x0000_4b00"
+                      Type="PatchFXOvertone"/>
+
+  <StructureReference Name="fx2Pan"
+                      Offset="0x0000_4c00"
+                      Type="PatchFXPan"/>
+
+  <StructureReference Name="fx2Phaser"
+                      Offset="0x0000_4d00"
+                      Type="PatchFXPhaser"/>
+
+  <StructureReference Name="fx2PitchShift"
+                      Offset="0x0000_4e00"
+                      Type="PatchFXPitchShift"/>
+
+  <StructureReference Name="fx2RingMod"
+                      Offset="0x0000_4f00"
+                      Type="PatchFXRingMod"/>
+
+  <StructureReference Name="fx2Rotary"
+                      Offset="0x0000_5000"
+                      Type="PatchFXRotary"/>
+
+  <StructureReference Name="fx2SitarSim"
+                      Offset="0x0000_5100"
+                      Type="PatchFXSitarSim"/>
+
+  <StructureReference Name="fx2Slicer"
+                      Offset="0x0000_5200"
+                      Type="PatchFXSlicer"/>
+
+  <StructureReference Name="fx2SlowGear"
+                      Offset="0x0000_5300"
+                      Type="PatchFXSlowGear"/>
+
+  <StructureReference Name="fx2SoundHold"
+                      Offset="0x0000_5400"
+                      Type="PatchFXSoundHold"/>
+
+  <StructureReference Name="fx2SBend"
+                      Offset="0x0000_5500"
+                      Type="PatchFXSBend"/>
+
+  <StructureReference Name="fx2Tremolo"
+                      Offset="0x0000_5600"
+                      Type="PatchFXTremolo"/>
+
+  <StructureReference Name="fx2TWah"
+                      Offset="0x0000_5700"
+                      Type="PatchFXTWah"/>
+
+  <StructureReference Name="fx2Vibrato"
+                      Offset="0x0000_5800"
+                      Type="PatchFXVibrato"/>
+
+  <!-- FX 3 -->
+
+  <StructureReference Name="fx3"
+                      Offset="0x0000_5900"
+                      Type="PatchFX"/>
+
+  <StructureReference Name="fx3AGSim"
+                      Offset="0x0000_5a00"
+                      Type="PatchFXAGSim"/>
+
+  <StructureReference Name="fx3AcReso"
+                      Offset="0x0000_5b00"
+                      Type="PatchFXAcReso"/>
+
+  <StructureReference Name="fx3AWah"
+                      Offset="0x0000_5c00"
+                      Type="PatchFXAWah"/>
+
+  <StructureReference Name="fx3Chorus"
+                      Offset="0x0000_5d00"
+                      Type="PatchFXChorus"/>
+
+  <StructureReference Name="fx3CVibe"
+                      Offset="0x0000_5e00"
+                      Type="PatchFXCVibe"/>
+
+  <StructureReference Name="fx3Comp"
+                      Offset="0x0000_5f00"
+                      Type="PatchFXComp"/>
+
+  <StructureReference Name="fx3Defretter"
+                      Offset="0x0000_6000"
+                      Type="PatchFXDefretter"/>
+
+  <StructureReference Name="fx3Feedbacker"
+                      Offset="0x0000_6100"
+                      Type="PatchFXFeedbacker"/>
+
+  <StructureReference Name="fx3Flanger"
+                      Offset="0x0000_6200"
+                      Type="PatchFXFlanger"/>
+
+  <StructureReference Name="fx3Harmonizer"
+                      Offset="0x0000_6300"
+                      Type="PatchFXHarmonizer"/>
+
+  <StructureReference Name="fx3Humanizer"
+                      Offset="0x0000_6400"
+                      Type="PatchFXHumanizer"/>
+
+  <StructureReference Name="fx3Octave"
+                      Offset="0x0000_6500"
+                      Type="PatchFXOctave"/>
+
+  <StructureReference Name="fx3Overtone"
+                      Offset="0x0000_6600"
+                      Type="PatchFXOvertone"/>
+
+  <StructureReference Name="fx3Pan"
+                      Offset="0x0000_6700"
+                      Type="PatchFXPan"/>
+
+  <StructureReference Name="fx3Phaser"
+                      Offset="0x0000_6800"
+                      Type="PatchFXPhaser"/>
+
+  <StructureReference Name="fx3PitchShift"
+                      Offset="0x0000_6900"
+                      Type="PatchFXPitchShift"/>
+
+  <StructureReference Name="fx3RingMod"
+                      Offset="0x0000_6a00"
+                      Type="PatchFXRingMod"/>
+
+  <StructureReference Name="fx3Rotary"
+                      Offset="0x0000_6b00"
+                      Type="PatchFXRotary"/>
+
+  <StructureReference Name="fx3SitarSim"
+                      Offset="0x0000_6c00"
+                      Type="PatchFXSitarSim"/>
+
+  <StructureReference Name="fx3Slicer"
+                      Offset="0x0000_6d00"
+                      Type="PatchFXSlicer"/>
+
+  <StructureReference Name="fx3SlowGear"
+                      Offset="0x0000_6e00"
+                      Type="PatchFXSlowGear"/>
+
+  <StructureReference Name="fx3SoundHold"
+                      Offset="0x0000_6f00"
+                      Type="PatchFXSoundHold"/>
+
+  <StructureReference Name="fx3SBend"
+                      Offset="0x0000_7000"
+                      Type="PatchFXSBend"/>
+
+  <StructureReference Name="fx3Tremolo"
+                      Offset="0x0000_7100"
+                      Type="PatchFXTremolo"/>
+
+  <StructureReference Name="fx3TWah"
+                      Offset="0x0000_7200"
+                      Type="PatchFXTWah"/>
+
+  <StructureReference Name="fx3Vibrato"
+                      Offset="0x0000_7300"
+                      Type="PatchFXVibrato"/>
+
+  <!-- Remainders -->
+
+  <StructureReference Name="reverb"
+                      Offset="0x0000_7400"
+                      Type="PatchReverb"/>
+
+  <StructureReference Name="pedalFx"
+                      Offset="0x0000_7500"
+                      Type="PatchPedalFX"/>
+
 </Structure>

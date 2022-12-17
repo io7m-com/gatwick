@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="Patch2"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <StructureReference Name="stompBox"
+                      Offset="0x0000_0000"
+                      Type="PatchStompBox2"/>
+
+  <!-- 1 -->
+
+  <StructureReference Name="fx1ChorusBass"
+                      Offset="0x0000_0100"
+                      Type="PatchFXChorusBass"/>
+
+  <StructureReference Name="fx1FlangerBass"
+                      Offset="0x0000_0200"
+                      Type="PatchFXFlangerBass"/>
+
+  <!-- 2 -->
+
+  <StructureReference Name="fx2ChorusBass"
+                      Offset="0x0000_0300"
+                      Type="PatchFXChorusBass"/>
+
+  <StructureReference Name="fx2FlangerBass"
+                      Offset="0x0000_0400"
+                      Type="PatchFXFlangerBass"/>
+
+  <!-- 3 -->
+
+  <StructureReference Name="fx3ChorusBass"
+                      Offset="0x0000_0500"
+                      Type="PatchFXChorusBass"/>
+
+  <StructureReference Name="fx3FlangerBass"
+                      Offset="0x0000_0600"
+                      Type="PatchFXFlangerBass"/>
+
+  <!-- Remainders -->
+
+  <StructureReference Name="efct"
+                      Offset="0x0000_0a00"
+                      Type="PatchEfct2"/>
+
+</Structure>

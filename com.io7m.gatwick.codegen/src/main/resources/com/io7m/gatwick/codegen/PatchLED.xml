@@ -1,10 +1,108 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Structure Name="PatchLed"
+           ExpectedSize="0x0020"
            xmlns="urn:com.io7m.gatwick:1">
 
-  <ParameterNumeric Name="UNUSED"
-                    Offset="0x0000"
+  <ParameterEnumerated Name="NUM1 OFF"
+                       Offset="0x0000"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="NUM1 ON"
+                       Offset="0x0001"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="NUM2 OFF"
+                       Offset="0x0002"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="NUM2 ON"
+                       Offset="0x0003"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="NUM3 OFF"
+                       Offset="0x0004"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="NUM3 ON"
+                       Offset="0x0005"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="NUM4 OFF"
+                       Offset="0x0006"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="NUM4 ON"
+                       Offset="0x0007"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="NUM5 OFF"
+                       Offset="0x0008"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="NUM5 ON"
+                       Offset="0x0009"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="BANKDOWN OFF"
+                       Offset="0x000a"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="BANKDOWN ON"
+                       Offset="0x000b"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="BANKUP OFF"
+                       Offset="0x000c"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="BANKUP ON"
+                       Offset="0x000d"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="CTL1 OFF"
+                       Offset="0x000e"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="CTL1 ON"
+                       Offset="0x000f"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="CTL2 OFF"
+                       Offset="0x0010"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="CTL2 ON"
+                       Offset="0x0011"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="CTL3 OFF"
+                       Offset="0x0012"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="CTL3 ON"
+                       Offset="0x0013"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterEnumerated Name="EXP1 SW OFF"
+                       Offset="0x0014"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="EXP1 SW ON"
+                       Offset="0x0015"
+                       Type="PatchLed.Type2"/>
+
+  <ParameterNumeric Name="ON OFF STATE"
+                    Offset="0x0016"
                     MinInclusive="0"
-                    MaxInclusive="0"/>
+                    MaxInclusive="2147483647"/>
+
+  <ParameterEnumerated Name="CNUM OFF"
+                       Offset="0x001e"
+                       Type="PatchLed.Type1"/>
+
+  <ParameterEnumerated Name="CNUM ON"
+                       Offset="0x001f"
+                       Type="PatchLed.Type2"/>
+
 </Structure>

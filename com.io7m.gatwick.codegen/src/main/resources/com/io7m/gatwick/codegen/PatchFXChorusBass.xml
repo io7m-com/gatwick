@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXChorusBass"
+           ExpectedSize="0x0006"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="TYPE"
+                       Offset="0x0000"
+                       Type="PatchFXChorusBass.Type"/>
+
+  <ParameterRate118 Name="RATE"
+                    Offset="0x0001"/>
+
+  <ParameterNumeric Name="DEPTH"
+                    Offset="0x0002"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x0003"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterLowCut Name="LOW CUT"
+                   Offset="0x0004"/>
+
+  <ParameterHighCut Name="HIGH CUT"
+                    Offset="0x0005"/>
+
+</Structure>

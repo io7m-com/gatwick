@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="PatchFXTWahBass"
+           ExpectedSize="0x0008"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <ParameterEnumerated Name="FILTER MODE"
+                       Offset="0x0008"
+                       Type="PatchFXTWah.Filter"/>
+
+  <ParameterEnumerated Name="POLARITY"
+                       Offset="0x0009"
+                       Type="PatchFXTWah.Polarity"/>
+
+  <ParameterNumeric Name="SENS"
+                    Offset="0x000a"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="FREQUENCY"
+                    Offset="0x000b"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="RESONANCE"
+                    Offset="0x000c"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DECAY"
+                    Offset="0x000d"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="EFFECT LEVEL"
+                    Offset="0x000e"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+  <ParameterNumeric Name="DIRECT MIX"
+                    Offset="0x000f"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
+</Structure>
