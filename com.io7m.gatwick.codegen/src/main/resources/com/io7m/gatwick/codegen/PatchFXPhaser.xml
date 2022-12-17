@@ -59,13 +59,11 @@
                     LogicalMinInclusive="-100"
                     LogicalMaxInclusive="0"/>
 
-  <ParameterEnumerated Name="LOW CUT"
-                       Offset="0x000e"
-                       Type="PatchFXPhaser.LowCut"/>
+  <ParameterLowCut Name="LOW CUT"
+                   Offset="0x000e"/>
 
-  <ParameterEnumerated Name="HIGH CUT"
-                       Offset="0x000f"
-                       Type="PatchFXPhaser.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT"
+                    Offset="0x000f"/>
 
   <ParameterNumeric Name="EFFECT LEVEL"
                     Offset="0x0010"

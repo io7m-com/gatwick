@@ -50,13 +50,11 @@
                     LogicalMinInclusive="-100"
                     LogicalMaxInclusive="0"/>
 
-  <ParameterEnumerated Name="LOW CUT"
-                       Offset="0x000d"
-                       Type="PatchFXFlanger.LowCut"/>
+  <ParameterLowCut Name="LOW CUT"
+                   Offset="0x000d"/>
 
-  <ParameterEnumerated Name="HIGH CUT"
-                       Offset="0x000e"
-                       Type="PatchFXFlanger.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT"
+                    Offset="0x000e"/>
 
   <ParameterNumeric Name="DIRECT MIX"
                     Offset="0x000f"

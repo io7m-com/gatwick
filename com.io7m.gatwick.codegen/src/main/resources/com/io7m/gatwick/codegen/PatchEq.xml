@@ -56,13 +56,11 @@
                     LogicalMinInclusive="-20"
                     LogicalMaxInclusive="20"/>
 
-  <ParameterEnumerated Name="LOW CUT"
-                       Offset="0x000b"
-                       Type="PatchEQ.LowCut"/>
+  <ParameterLowCut Name="LOW CUT"
+                   Offset="0x000b"/>
 
-  <ParameterEnumerated Name="HIGH CUT"
-                       Offset="0x000c"
-                       Type="PatchEQ.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT"
+                    Offset="0x000c"/>
 
   <ParameterNumeric Name="LEVEL 2"
                     Offset="0x000d"

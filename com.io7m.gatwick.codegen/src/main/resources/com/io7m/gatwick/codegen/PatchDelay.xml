@@ -17,9 +17,8 @@
                     MinInclusive="0"
                     MaxInclusive="100"/>
 
-  <ParameterEnumerated Name="HIGH CUT"
-                       Offset="0x0006"
-                       Type="PatchDelay.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT"
+                    Offset="0x0006"/>
 
   <ParameterNumeric Name="EFFECT LEVEL"
                     Offset="0x0007"

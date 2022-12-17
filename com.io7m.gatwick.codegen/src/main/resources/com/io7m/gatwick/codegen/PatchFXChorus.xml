@@ -64,13 +64,11 @@
                        Offset="0x000c"
                        Type="PatchFXChorus.Waveform"/>
 
-  <ParameterEnumerated Name="LOW CUT"
-                       Offset="0x000d"
-                       Type="PatchFXChorus.LowCut"/>
+  <ParameterLowCut Name="LOW CUT"
+                   Offset="0x000d"/>
 
-  <ParameterEnumerated Name="HIGH CUT"
-                       Offset="0x000e"
-                       Type="PatchFXChorus.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT"
+                    Offset="0x000e"/>
 
   <!-- 1 -->
 
@@ -98,13 +96,11 @@
                        Offset="0x0013"
                        Type="PatchFXChorus.Waveform"/>
 
-  <ParameterEnumerated Name="LOW CUT 1"
-                       Offset="0x0014"
-                       Type="PatchFXChorus.LowCut"/>
+  <ParameterLowCut Name="LOW CUT 1"
+                   Offset="0x0014"/>
 
-  <ParameterEnumerated Name="HIGH CUT 1"
-                       Offset="0x0015"
-                       Type="PatchFXChorus.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT 1"
+                    Offset="0x0015"/>
 
   <!-- 2 -->
 
@@ -132,12 +128,10 @@
                        Offset="0x001a"
                        Type="PatchFXChorus.Waveform"/>
 
-  <ParameterEnumerated Name="LOW CUT 2"
-                       Offset="0x001b"
-                       Type="PatchFXChorus.LowCut"/>
+  <ParameterLowCut Name="LOW CUT 2"
+                   Offset="0x001b"/>
 
-  <ParameterEnumerated Name="HIGH CUT 2"
-                       Offset="0x001c"
-                       Type="PatchFXChorus.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT 2"
+                    Offset="0x001c"/>
 
 </Structure>

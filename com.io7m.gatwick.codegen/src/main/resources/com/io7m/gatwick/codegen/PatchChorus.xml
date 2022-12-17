@@ -35,13 +35,11 @@
                        Offset="0x0006"
                        Type="PatchChorus.Waveform"/>
 
-  <ParameterEnumerated Name="LOW CUT"
-                       Offset="0x0007"
-                       Type="PatchChorus.LowCut"/>
+  <ParameterLowCut Name="LOW CUT"
+                   Offset="0x0007"/>
 
-  <ParameterEnumerated Name="HIGH CUT"
-                       Offset="0x0008"
-                       Type="PatchChorus.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT"
+                    Offset="0x0008"/>
 
   <!-- 1 -->
 
@@ -69,13 +67,11 @@
                        Offset="0x000d"
                        Type="PatchChorus.Waveform"/>
 
-  <ParameterEnumerated Name="LOW CUT 1"
-                       Offset="0x000e"
-                       Type="PatchChorus.LowCut"/>
+  <ParameterLowCut Name="LOW CUT 1"
+                   Offset="0x000e"/>
 
-  <ParameterEnumerated Name="HIGH CUT 1"
-                       Offset="0x000f"
-                       Type="PatchChorus.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT 1"
+                    Offset="0x000f"/>
 
   <!-- 2 -->
 
@@ -103,13 +99,11 @@
                        Offset="0x0014"
                        Type="PatchChorus.Waveform"/>
 
-  <ParameterEnumerated Name="LOW CUT 2"
-                       Offset="0x0015"
-                       Type="PatchChorus.LowCut"/>
+  <ParameterLowCut Name="LOW CUT 2"
+                   Offset="0x0015"/>
 
-  <ParameterEnumerated Name="HIGH CUT 2"
-                       Offset="0x0016"
-                       Type="PatchChorus.HighCut"/>
+  <ParameterHighCut Name="HIGH CUT 2"
+                    Offset="0x0016"/>
 
   <ParameterNumeric Name="DIRECT LEVEL"
                     Offset="0x0017"

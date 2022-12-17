@@ -56,6 +56,28 @@
     </complexType>
   </element>
 
+  <element name="ParameterLowCut">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="ParameterHighCut">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+    </complexType>
+  </element>
+
   <element name="ParameterNumeric">
     <complexType>
       <attribute name="Name"
@@ -129,6 +151,8 @@
                 maxOccurs="unbounded">
         <choice>
           <element ref="g:ParameterEnumerated"/>
+          <element ref="g:ParameterHighCut"/>
+          <element ref="g:ParameterLowCut"/>
           <element ref="g:ParameterNumeric"/>
           <element ref="g:ParameterRate118"/>
           <element ref="g:ParameterRate118AndOff"/>
