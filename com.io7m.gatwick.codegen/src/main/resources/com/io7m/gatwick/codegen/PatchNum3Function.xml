@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Enumeration Name="PATCH Num3 FUNCTION"
+<Enumeration Name="Patch.Num3Function"
              xmlns="urn:com.io7m.gatwick:1">
   <Case Name="OFF"
         Value="0"/>

@@ -3,137 +3,178 @@
 <Structure Name="PatchCommon"
            ExpectedSize="0x007e"
            xmlns="urn:com.io7m.gatwick:1">
+
   <ParameterString Name="Patch Name"
                    Offset="0x0000"
                    Length="16"/>
 
+  <ParameterEnumerated Name="Manual Num1 Function"
+                       Offset="0x0010"
+                       Type="Patch.Num1Function"/>
+  <ParameterEnumerated Name="Manual Num1 Mode"
+                       Offset="0x0011"
+                       Type="Patch.FunctionMode"/>
+
+  <ParameterEnumerated Name="Manual Num2 Function"
+                       Offset="0x0012"
+                       Type="Patch.Num2Function"/>
+  <ParameterEnumerated Name="Manual Num2 Mode"
+                       Offset="0x0013"
+                       Type="Patch.FunctionMode"/>
+
+  <ParameterEnumerated Name="Manual Num3 Function"
+                       Offset="0x0014"
+                       Type="Patch.Num3Function"/>
+  <ParameterEnumerated Name="Manual Num3 Mode"
+                       Offset="0x0015"
+                       Type="Patch.FunctionMode"/>
+
+  <ParameterEnumerated Name="Manual Num4 Function"
+                       Offset="0x0016"
+                       Type="Patch.Num4Function"/>
+  <ParameterEnumerated Name="Manual Num4 Mode"
+                       Offset="0x0017"
+                       Type="Patch.FunctionMode"/>
+
+  <ParameterEnumerated Name="Manual Num5 Function"
+                       Offset="0x0018"
+                       Type="Patch.Num5Function"/>
+  <ParameterEnumerated Name="Manual Num5 Mode"
+                       Offset="0x0019"
+                       Type="Patch.FunctionMode"/>
+
+  <ParameterEnumerated Name="INPUT SETTING"
+                       Offset="0x001e"
+                       Type="PatchCommon.InputSetting"/>
+
   <ParameterEnumerated Name="Num1 Function"
                        Offset="0x0023"
-                       Type="PATCH Num1 FUNCTION"/>
+                       Type="Patch.Num1Function"/>
   <ParameterEnumerated Name="Num1 Mode"
                        Offset="0x0024"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Num2 Function"
                        Offset="0x0025"
-                       Type="PATCH Num2 FUNCTION"/>
+                       Type="Patch.Num2Function"/>
   <ParameterEnumerated Name="Num2 Mode"
                        Offset="0x0026"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Num3 Function"
                        Offset="0x0027"
-                       Type="PATCH Num3 FUNCTION"/>
+                       Type="Patch.Num3Function"/>
   <ParameterEnumerated Name="Num3 Mode"
                        Offset="0x0028"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Num4 Function"
                        Offset="0x0029"
-                       Type="PATCH Num4 FUNCTION"/>
+                       Type="Patch.Num4Function"/>
   <ParameterEnumerated Name="Num4 Mode"
                        Offset="0x002a"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Num5 Function"
                        Offset="0x002b"
-                       Type="PATCH Num5 FUNCTION"/>
+                       Type="Patch.Num5Function"/>
   <ParameterEnumerated Name="Num5 Mode"
                        Offset="0x002c"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="BankDown Function"
                        Offset="0x002d"
-                       Type="PATCH BankDown FUNCTION"/>
+                       Type="Patch.BankDownFunction"/>
   <ParameterEnumerated Name="BankDown Mode"
                        Offset="0x002e"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="BankUp Function"
                        Offset="0x002f"
-                       Type="PATCH BankUp FUNCTION"/>
+                       Type="Patch.BankUpFunction"/>
   <ParameterEnumerated Name="BankUp Mode"
                        Offset="0x0030"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Ctl1 Function"
                        Offset="0x0031"
-                       Type="PATCH Ctl1 FUNCTION"/>
+                       Type="Patch.Ctl1Function"/>
   <ParameterEnumerated Name="Ctl1 Mode"
                        Offset="0x0032"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Ctl2 Function"
                        Offset="0x0033"
-                       Type="PATCH Ctl2 FUNCTION"/>
+                       Type="Patch.Ctl2Function"/>
   <ParameterEnumerated Name="Ctl2 Mode"
                        Offset="0x0034"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Ctl3 Function"
                        Offset="0x0035"
-                       Type="PATCH Ctl3 FUNCTION"/>
+                       Type="Patch.Ctl3Function"/>
   <ParameterEnumerated Name="Ctl3 Mode"
                        Offset="0x0036"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Ctl4 Function"
                        Offset="0x0037"
-                       Type="PATCH Ctl4 FUNCTION"/>
+                       Type="Patch.Ctl4Function"/>
   <ParameterEnumerated Name="Ctl4 Mode"
                        Offset="0x0038"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Ctl5 Function"
                        Offset="0x0039"
-                       Type="PATCH Ctl5 FUNCTION"/>
+                       Type="Patch.Ctl5Function"/>
   <ParameterEnumerated Name="Ctl5 Mode"
                        Offset="0x003a"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Ctl6 Function"
                        Offset="0x003b"
-                       Type="PATCH Ctl6 FUNCTION"/>
+                       Type="Patch.Ctl6Function"/>
   <ParameterEnumerated Name="Ctl6 Mode"
                        Offset="0x003c"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Ctl7 Function"
                        Offset="0x003d"
-                       Type="PATCH Ctl7 FUNCTION"/>
+                       Type="Patch.Ctl7Function"/>
   <ParameterEnumerated Name="Ctl7 Mode"
                        Offset="0x003e"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="CNum Function"
                        Offset="0x003f"
-                       Type="PATCH CNum FUNCTION"/>
+                       Type="Patch.CNumFunction"/>
   <ParameterEnumerated Name="CNum Mode"
                        Offset="0x0040"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Exp1Sw Function"
                        Offset="0x0041"
-                       Type="PATCH Exp1Sw FUNCTION"/>
+                       Type="Patch.Exp1SwFunction"/>
   <ParameterEnumerated Name="Exp1Sw Mode"
                        Offset="0x0042"
-                       Type="PATCH FUNCTION MODE"/>
+                       Type="Patch.FunctionMode"/>
 
   <ParameterEnumerated Name="Exp1 Function"
                        Offset="0x0043"
-                       Type="PATCH Exp1 FUNCTION"/>
+                       Type="Patch.Exp1Function"/>
   <ParameterEnumerated Name="Exp2 Function"
                        Offset="0x0044"
-                       Type="PATCH Exp2 FUNCTION"/>
+                       Type="Patch.Exp2Function"/>
   <ParameterEnumerated Name="Exp3 Function"
                        Offset="0x0045"
-                       Type="PATCH Exp3 FUNCTION"/>
+                       Type="Patch.Exp3Function"/>
 
   <ParameterEnumerated Name="AMP CTL BPM1"
                        Offset="0x0046"
-                       Type="PATCH AMP CTL BPM1"/>
+                       Type="Patch.AmpCtlBPM1"/>
 
   <ParameterEnumerated Name="AMP CTL BPM2"
                        Offset="0x0048"
-                       Type="PATCH AMP CTL BPM2"/>
+                       Type="Patch.AmpCtlBPM2"/>
+
 </Structure>

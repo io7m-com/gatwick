@@ -11,15 +11,15 @@
 
   <ParameterEnumerated Name="TUNER MODE"
                        Offset="0x0004"
-                       Type="TUNER MODE"/>
+                       Type="TunerMode"/>
 
   <ParameterEnumerated Name="TUNER TYPE"
                        Offset="0x0005"
-                       Type="TUNER TYPE"/>
+                       Type="TunerType"/>
 
   <ParameterEnumerated Name="BANK CHANGE MODE"
                        Offset="0x0006"
-                       Type="BANK CHANGE MODE"/>
+                       Type="BankChangeMode"/>
 
   <ParameterNumeric Name="BANK EXTENT MIN"
                     Offset="0x0007"
@@ -38,7 +38,7 @@
 
   <ParameterEnumerated Name="METRONOME BEAT"
                        Offset="0x000d"
-                       Type="METRONOME BEAT"/>
+                       Type="MetronomeBeat"/>
 
   <ParameterNumeric Name="N/A (fixed 0)"
                     Offset="0x000e"
@@ -47,11 +47,11 @@
 
   <ParameterEnumerated Name="AMP CTL1"
                        Offset="0x000f"
-                       Type="AMP CTL"/>
+                       Type="AmpCtl"/>
 
   <ParameterEnumerated Name="AMP CTL2"
                        Offset="0x0010"
-                       Type="AMP CTL"/>
+                       Type="AmpCtl"/>
 
   <ParameterEnumerated Name="EXP1 HOLD"
                        Offset="0x0011"
@@ -76,7 +76,7 @@
 
   <ParameterEnumerated Name="LED LUMINANCE"
                        Offset="0x0016"
-                       Type="LED LUMINANCE"/>
+                       Type="LEDLuminance"/>
 
   <ParameterNumeric Name="N/A (fixed 2)"
                     Offset="0x0017"

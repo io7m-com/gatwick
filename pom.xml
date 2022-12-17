@@ -22,6 +22,7 @@
 
   <modules>
     <module>com.io7m.gatwick.codegen</module>
+    <module>com.io7m.gatwick.tests</module>
   </modules>
 
   <properties>
@@ -85,6 +86,16 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>jakarta.xml.bind</groupId>
+        <artifactId>jakarta.xml.bind-api</artifactId>
+        <version>4.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>4.0.1</version>
+      </dependency>
+      <dependency>
         <groupId>net.jqwik</groupId>
         <artifactId>jqwik-engine</artifactId>
         <version>${jqwik.version}</version>
@@ -114,6 +125,21 @@
         <artifactId>org.osgi.annotation.versioning</artifactId>
         <version>1.1.2</version>
       </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.4.5</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>2.0.6</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.jodist</groupId>
+        <artifactId>com.io7m.jodist</artifactId>
+        <version>2.0.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -127,6 +153,12 @@
             <suppressionsLocation>checkstyle-filter.xml</suppressionsLocation>
           </configuration>
         </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>jaxb2-maven-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -136,14 +168,6 @@
         <groupId>com.io7m.minisite</groupId>
         <artifactId>com.io7m.minisite.maven_plugin</artifactId>
         <inherited>false</inherited>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>7</source>
-          <target>7</target>
-        </configuration>
       </plugin>
     </plugins>
   </build>

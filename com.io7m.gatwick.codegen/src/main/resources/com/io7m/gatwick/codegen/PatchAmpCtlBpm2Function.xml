@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Enumeration Name="PATCH AMP CTL BPM2"
+<Enumeration Name="Patch.AmpCtlBPM2"
              xmlns="urn:com.io7m.gatwick:1">
   <Case Name="TAP:OFF"
         Value="0"/>

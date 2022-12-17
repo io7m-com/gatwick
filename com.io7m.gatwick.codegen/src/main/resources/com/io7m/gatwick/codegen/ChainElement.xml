@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Enumeration Name="CHAIN ELEMENT"
+<Enumeration Name="ChainElement"
              xmlns="urn:com.io7m.gatwick:1">
   <Case Name="COMPRESSOR"
         Value="0"/>

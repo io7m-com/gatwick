@@ -25,6 +25,7 @@
     <xi:include href="PatchChorusWaveform.xml"/>
     <xi:include href="PatchCnumFunction.xml"/>
     <xi:include href="PatchCommon.xml"/>
+    <xi:include href="PatchCommonInputSetting.xml"/>
     <xi:include href="PatchComp.xml"/>
     <xi:include href="PatchCompRatio.xml"/>
     <xi:include href="PatchCompType.xml"/>

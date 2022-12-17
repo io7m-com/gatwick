@@ -39,4 +39,9 @@
                     MinInclusive="0"
                     MaxInclusive="100"/>
 
+  <ParameterNumeric Name="THRESHOLD"
+                    Offset="0x0007"
+                    MinInclusive="0"
+                    MaxInclusive="100"/>
+
 </Structure>
