@@ -11,33 +11,38 @@
   <ParameterRate118 Name="RATE"
                     Offset="0x0001"/>
 
-  <ParameterNumeric Name="DEPTH"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DEPTH"
+                          Offset="0x0002"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0003"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="FREQUENCY"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FREQUENCY"
+                          Offset="0x0004"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="RESONANCE"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RESONANCE"
+                          Offset="0x0005"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="WAVEFORM"
                        Offset="0x0006"
                        Type="PatchFXAWah.Waveform"/>
 
-  <ParameterNumeric Name="DIRECT MIX"
-                    Offset="0x0007"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT MIX"
+                          Offset="0x0007"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

@@ -8,29 +8,34 @@
                        Offset="0x0000"
                        Type="PatchFXOctave.Type"/>
 
-  <ParameterNumeric Name="-2OCT"
-                    Offset="0x0001"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="-2OCT"
+                          Offset="0x0001"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="-1OCT"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="-1OCT"
+                          Offset="0x0002"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DIRECT LEVEL"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT LEVEL"
+                          Offset="0x0003"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="RANGE"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RANGE"
+                          Offset="0x0004"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="OCTAVE LEVEL"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="OCTAVE LEVEL"
+                          Offset="0x0005"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

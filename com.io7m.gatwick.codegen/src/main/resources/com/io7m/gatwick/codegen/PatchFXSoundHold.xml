@@ -8,14 +8,16 @@
                        Offset="0x0000"
                        Type="OnOff"/>
 
-  <ParameterNumeric Name="RISE TIME"
-                    Offset="0x0001"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RISE TIME"
+                          Offset="0x0001"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0002"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

@@ -12,20 +12,23 @@
                        Offset="0x0001"
                        Type="PatchEQ.Type"/>
 
-  <ParameterNumeric Name="LOW GAIN"
-                    Offset="0x0002"
-                    MinInclusive="12"
-                    MaxInclusive="52"/>
+  <ParameterIntegerDirect Name="LOW GAIN"
+                          Offset="0x0002"
+                          Default="20"
+                          MinInclusive="12"
+                          MaxInclusive="52"/>
 
-  <ParameterNumeric Name="HIGH GAIN"
-                    Offset="0x0003"
-                    MinInclusive="12"
-                    MaxInclusive="52"/>
+  <ParameterIntegerDirect Name="HIGH GAIN"
+                          Offset="0x0003"
+                          Default="20"
+                          MinInclusive="12"
+                          MaxInclusive="52"/>
 
-  <ParameterNumeric Name="LEVEL"
-                    Offset="0x0004"
-                    MinInclusive="12"
-                    MaxInclusive="52"/>
+  <ParameterIntegerDirect Name="LEVEL"
+                          Offset="0x0004"
+                          Default="20"
+                          MinInclusive="12"
+                          MaxInclusive="52"/>
 
   <ParameterEnumerated Name="LOW-MID FREQ"
                        Offset="0x0005"
@@ -35,12 +38,13 @@
                        Offset="0x0006"
                        Type="PatchEQ.Q"/>
 
-  <ParameterNumeric Name="LOW-MID GAIN"
-                    Offset="0x0007"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="LOW-MID GAIN"
+                          Offset="0x0007"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
   <ParameterEnumerated Name="HIGH-MID FREQ"
                        Offset="0x0008"
@@ -50,12 +54,13 @@
                        Offset="0x0009"
                        Type="PatchEQ.Q"/>
 
-  <ParameterNumeric Name="HIGH-MID GAIN"
-                    Offset="0x000a"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="HIGH-MID GAIN"
+                          Offset="0x000a"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
   <ParameterLowCut Name="LOW CUT"
                    Offset="0x000b"/>
@@ -63,81 +68,92 @@
   <ParameterHighCut Name="HIGH CUT"
                     Offset="0x000c"/>
 
-  <ParameterNumeric Name="LEVEL 2"
-                    Offset="0x000d"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="LEVEL 2"
+                          Offset="0x000d"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="31.5hz"
-                    Offset="0x000e"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="31.5hz"
+                          Offset="0x000e"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="63hz"
-                    Offset="0x000f"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="63hz"
+                          Offset="0x000f"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="125hz"
-                    Offset="0x0010"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="125hz"
+                          Offset="0x0010"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="250hz"
-                    Offset="0x0011"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="250hz"
+                          Offset="0x0011"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="500hz"
-                    Offset="0x0012"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="500hz"
+                          Offset="0x0012"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="1khz"
-                    Offset="0x0013"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="1khz"
+                          Offset="0x0013"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="2khz"
-                    Offset="0x0014"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="2khz"
+                          Offset="0x0014"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="4khz"
-                    Offset="0x0015"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="4khz"
+                          Offset="0x0015"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="8khz"
-                    Offset="0x0016"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="8khz"
+                          Offset="0x0016"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
-  <ParameterNumeric Name="16khz"
-                    Offset="0x0017"
-                    MinInclusive="12"
-                    MaxInclusive="52"
-                    LogicalMinInclusive="-20"
-                    LogicalMaxInclusive="20"/>
+  <ParameterIntegerMapped Name="16khz"
+                          Offset="0x0017"
+                          MinInclusive="-20"
+                          MaxInclusive="20"
+                          Default="0"
+                          PhysicalMinInclusive="12"
+                          PhysicalMaxInclusive="52"/>
 
 </Structure>

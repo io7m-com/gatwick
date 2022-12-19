@@ -12,52 +12,60 @@
                        Offset="0x0001"
                        Type="PatchPedalFX.Type"/>
 
-  <ParameterNumeric Name="PITCH MAX"
-                    Offset="0x0002"
-                    MinInclusive="8"
-                    MaxInclusive="56"
-                    LogicalMinInclusive="-24"
-                    LogicalMaxInclusive="24"/>
+  <ParameterIntegerMapped Name="PITCH MAX"
+                          Offset="0x0002"
+                          MinInclusive="-24"
+                          MaxInclusive="24"
+                          Default="0"
+                          PhysicalMinInclusive="8"
+                          PhysicalMaxInclusive="56"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0003"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DIRECT MIX"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT MIX"
+                          Offset="0x0004"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="WAH TYPE"
                        Offset="0x0005"
                        Type="PatchPedalFX.WahType"/>
 
-  <ParameterNumeric Name="PEDAL MIN"
-                    Offset="0x0006"
-                    MinInclusive="0"
-                    MaxInclusive="1000"/>
+  <ParameterIntegerDirect Name="PEDAL MIN"
+                          Offset="0x0006"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="1000"/>
 
-  <ParameterNumeric Name="PEDAL MAX"
-                    Offset="0x000a"
-                    MinInclusive="0"
-                    MaxInclusive="1000"/>
+  <ParameterIntegerDirect Name="PEDAL MAX"
+                          Offset="0x000a"
+                          Default="1000"
+                          MinInclusive="0"
+                          MaxInclusive="1000"/>
 
-  <ParameterNumeric Name="WAH:PEDAL POSITION"
-                    Offset="0x000e"
-                    MinInclusive="0"
-                    MaxInclusive="1000"/>
+  <ParameterIntegerDirect Name="WAH:PEDAL POSITION"
+                          Offset="0x000e"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="1000"/>
 
-  <ParameterNumeric Name="PEDAL BEND:PEDAL POSITION"
-                    Offset="0x0012"
-                    MinInclusive="0"
-                    MaxInclusive="1000"/>
+  <ParameterIntegerDirect Name="PEDAL BEND:PEDAL POSITION"
+                          Offset="0x0012"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="1000"/>
 
-  <ParameterNumeric Name="PITCH MIN"
-                    Offset="0x0016"
-                    MinInclusive="8"
-                    MaxInclusive="56"
-                    LogicalMinInclusive="-24"
-                    LogicalMaxInclusive="24"/>
+  <ParameterIntegerMapped Name="PITCH MIN"
+                          Offset="0x0016"
+                          MinInclusive="-24"
+                          MaxInclusive="24"
+                          Default="0"
+                          PhysicalMinInclusive="8"
+                          PhysicalMaxInclusive="56"/>
 
 </Structure>

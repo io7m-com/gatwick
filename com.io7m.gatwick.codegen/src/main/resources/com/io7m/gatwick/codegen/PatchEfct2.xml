@@ -4,39 +4,46 @@
            ExpectedSize="0x0007"
            xmlns="urn:com.io7m.gatwick:1">
 
-  <ParameterNumeric Name="N/A(fixed value)"
-                    Offset="0x0000"
-                    MinInclusive="0"
-                    MaxInclusive="0"/>
+  <ParameterIntegerDirect Name="UNUSED"
+                          Offset="0x0000"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="0"/>
 
-  <ParameterNumeric Name="MIX1 A:LEVEL"
-                    Offset="0x0001"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MIX1 A:LEVEL"
+                          Offset="0x0001"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="MIX1 B:LEVEL"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MIX1 B:LEVEL"
+                          Offset="0x0002"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="MIX2 A:LEVEL"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MIX2 A:LEVEL"
+                          Offset="0x0003"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="MIX2 B:LEVEL"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MIX2 B:LEVEL"
+                          Offset="0x0004"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="MIX3 A:LEVEL"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MIX3 A:LEVEL"
+                          Offset="0x0005"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="MIX3 B:LEVEL"
-                    Offset="0x0006"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MIX3 B:LEVEL"
+                          Offset="0x0006"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

@@ -14,35 +14,25 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+package com.io7m.gatwick.controller.api;
 
-package com.io7m.gatwick.tests.codegen;
+import com.io7m.gatwick.iovar.GWIOVariableType;
 
-import com.io7m.gatwick.codegen.DefinitionParser;
-import org.junit.jupiter.api.Test;
+/**
+ * The type of patches.
+ */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public final class DefinitionParserTest
+public interface GWPatchType
 {
   /**
-   * Basic smoke test to ensure definitions are loaded.
-   *
-   * @throws Exception On errors
+   * @return The patch name
    */
 
-  @Test
-  public void testResources()
-    throws Exception
-  {
-    final var definitions =
-      DefinitionParser.parse();
+  GWIOVariableType<String> name();
 
-    final var types =
-      definitions.getTypes();
+  /**
+   * @return The PFX patch block
+   */
 
-    final var typeObjects =
-      types.getEnumerationOrStructure();
-
-    assertEquals(161, typeObjects.size());
-  }
+  GWPatchEffectBlockPFXType pfx();
 }

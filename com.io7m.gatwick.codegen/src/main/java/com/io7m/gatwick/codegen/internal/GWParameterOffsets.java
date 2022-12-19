@@ -18,66 +18,73 @@
 package com.io7m.gatwick.codegen.internal;
 
 import com.io7m.gatwick.codegen.jaxb.ParameterEnumerated;
+import com.io7m.gatwick.codegen.jaxb.ParameterFractional;
 import com.io7m.gatwick.codegen.jaxb.ParameterHighCut;
+import com.io7m.gatwick.codegen.jaxb.ParameterIntegerDirect;
+import com.io7m.gatwick.codegen.jaxb.ParameterIntegerMapped;
 import com.io7m.gatwick.codegen.jaxb.ParameterLowCut;
-import com.io7m.gatwick.codegen.jaxb.ParameterNumeric;
 import com.io7m.gatwick.codegen.jaxb.ParameterRate118;
 import com.io7m.gatwick.codegen.jaxb.ParameterRate118AndOff;
 import com.io7m.gatwick.codegen.jaxb.ParameterRate318;
 import com.io7m.gatwick.codegen.jaxb.ParameterString;
+import com.io7m.gatwick.codegen.jaxb.StructureReference;
 
-import java.math.BigInteger;
+import static com.io7m.gatwick.codegen.internal.GWHexIntegers.parseHex;
 
 /**
- * Functions to calculate structure sizes.
+ * Functions to calculate parameter offsets.
  */
 
-public final class ParameterSizes
+public final class GWParameterOffsets
 {
-  private static final BigInteger BIG_128 =
-    BigInteger.valueOf(128L);
-  private static final BigInteger BIG_1000 =
-    BigInteger.valueOf(1000L);
-
-  private ParameterSizes()
+  private GWParameterOffsets()
   {
 
   }
 
   /**
-   * The size of {@code p}
+   * The offset of {@code p}
    *
    * @param p The parameter
    *
-   * @return the size of {@code p}
+   * @return the offset of {@code p}
    */
 
-  public static long sizeOf(
+  public static long offsetOf(
     final Object p)
   {
     if (p instanceof ParameterEnumerated pp) {
-      return sizeOf(pp);
+      return offsetOf(pp);
     }
     if (p instanceof ParameterHighCut pp) {
-      return sizeOf(pp);
+      return offsetOf(pp);
     }
     if (p instanceof ParameterLowCut pp) {
-      return sizeOf(pp);
+      return offsetOf(pp);
     }
     if (p instanceof ParameterRate118 pp) {
-      return sizeOf(pp);
+      return offsetOf(pp);
     }
     if (p instanceof ParameterRate118AndOff pp) {
-      return sizeOf(pp);
+      return offsetOf(pp);
     }
     if (p instanceof ParameterRate318 pp) {
-      return sizeOf(pp);
+      return offsetOf(pp);
     }
     if (p instanceof ParameterString pp) {
-      return sizeOf(pp);
+      return offsetOf(pp);
     }
-    if (p instanceof ParameterNumeric pp) {
-      return sizeOf(pp);
+    if (p instanceof ParameterIntegerMapped pp) {
+      return offsetOf(pp);
+    }
+    if (p instanceof ParameterIntegerDirect pp) {
+      return offsetOf(pp);
+    }
+    if (p instanceof ParameterFractional pp) {
+      return offsetOf(pp);
+    }
+    if (p instanceof StructureReference pp) {
+      return offsetOf(pp);
     }
 
     throw new IllegalArgumentException(
@@ -85,57 +92,69 @@ public final class ParameterSizes
     );
   }
 
-  private static long sizeOf(
+  private static long offsetOf(
+    final StructureReference p)
+  {
+    return parseHex(p.getOffset());
+  }
+
+  private static long offsetOf(
     final ParameterEnumerated p)
   {
-    return 1L;
+    return parseHex(p.getOffset());
   }
 
-  private static long sizeOf(
+  private static long offsetOf(
     final ParameterHighCut p)
   {
-    return 1L;
+    return parseHex(p.getOffset());
   }
 
-  private static long sizeOf(
+  private static long offsetOf(
     final ParameterLowCut p)
   {
-    return 1L;
+    return parseHex(p.getOffset());
   }
 
-  private static long sizeOf(
+  private static long offsetOf(
     final ParameterRate118 p)
   {
-    return 1L;
+    return parseHex(p.getOffset());
   }
 
-  private static long sizeOf(
+  private static long offsetOf(
     final ParameterRate118AndOff p)
   {
-    return 1L;
+    return parseHex(p.getOffset());
   }
 
-  private static long sizeOf(
+  private static long offsetOf(
     final ParameterRate318 p)
   {
-    return 2L;
+    return parseHex(p.getOffset());
   }
 
-  private static long sizeOf(
+  private static long offsetOf(
     final ParameterString p)
   {
-    return p.getLength();
+    return parseHex(p.getOffset());
   }
 
-  private static long sizeOf(
-    final ParameterNumeric p)
+  private static long offsetOf(
+    final ParameterIntegerDirect p)
   {
-    if (p.getMaxInclusive().compareTo(BIG_1000) >= 0) {
-      return 4L;
-    }
-    if (p.getMaxInclusive().compareTo(BIG_128) >= 0) {
-      return 2L;
-    }
-    return 1L;
+    return parseHex(p.getOffset());
+  }
+
+  private static long offsetOf(
+    final ParameterIntegerMapped p)
+  {
+    return parseHex(p.getOffset());
+  }
+
+  private static long offsetOf(
+    final ParameterFractional p)
+  {
+    return parseHex(p.getOffset());
   }
 }

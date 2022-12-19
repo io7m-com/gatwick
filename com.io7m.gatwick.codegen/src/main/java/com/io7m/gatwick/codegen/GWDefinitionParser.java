@@ -41,12 +41,12 @@ import java.util.Objects;
  * A parser for definitions.
  */
 
-public final class DefinitionParser
+public final class GWDefinitionParser
 {
   private static final Logger LOG =
-    LoggerFactory.getLogger(DefinitionParser.class);
+    LoggerFactory.getLogger(GWDefinitionParser.class);
 
-  private DefinitionParser()
+  private GWDefinitionParser()
   {
 
   }
@@ -64,7 +64,7 @@ public final class DefinitionParser
     throws IOException, URISyntaxException
   {
     final var source =
-      DefinitionParser.class.getResource(
+      GWDefinitionParser.class.getResource(
         "/com/io7m/gatwick/codegen/Main.xml");
 
     return parse(source.toURI(), source.openStream());
@@ -94,7 +94,7 @@ public final class DefinitionParser
         SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       final var schema =
         schemas.newSchema(
-          DefinitionParser.class.getResource(
+          GWDefinitionParser.class.getResource(
             "/com/io7m/gatwick/codegen/gt1000.xsd")
         );
 
@@ -221,7 +221,7 @@ public final class DefinitionParser
         systemId);
 
       final var url =
-        DefinitionParser.class.getResource(
+        GWDefinitionParser.class.getResource(
           "/com/io7m/gatwick/codegen/%s".formatted(systemId)
         );
 

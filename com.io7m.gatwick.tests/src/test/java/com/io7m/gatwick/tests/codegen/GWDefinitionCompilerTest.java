@@ -17,7 +17,7 @@
 
 package com.io7m.gatwick.tests.codegen;
 
-import com.io7m.gatwick.codegen.DefinitionParser;
+import com.io7m.gatwick.codegen.GWDefinitionParser;
 import com.io7m.gatwick.tests.GWTestDirectories;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public final class DefinitionCompilerTest
+public final class GWDefinitionCompilerTest
 {
   private Path directory;
   private Path module;
@@ -35,6 +35,7 @@ public final class DefinitionCompilerTest
   public void setup()
     throws IOException
   {
+    // this.directory = Paths.get("/tmp/gatout");
     this.directory =
       GWTestDirectories.createTempDirectory();
     this.module =
@@ -60,7 +61,7 @@ public final class DefinitionCompilerTest
     throws Exception
   {
     final var definitions =
-      DefinitionParser.parse();
+      GWDefinitionParser.parse();
     final var classloader =
       Compilation.compile(definitions, this.directory, this.module);
   }

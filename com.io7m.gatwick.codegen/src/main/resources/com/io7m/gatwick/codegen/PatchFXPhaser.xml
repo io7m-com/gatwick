@@ -15,20 +15,23 @@
   <ParameterRate118 Name="RATE"
                     Offset="0x0002"/>
 
-  <ParameterNumeric Name="DEPTH"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DEPTH"
+                          Offset="0x0003"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="RESONANCE"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RESONANCE"
+                          Offset="0x0004"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="MANUAL"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MANUAL"
+                          Offset="0x0005"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="WAVEFORM"
                        Offset="0x0006"
@@ -41,24 +44,27 @@
                        Offset="0x0008"
                        Type="OnOff"/>
 
-  <ParameterNumeric Name="SEPARATION"
-                    Offset="0x0009"
-                    MinInclusive="0"
-                    MaxInclusive="12"/>
+  <ParameterIntegerDirect Name="SEPARATION"
+                          Offset="0x0009"
+                          Default="6"
+                          MinInclusive="0"
+                          MaxInclusive="12"/>
 
-  <ParameterNumeric Name="LOW DAMP"
-                    Offset="0x000a"
-                    MinInclusive="28"
-                    MaxInclusive="128"
-                    LogicalMinInclusive="-100"
-                    LogicalMaxInclusive="0"/>
+  <ParameterIntegerMapped Name="LOW DAMP"
+                          Offset="0x000a"
+                          MinInclusive="-100"
+                          MaxInclusive="0"
+                          Default="0"
+                          PhysicalMinInclusive="28"
+                          PhysicalMaxInclusive="128"/>
 
-  <ParameterNumeric Name="HIGH DAMP"
-                    Offset="0x000c"
-                    MinInclusive="28"
-                    MaxInclusive="128"
-                    LogicalMinInclusive="-100"
-                    LogicalMaxInclusive="0"/>
+  <ParameterIntegerMapped Name="HIGH DAMP"
+                          Offset="0x000c"
+                          MinInclusive="-100"
+                          MaxInclusive="0"
+                          Default="0"
+                          PhysicalMinInclusive="28"
+                          PhysicalMaxInclusive="128"/>
 
   <ParameterLowCut Name="LOW CUT"
                    Offset="0x000e"/>
@@ -66,14 +72,16 @@
   <ParameterHighCut Name="HIGH CUT"
                     Offset="0x000f"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0010"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0010"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DIRECT MIX"
-                    Offset="0x0011"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT MIX"
+                          Offset="0x0011"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

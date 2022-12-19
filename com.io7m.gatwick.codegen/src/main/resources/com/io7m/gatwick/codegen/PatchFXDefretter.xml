@@ -4,41 +4,48 @@
            ExpectedSize="0x0007"
            xmlns="urn:com.io7m.gatwick:1">
 
-  <ParameterNumeric Name="SENS"
-                    Offset="0x0000"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="SENS"
+                          Offset="0x0000"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DEPTH"
-                    Offset="0x0001"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DEPTH"
+                          Offset="0x0001"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="TONE"
-                    Offset="0x0002"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="TONE"
+                          Offset="0x0002"
+                          Default="0"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0003"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="ATTACK"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="ATTACK"
+                          Offset="0x0004"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="RESONANCE"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RESONANCE"
+                          Offset="0x0005"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DIRECT MIX"
-                    Offset="0x0006"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT MIX"
+                          Offset="0x0006"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

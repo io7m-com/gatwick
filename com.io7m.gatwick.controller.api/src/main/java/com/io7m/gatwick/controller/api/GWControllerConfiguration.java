@@ -14,38 +14,29 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.gatwick.codegen;
+package com.io7m.gatwick.controller.api;
 
-import com.io7m.gatwick.codegen.jaxb.Definitions;
+import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 
-import java.nio.file.Path;
 import java.util.Objects;
 
 /**
- * The compilation information for the compiler.
+ * Controller configuration information.
  *
- * @param outputDirectory The output directory
- * @param packageName     The package name for source files
- * @param definitions     The definitions
+ * @param deviceConfiguration The device configuration
  */
 
-public record DefinitionCompilerConfiguration(
-  Path outputDirectory,
-  String packageName,
-  Definitions definitions)
+public record GWControllerConfiguration(
+  GWDeviceConfiguration deviceConfiguration)
 {
   /**
-   * The compilation information for the compiler.
+   * Controller configuration information.
    *
-   * @param outputDirectory The output directory
-   * @param packageName     The package name for source files
-   * @param definitions     The definitions
+   * @param deviceConfiguration The device configuration
    */
 
-  public DefinitionCompilerConfiguration
+  public GWControllerConfiguration
   {
-    Objects.requireNonNull(outputDirectory, "outputDirectory");
-    Objects.requireNonNull(packageName, "packageName");
-    Objects.requireNonNull(definitions, "definitions");
+    Objects.requireNonNull(deviceConfiguration, "deviceConfiguration");
   }
 }

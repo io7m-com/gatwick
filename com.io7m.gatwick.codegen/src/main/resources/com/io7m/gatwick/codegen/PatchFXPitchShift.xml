@@ -8,66 +8,74 @@
                        Offset="0x0000"
                        Type="PatchFXPitchShift.Voice"/>
 
-  <ParameterNumeric Name="PS1:PITCH"
-                    Offset="0x0001"
-                    MinInclusive="8"
-                    MaxInclusive="56"
-                    LogicalMinInclusive="-24"
-                    LogicalMaxInclusive="24"/>
+  <ParameterIntegerMapped Name="PS1:PITCH"
+                          Offset="0x0001"
+                          MinInclusive="-24"
+                          MaxInclusive="24"
+                          Default="0"
+                          PhysicalMinInclusive="8"
+                          PhysicalMaxInclusive="56"/>
 
-  <ParameterNumeric Name="PS2:PITCH"
-                    Offset="0x0002"
-                    MinInclusive="8"
-                    MaxInclusive="56"
-                    LogicalMinInclusive="-24"
-                    LogicalMaxInclusive="24"/>
+  <ParameterIntegerMapped Name="PS2:PITCH"
+                          Offset="0x0002"
+                          MinInclusive="-24"
+                          MaxInclusive="24"
+                          Default="0"
+                          PhysicalMinInclusive="8"
+                          PhysicalMaxInclusive="56"/>
 
-  <ParameterNumeric Name="DIRECT LEVEL"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT LEVEL"
+                          Offset="0x0003"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="PS1:MODE"
                        Offset="0x0004"
                        Type="PatchFXPitchShift.Mode"/>
 
-  <ParameterNumeric Name="PS1:FINE"
-                    Offset="0x0005"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="PS1:FINE"
+                          Offset="0x0005"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
   <ParameterRate318 Name="PS1:PRE-DELAY"
                     Offset="0x0006"/>
 
-  <ParameterNumeric Name="PS1:LEVEL"
-                    Offset="0x000a"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="PS1:LEVEL"
+                          Offset="0x000a"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="PS1:FEEDBACK"
-                    Offset="0x000b"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="PS1:FEEDBACK"
+                          Offset="0x000b"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="PS2:MODE"
                        Offset="0x000c"
                        Type="PatchFXPitchShift.Mode"/>
 
-  <ParameterNumeric Name="PS2:FINE"
-                    Offset="0x000d"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="PS2:FINE"
+                          Offset="0x000d"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
   <ParameterRate318 Name="PS2:PRE-DELAY"
                     Offset="0x000e"/>
 
-  <ParameterNumeric Name="PS2:LEVEL"
-                    Offset="0x0012"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="PS2:LEVEL"
+                          Offset="0x0012"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

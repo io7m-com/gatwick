@@ -90,32 +90,9 @@ public final class GWDeviceDemo
 
       {
         final var address = 0x1000_0000;
+
         final var response =
-          device.sendCommand(
-            new GWDeviceCommandRequestData(address, 16)
-          );
-
-        LOG.debug(
-          "[0x{}] {} {} (0x{}) ('{}')",
-          String.format("%08x", Integer.valueOf(address)),
-          Integer.valueOf(response.data().length),
-          HexFormat.of().formatHex(response.data()),
-          String.format("%02x", Integer.valueOf(response.checksum())),
-          new String(response.data(), US_ASCII)
-        );
-      }
-
-      device.sendCommand(new GWDeviceCommandSetData(
-        0x1000_0000,
-        new byte[] { 'D' }
-      ));
-
-      {
-        final var address = 0x1000_0000;
-        final var response =
-          device.sendCommand(
-            new GWDeviceCommandRequestData(address, 16)
-          );
+          device.sendCommand(new GWDeviceCommandRequestData(address, 0x7e));
 
         LOG.debug(
           "[0x{}] {} {} (0x{}) ('{}')",

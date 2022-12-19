@@ -12,71 +12,83 @@
                        Offset="0x0001"
                        Type="PatchMstDelay.Type"/>
 
-  <ParameterNumeric Name="TIME"
-                    Offset="0x0002"
-                    MinInclusive="1"
-                    MaxInclusive="2018"/>
+  <ParameterIntegerDirect Name="TIME"
+                          Offset="0x0002"
+                          Default="1"
+                          MinInclusive="1"
+                          MaxInclusive="2018"/>
 
-  <ParameterNumeric Name="FEEDBACK"
-                    Offset="0x0006"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FEEDBACK"
+                          Offset="0x0006"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="HIGH CUT"
                        Offset="0x0007"
                        Type="PatchMstDelay.HighCut"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0008"
-                    MinInclusive="0"
-                    MaxInclusive="120"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0008"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="120"/>
 
-  <ParameterNumeric Name="MOD RATE"
-                    Offset="0x0009"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MOD RATE"
+                          Offset="0x0009"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="MOD DEPTH"
-                    Offset="0x000a"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MOD DEPTH"
+                          Offset="0x000a"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DUCK SENS"
-                    Offset="0x000b"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DUCK SENS"
+                          Offset="0x000b"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DUCK PRE DEPTH"
-                    Offset="0x000c"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DUCK PRE DEPTH"
+                          Offset="0x000c"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DUCK POST DEPTH"
-                    Offset="0x000d"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DUCK POST DEPTH"
+                          Offset="0x000d"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DIRECT LEVEL"
-                    Offset="0x000e"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT LEVEL"
+                          Offset="0x000e"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="PITCH"
-                    Offset="0x000f"
-                    MinInclusive="8"
-                    MaxInclusive="56"
-                    LogicalMinInclusive="-24"
-                    LogicalMaxInclusive="24"/>
+  <ParameterIntegerMapped Name="PITCH"
+                          Offset="0x000f"
+                          MinInclusive="-24"
+                          MaxInclusive="24"
+                          Default="0"
+                          PhysicalMinInclusive="8"
+                          PhysicalMaxInclusive="56"/>
 
-  <ParameterNumeric Name="PITCH BAL"
-                    Offset="0x0010"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="PITCH BAL"
+                          Offset="0x0010"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="PITCH FEEDBACK"
-                    Offset="0x0011"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="PITCH FEEDBACK"
+                          Offset="0x0011"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="DUAL:MODE"
                        Offset="0x0012"
@@ -88,24 +100,27 @@
                        Offset="0x0013"
                        Type="PatchMstDelay.DType"/>
 
-  <ParameterNumeric Name="D1 TIME"
-                    Offset="0x0014"
-                    MinInclusive="1"
-                    MaxInclusive="2018"/>
+  <ParameterIntegerDirect Name="D1 TIME"
+                          Offset="0x0014"
+                          Default="1"
+                          MinInclusive="1"
+                          MaxInclusive="2018"/>
 
-  <ParameterNumeric Name="D1 FEEDBACK"
-                    Offset="0x0018"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="D1 FEEDBACK"
+                          Offset="0x0018"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="D1 HIGH CUT"
                        Offset="0x0019"
                        Type="PatchMstDelay.HighCut"/>
 
-  <ParameterNumeric Name="D1 EFFECT LEVEL"
-                    Offset="0x001a"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="D1 EFFECT LEVEL"
+                          Offset="0x001a"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 
   <!-- D2 -->
@@ -114,24 +129,27 @@
                        Offset="0x001b"
                        Type="PatchMstDelay.DType"/>
 
-  <ParameterNumeric Name="D2 TIME"
-                    Offset="0x001f"
-                    MinInclusive="1"
-                    MaxInclusive="2018"/>
+  <ParameterIntegerDirect Name="D2 TIME"
+                          Offset="0x001f"
+                          Default="1"
+                          MinInclusive="1"
+                          MaxInclusive="2018"/>
 
-  <ParameterNumeric Name="D2 FEEDBACK"
-                    Offset="0x0020"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="D2 FEEDBACK"
+                          Offset="0x0020"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="D2 HIGH CUT"
                        Offset="0x0021"
                        Type="PatchMstDelay.HighCut"/>
 
-  <ParameterNumeric Name="D2 EFFECT LEVEL"
-                    Offset="0x0022"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="D2 EFFECT LEVEL"
+                          Offset="0x0022"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <!-- Twist -->
 
@@ -143,20 +161,23 @@
                        Offset="0x0024"
                        Type="OnOff"/>
 
-  <ParameterNumeric Name="RISE TIME"
-                    Offset="0x0025"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RISE TIME"
+                          Offset="0x0025"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="FALL TIME"
-                    Offset="0x0026"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FALL TIME"
+                          Offset="0x0026"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="LEVEL"
-                    Offset="0x0027"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="LEVEL"
+                          Offset="0x0027"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="STAGE"
                        Offset="0x0028"
@@ -166,20 +187,23 @@
                        Offset="0x0029"
                        Type="PatchMstDelay.Head"/>
 
-  <ParameterNumeric Name="FADE TIME"
-                    Offset="0x002a"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FADE TIME"
+                          Offset="0x002a"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="TAP TIME"
-                    Offset="0x002b"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="TAP TIME"
+                          Offset="0x002b"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="WOW &amp; FLUTTER"
-                    Offset="0x002c"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="WOW &amp; FLUTTER"
+                          Offset="0x002c"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="DRUM ECHO:HEAD"
                        Offset="0x002d"

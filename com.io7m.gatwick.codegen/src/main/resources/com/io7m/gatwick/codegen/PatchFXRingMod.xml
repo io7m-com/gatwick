@@ -8,27 +8,31 @@
                        Offset="0x0000"
                        Type="OnOff"/>
 
-  <ParameterNumeric Name="FREQUENCY"
-                    Offset="0x0001"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FREQUENCY"
+                          Offset="0x0001"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterRate118 Name="FREQ MOD RATE"
                     Offset="0x0002"/>
 
-  <ParameterNumeric Name="FREQ MOD DEPTH"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FREQ MOD DEPTH"
+                          Offset="0x0003"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0004"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DIRECT MIX"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT MIX"
+                          Offset="0x0005"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

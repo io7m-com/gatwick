@@ -15,22 +15,25 @@
   <ParameterRate118 Name="RATE"
                     Offset="0x0002"/>
 
-  <ParameterNumeric Name="DEPTH"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DEPTH"
+                          Offset="0x0003"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="PRE-DELAY"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="80"
-                    LogicalMinInclusive="0"
-                    LogicalMaxInclusive="40"/>
+  <ParameterFractional Name="PRE-DELAY"
+                          Offset="0x0004"
+                          Default="40"
+                          MinInclusive="0"
+                          MaxInclusive="40"
+                          PhysicalMinInclusive="0"
+                          PhysicalMaxInclusive="80"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0005"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="WAVEFORM"
                        Offset="0x0006"
@@ -47,22 +50,25 @@
   <ParameterRate118 Name="RATE 1"
                     Offset="0x0009"/>
 
-  <ParameterNumeric Name="DEPTH 1"
-                    Offset="0x000a"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DEPTH 1"
+                          Offset="0x000a"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="PRE-DELAY 1"
-                    Offset="0x000b"
-                    MinInclusive="0"
-                    MaxInclusive="80"
-                    LogicalMinInclusive="0"
-                    LogicalMaxInclusive="40"/>
+  <ParameterFractional Name="PRE-DELAY 1"
+                          Offset="0x000b"
+                          Default="40"
+                          MinInclusive="0"
+                          MaxInclusive="40"
+                          PhysicalMinInclusive="0"
+                          PhysicalMaxInclusive="80"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL 1"
-                    Offset="0x000c"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL 1"
+                          Offset="0x000c"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="WAVEFORM 1"
                        Offset="0x000d"
@@ -79,22 +85,25 @@
   <ParameterRate118 Name="RATE 2"
                     Offset="0x0010"/>
 
-  <ParameterNumeric Name="DEPTH 2"
-                    Offset="0x0011"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DEPTH 2"
+                          Offset="0x0011"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="PRE-DELAY 2"
-                    Offset="0x0012"
-                    MinInclusive="0"
-                    MaxInclusive="80"
-                    LogicalMinInclusive="0"
-                    LogicalMaxInclusive="40"/>
+  <ParameterFractional Name="PRE-DELAY 2"
+                          Offset="0x0012"
+                          Default="40"
+                          MinInclusive="0"
+                          MaxInclusive="40"
+                          PhysicalMinInclusive="0"
+                          PhysicalMaxInclusive="80"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL 2"
-                    Offset="0x0013"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL 2"
+                          Offset="0x0013"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="WAVEFORM 2"
                        Offset="0x0014"
@@ -106,10 +115,11 @@
   <ParameterHighCut Name="HIGH CUT 2"
                     Offset="0x0016"/>
 
-  <ParameterNumeric Name="DIRECT LEVEL"
-                    Offset="0x0017"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT LEVEL"
+                          Offset="0x0017"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="OUTPUT MODE"
                        Offset="0x0018"

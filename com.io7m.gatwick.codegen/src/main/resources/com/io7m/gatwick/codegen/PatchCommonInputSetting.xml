@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Enumeration Name="PatchCommon.InputSetting"
-           xmlns="urn:com.io7m.gatwick:1">
-  <Case Name="SYSTEM" Value="0"/>
-  <Case Name="1" Value="1"/>
-  <Case Name="2" Value="2"/>
-  <Case Name="3" Value="3"/>
-  <Case Name="4" Value="4"/>
-  <Case Name="5" Value="5"/>
-  <Case Name="6" Value="6"/>
-  <Case Name="7" Value="7"/>
-  <Case Name="8" Value="8"/>
-  <Case Name="9" Value="9"/>
-  <Case Name="10" Value="10"/>
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="SYSTEM"
+        Value="0"/>
+  <Case Name="1"
+        Value="1"/>
+  <Case Name="2"
+        Value="2"/>
+  <Case Name="3"
+        Value="3"/>
+  <Case Name="4"
+        Value="4"/>
+  <Case Name="5"
+        Value="5"/>
+  <Case Name="6"
+        Value="6"/>
+  <Case Name="7"
+        Value="7"/>
+  <Case Name="8"
+        Value="8"/>
+  <Case Name="9"
+        Value="9"/>
+  <Case Name="10"
+        Value="10"/>
 </Enumeration>

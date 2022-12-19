@@ -8,27 +8,31 @@
                        Offset="0x0000"
                        Type="OnOff"/>
 
-  <ParameterNumeric Name="TIME"
-                    Offset="0x0001"
-                    MinInclusive="1"
-                    MaxInclusive="2018"/>
+  <ParameterIntegerDirect Name="TIME"
+                          Offset="0x0001"
+                          Default="200"
+                          MinInclusive="1"
+                          MaxInclusive="2018"/>
 
-  <ParameterNumeric Name="FEEDBACK"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FEEDBACK"
+                          Offset="0x0005"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterHighCut Name="HIGH CUT"
                     Offset="0x0006"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0007"
-                    MinInclusive="0"
-                    MaxInclusive="120"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0007"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="120"/>
 
-  <ParameterNumeric Name="DIRECT LEVEL"
-                    Offset="0x0008"
-                    MinInclusive="0"
-                    MaxInclusive="120"/>
+  <ParameterIntegerDirect Name="DIRECT LEVEL"
+                          Offset="0x0008"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="120"/>
 
 </Structure>

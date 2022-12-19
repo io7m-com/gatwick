@@ -11,15 +11,17 @@
   <ParameterRate118 Name="RATE"
                     Offset="0x0001"/>
 
-  <ParameterNumeric Name="DEPTH"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DEPTH"
+                          Offset="0x0002"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x0003"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterLowCut Name="LOW CUT"
                    Offset="0x0004"/>

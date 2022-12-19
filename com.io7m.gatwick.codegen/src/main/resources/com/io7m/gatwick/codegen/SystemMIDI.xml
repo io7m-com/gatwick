@@ -4,8 +4,9 @@
            ExpectedSize="0x001b"
            xmlns="urn:com.io7m.gatwick:1">
 
-  <ParameterNumeric Name="UNUSED"
-                    Offset="0x0000"
-                    MinInclusive="0"
-                    MaxInclusive="0"/>
+  <ParameterIntegerDirect Name="UNUSED"
+                          Offset="0x0000"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="0"/>
 </Structure>

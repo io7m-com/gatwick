@@ -4,28 +4,32 @@
            ExpectedSize="0x0004"
            xmlns="urn:com.io7m.gatwick:1">
 
-  <ParameterNumeric Name="BODY"
-                    Offset="0x0000"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="BODY"
+                          Offset="0x0000"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="LOW"
-                    Offset="0x0001"
-                    MinInclusive="0"
-                    MaxInclusive="100"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="LOW"
+                          Offset="0x0001"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="0"
+                          PhysicalMaxInclusive="100"/>
 
-  <ParameterNumeric Name="HIGH"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="HIGH"
+                          Offset="0x0002"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="0"
+                          PhysicalMaxInclusive="100"/>
 
-  <ParameterNumeric Name="LEVEL"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="LEVEL"
+                          Offset="0x0003"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

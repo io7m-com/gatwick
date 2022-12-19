@@ -4,19 +4,22 @@
            ExpectedSize="0x0003"
            xmlns="urn:com.io7m.gatwick:1">
 
-  <ParameterNumeric Name="SENS"
-                    Offset="0x0000"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="SENS"
+                          Offset="0x0000"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="RISE TIME"
-                    Offset="0x0001"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RISE TIME"
+                          Offset="0x0001"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="LEVEL"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="LEVEL"
+                          Offset="0x0002"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

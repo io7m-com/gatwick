@@ -12,14 +12,16 @@
                        Offset="0x0001"
                        Type="PatchFXSBend.Pitch"/>
 
-  <ParameterNumeric Name="RISE TIME"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RISE TIME"
+                          Offset="0x0002"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="FALL TIME"
-                    Offset="0x0003"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FALL TIME"
+                          Offset="0x0003"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

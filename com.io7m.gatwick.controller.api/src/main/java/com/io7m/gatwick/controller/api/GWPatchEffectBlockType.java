@@ -15,46 +15,32 @@
  */
 
 
-package com.io7m.gatwick.codegen.internal;
+package com.io7m.gatwick.controller.api;
 
-import java.util.regex.Pattern;
+import com.io7m.gatwick.iovar.GWIOReadableType;
+import com.io7m.gatwick.iovar.GWIOVariableType;
 
 /**
- * Functions to parse hex integers.
+ * A patch effect block.
  */
 
-public final class HexIntegers
+public interface GWPatchEffectBlockType extends GWIOReadableType
 {
-  private static final Pattern LEADING_ZEROES =
-    Pattern.compile("^0+");
-
-  private HexIntegers()
-  {
-
-  }
-
   /**
-   * Parse a hex integer.
-   *
-   * @param text The text
-   *
-   * @return The integer
+   * @return The on/off value
    */
 
-  public static long parseHex(
-    final String text)
-  {
-    var textNow = text;
-    if (text.startsWith("0x")) {
-      textNow = text.substring(2);
-    }
+  GWIOVariableType<GWOnOffValue> enabled();
 
-    textNow = textNow.replace("_", "");
-    textNow = LEADING_ZEROES.matcher(textNow).replaceFirst("");
-    if (textNow.isEmpty()) {
-      return 0L;
-    }
+  /**
+   * @return The effect level value
+   */
 
-    return Long.parseUnsignedLong(textNow, 16);
-  }
+  GWIOVariableType<Integer> effectLevel();
+
+  /**
+   * @return The direct mix value
+   */
+
+  GWIOVariableType<Integer> directMix();
 }

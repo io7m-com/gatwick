@@ -9,4 +9,15 @@
             checks="NPathComplexity"/>
   <suppress files="ParameterOffsets\.java"
             checks="NPathComplexity"/>
+
+  <suppress files="GWIOSerializers\.java"
+            checks="IllegalInstantiation"/>
+  
+  <suppress files="GWIORate318Milliseconds\.java"
+            checks="HiddenField"/>
+  <suppress files="GWIORate118Milliseconds\.java"
+            checks="HiddenField"/>
+  <suppress files="GWIORate119Milliseconds\.java"
+            checks="HiddenField"/>
+  
 </suppressions>

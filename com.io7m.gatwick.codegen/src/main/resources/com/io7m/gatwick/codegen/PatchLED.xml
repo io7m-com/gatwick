@@ -92,10 +92,11 @@
                        Offset="0x0015"
                        Type="PatchLed.Type2"/>
 
-  <ParameterNumeric Name="ON OFF STATE"
-                    Offset="0x0016"
-                    MinInclusive="0"
-                    MaxInclusive="2147483647"/>
+  <ParameterIntegerDirect Name="ON OFF STATE"
+                          Offset="0x0016"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="2147483647"/>
 
   <ParameterEnumerated Name="CNUM OFF"
                        Offset="0x001e"

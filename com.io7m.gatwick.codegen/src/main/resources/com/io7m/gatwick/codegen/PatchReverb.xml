@@ -12,76 +12,89 @@
                        Offset="0x0001"
                        Type="PatchReverb.Type"/>
 
-  <ParameterNumeric Name="DIRECT LEVEL"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT LEVEL"
+                          Offset="0x0002"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="LOW DAMP"
-                    Offset="0x0003"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="LOW DAMP"
+                          Offset="0x0003"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
-  <ParameterNumeric Name="HIGH DAMP"
-                    Offset="0x0004"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="HIGH DAMP"
+                          Offset="0x0004"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
-  <ParameterNumeric Name="MOD RATE"
-                    Offset="0x0005"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MOD RATE"
+                          Offset="0x0005"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="MOD DEPTH"
-                    Offset="0x0006"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="MOD DEPTH"
+                          Offset="0x0006"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DUCK SENS"
-                    Offset="0x0007"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DUCK SENS"
+                          Offset="0x0007"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DUCK PRE DEPTH"
-                    Offset="0x0008"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DUCK PRE DEPTH"
+                          Offset="0x0008"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DUCK POST DEPTH"
-                    Offset="0x0009"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DUCK POST DEPTH"
+                          Offset="0x0009"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="TIME"
-                    Offset="0x000a"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="TIME"
+                          Offset="0x000a"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="TONE"
-                    Offset="0x000b"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="TONE"
+                          Offset="0x000b"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x000c"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x000c"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DENSITY"
-                    Offset="0x000d"
-                    MinInclusive="1"
-                    MaxInclusive="10"/>
+  <ParameterIntegerDirect Name="DENSITY"
+                          Offset="0x000d"
+                          Default="5"
+                          MinInclusive="1"
+                          MaxInclusive="10"/>
 
-  <ParameterNumeric Name="PRE-DELAY"
-                    Offset="0x000e"
-                    MinInclusive="0"
-                    MaxInclusive="200"/>
+  <ParameterIntegerDirect Name="PRE-DELAY"
+                          Offset="0x000e"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="200"/>
 
   <ParameterLowCut Name="LOW CUT"
                    Offset="0x0010"/>
@@ -91,48 +104,55 @@
 
   <!-- 1 -->
 
-  <ParameterNumeric Name="PITCH 1"
-                    Offset="0x0012"
-                    MinInclusive="8"
-                    MaxInclusive="56"
-                    LogicalMinInclusive="-24"
-                    LogicalMaxInclusive="24"/>
+  <ParameterIntegerMapped Name="PITCH 1"
+                          Offset="0x0012"
+                          MinInclusive="-24"
+                          MaxInclusive="24"
+                          Default="0"
+                          PhysicalMinInclusive="8"
+                          PhysicalMaxInclusive="56"/>
 
-  <ParameterNumeric Name="LEVEL 1"
-                    Offset="0x0013"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="LEVEL 1"
+                          Offset="0x0013"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="TYPE 1"
                        Offset="0x0014"
                        Type="PatchReverb.TType"/>
 
-  <ParameterNumeric Name="TIME 1"
-                    Offset="0x0015"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="TIME 1"
+                          Offset="0x0015"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="TONE 1"
-                    Offset="0x0016"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="TONE 1"
+                          Offset="0x0016"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL 1"
-                    Offset="0x0017"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL 1"
+                          Offset="0x0017"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DENSITY 1"
-                    Offset="0x0018"
-                    MinInclusive="1"
-                    MaxInclusive="10"/>
+  <ParameterIntegerDirect Name="DENSITY 1"
+                          Offset="0x0018"
+                          Default="5"
+                          MinInclusive="1"
+                          MaxInclusive="10"/>
 
-  <ParameterNumeric Name="PRE-DELAY 1"
-                    Offset="0x0019"
-                    MinInclusive="0"
-                    MaxInclusive="200"/>
+  <ParameterIntegerDirect Name="PRE-DELAY 1"
+                          Offset="0x0019"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="200"/>
 
   <ParameterLowCut Name="LOW CUT 1"
                    Offset="0x001b"/>
@@ -142,48 +162,55 @@
 
   <!-- 2 -->
 
-  <ParameterNumeric Name="PITCH 2"
-                    Offset="0x001d"
-                    MinInclusive="8"
-                    MaxInclusive="56"
-                    LogicalMinInclusive="-24"
-                    LogicalMaxInclusive="24"/>
+  <ParameterIntegerMapped Name="PITCH 2"
+                          Offset="0x001d"
+                          MinInclusive="-24"
+                          MaxInclusive="24"
+                          Default="0"
+                          PhysicalMinInclusive="8"
+                          PhysicalMaxInclusive="56"/>
 
-  <ParameterNumeric Name="LEVEL 2"
-                    Offset="0x001e"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="LEVEL 2"
+                          Offset="0x001e"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="TYPE 2"
                        Offset="0x001f"
                        Type="PatchReverb.TType"/>
 
-  <ParameterNumeric Name="TIME 2"
-                    Offset="0x0020"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="TIME 2"
+                          Offset="0x0020"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="TONE 2"
-                    Offset="0x0021"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="TONE 2"
+                          Offset="0x0021"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          Default="0"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL 2"
-                    Offset="0x0022"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL 2"
+                          Offset="0x0022"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DENSITY 2"
-                    Offset="0x0023"
-                    MinInclusive="1"
-                    MaxInclusive="10"/>
+  <ParameterIntegerDirect Name="DENSITY 2"
+                          Offset="0x0023"
+                          Default="5"
+                          MinInclusive="1"
+                          MaxInclusive="10"/>
 
-  <ParameterNumeric Name="PRE-DELAY 2"
-                    Offset="0x0024"
-                    MinInclusive="0"
-                    MaxInclusive="200"/>
+  <ParameterIntegerDirect Name="PRE-DELAY 2"
+                          Offset="0x0024"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="200"/>
 
   <ParameterLowCut Name="LOW CUT 2"
                    Offset="0x0026"/>
@@ -197,15 +224,17 @@
                        Offset="0x0028"
                        Type="PatchReverb.Mode"/>
 
-  <ParameterNumeric Name="SPREAD TIME"
-                    Offset="0x0029"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="SPREAD TIME"
+                          Offset="0x0029"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="FEEDBACK"
-                    Offset="0x002a"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FEEDBACK"
+                          Offset="0x002a"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="TRIGGER"
                        Offset="0x002b"

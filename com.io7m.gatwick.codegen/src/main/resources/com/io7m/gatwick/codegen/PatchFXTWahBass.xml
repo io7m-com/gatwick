@@ -12,34 +12,40 @@
                        Offset="0x0009"
                        Type="PatchFXTWah.Polarity"/>
 
-  <ParameterNumeric Name="SENS"
-                    Offset="0x000a"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="SENS"
+                          Offset="0x000a"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="FREQUENCY"
-                    Offset="0x000b"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="FREQUENCY"
+                          Offset="0x000b"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="RESONANCE"
-                    Offset="0x000c"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="RESONANCE"
+                          Offset="0x000c"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DECAY"
-                    Offset="0x000d"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DECAY"
+                          Offset="0x000d"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="EFFECT LEVEL"
-                    Offset="0x000e"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="EFFECT LEVEL"
+                          Offset="0x000e"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="DIRECT MIX"
-                    Offset="0x000f"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT MIX"
+                          Offset="0x000f"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>

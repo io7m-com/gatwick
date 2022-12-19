@@ -16,8 +16,8 @@
 
 package com.io7m.gatwick.tests.codegen;
 
-import com.io7m.gatwick.codegen.DefinitionCompiler;
-import com.io7m.gatwick.codegen.DefinitionCompilerConfiguration;
+import com.io7m.gatwick.codegen.GWDefinitionCompiler;
+import com.io7m.gatwick.codegen.GWDefinitionCompilerConfiguration;
 import com.io7m.gatwick.codegen.jaxb.Definitions;
 import com.io7m.gatwick.tests.GWZip;
 import com.sun.source.util.JavacTask;
@@ -68,9 +68,12 @@ public final class Compilation
       new Compilation(outputDirectory, moduleDirectory);
 
     final var compiler =
-      DefinitionCompiler.create(new DefinitionCompilerConfiguration(
+      GWDefinitionCompiler.create(new GWDefinitionCompilerConfiguration(
         outputDirectory,
-        "com.io7m.gatwick.generated",
+        true,
+        "com.io7m.gatwick.generated.structs",
+        true,
+        "com.io7m.gatwick.generated.enums",
         definitions
       ));
 

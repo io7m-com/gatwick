@@ -17,14 +17,12 @@
 
 package com.io7m.gatwick.codegen;
 
+import com.io7m.gatwick.codegen.internal.GWEnumerations;
+import com.io7m.gatwick.codegen.internal.GWStructures;
 import com.io7m.gatwick.codegen.jaxb.Enumeration;
 import com.io7m.gatwick.codegen.jaxb.Structure;
 import com.io7m.gatwick.codegen.jaxb.StructureReference;
-import com.io7m.jodist.ClassName;
-import com.io7m.jodist.CodeBlock;
-import com.io7m.jodist.JavaFile;
-import com.io7m.jodist.MethodSpec;
-import com.io7m.jodist.TypeSpec;
+import com.io7m.jaffirm.core.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,34 +34,29 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.io7m.gatwick.codegen.internal.HexIntegers.parseHex;
-import static com.io7m.gatwick.codegen.internal.ParameterOffsets.offsetOf;
-import static com.io7m.gatwick.codegen.internal.ParameterSizes.sizeOf;
-import static javax.lang.model.element.Modifier.PUBLIC;
+import static com.io7m.gatwick.codegen.internal.GWHexIntegers.parseHex;
+import static com.io7m.gatwick.codegen.internal.GWParameterOffsets.offsetOf;
+import static com.io7m.gatwick.codegen.internal.GWParameterSizes.sizeOf;
 
 /**
  * A definition compiler.
  */
 
-public final class DefinitionCompiler
+public final class GWDefinitionCompiler
 {
   private static final Logger LOG =
-    LoggerFactory.getLogger(DefinitionCompiler.class);
+    LoggerFactory.getLogger(GWDefinitionCompiler.class);
 
-  private static final Pattern INVALID_START =
-    Pattern.compile("^[^A-Z]+.*");
-
-  private final DefinitionCompilerConfiguration configuration;
+  private final GWDefinitionCompilerConfiguration configuration;
   private final HashMap<String, Long> structureSizes;
   private final HashSet<Path> files;
   private Map<String, Structure> structures;
   private Map<String, Enumeration> enumerations;
 
-  private DefinitionCompiler(
-    final DefinitionCompilerConfiguration inConfiguration)
+  private GWDefinitionCompiler(
+    final GWDefinitionCompilerConfiguration inConfiguration)
   {
     this.configuration =
       Objects.requireNonNull(inConfiguration, "configuration");
@@ -83,10 +76,10 @@ public final class DefinitionCompiler
    * @return The compiler
    */
 
-  public static DefinitionCompiler create(
-    final DefinitionCompilerConfiguration configuration)
+  public static GWDefinitionCompiler create(
+    final GWDefinitionCompilerConfiguration configuration)
   {
-    return new DefinitionCompiler(configuration);
+    return new GWDefinitionCompiler(configuration);
   }
 
   /**
@@ -123,119 +116,47 @@ public final class DefinitionCompiler
 
     this.checkStructures();
     this.compileEnumerations();
+    this.compileStructures();
+
     return Set.copyOf(this.files);
+  }
+
+  private void compileStructures()
+    throws IOException
+  {
+    if (this.configuration.structures()) {
+      final var newFiles =
+        new GWStructures(this.configuration, this.structures)
+          .compile();
+
+      for (final var file : newFiles) {
+        Preconditions.checkPreconditionV(
+          !this.files.contains(file),
+          "File %s cannot be created twice",
+          file
+        );
+        this.files.add(file);
+      }
+    }
   }
 
   private void compileEnumerations()
     throws IOException
   {
-    for (final var enumeration : this.enumerations.values()) {
-      this.compileEnumeration(enumeration);
+    if (this.configuration.enumerations()) {
+      final var newFiles =
+        new GWEnumerations(this.configuration)
+          .compileEnumerations(this.enumerations.values());
+
+      for (final var file : newFiles) {
+        Preconditions.checkPreconditionV(
+          !this.files.contains(file),
+          "File %s cannot be created twice",
+          file
+        );
+        this.files.add(file);
+      }
     }
-  }
-
-  private void compileEnumeration(
-    final Enumeration enumeration)
-    throws IOException
-  {
-    final var className =
-      ClassName.get(
-        this.configuration.packageName(),
-        makeEnumerationName(enumeration.getName())
-      );
-
-    final var builder = TypeSpec.enumBuilder(className);
-    builder.addModifiers(PUBLIC);
-    for (final var caseV : enumeration.getCase()) {
-      builder.addEnumConstant(makeEnumerationConstant(caseV.getName()));
-    }
-
-    builder.addMethod(makeEnumerationIntegerMethod(enumeration));
-    builder.addMethod(makeEnumerationLabelMethod(enumeration));
-
-    final var enumT =
-      builder.build();
-    final var javaFile =
-      JavaFile.builder(this.configuration.packageName(), enumT)
-        .build();
-
-    this.files.add(javaFile.writeToPath(this.configuration.outputDirectory()));
-  }
-
-  private static MethodSpec makeEnumerationIntegerMethod(
-    final Enumeration enumeration)
-  {
-    final var spec = MethodSpec.methodBuilder("toInt");
-    spec.returns(int.class);
-    spec.addModifiers(PUBLIC);
-
-    var code = CodeBlock.builder();
-    code = code.beginControlFlow("return switch (this)");
-
-    for (final var caseV : enumeration.getCase()) {
-      code = code.addStatement(
-        "case $L -> $L",
-        makeEnumerationConstant(caseV.getName()),
-        caseV.getValue().toString()
-      );
-    }
-    code = code.endControlFlow();
-    code = code.add(";");
-
-    spec.addCode(code.build());
-    return spec.build();
-  }
-
-  private static MethodSpec makeEnumerationLabelMethod(
-    final Enumeration enumeration)
-  {
-    final var spec = MethodSpec.methodBuilder("labelOf");
-    spec.returns(String.class);
-    spec.addModifiers(PUBLIC);
-
-    var code = CodeBlock.builder();
-    code = code.beginControlFlow("return switch (this)");
-
-    for (final var caseV : enumeration.getCase()) {
-      code = code.addStatement(
-        "case $L -> $S",
-        makeEnumerationConstant(caseV.getName()),
-        caseV.getName()
-      );
-    }
-    code = code.endControlFlow();
-    code = code.add(";");
-
-    spec.addCode(code.build());
-    return spec.build();
-  }
-
-  private static String makeEnumerationConstant(
-    final String name)
-  {
-    final var text =
-      name.replace(" ", "_")
-        .replace("->", "_TO_")
-        .replace(".", "_")
-        .replace("-", "_NEGATIVE_")
-        .replace(":", "_")
-        .replace("/", "_SLASH_")
-        .replace("+", "_POSITIVE_")
-        .toUpperCase();
-
-    if (INVALID_START.matcher(text).matches()) {
-      return "X_%s".formatted(text);
-    }
-    return text;
-  }
-
-  private static String makeEnumerationName(
-    final String name)
-  {
-    return name.replace(" ", "_")
-      .replace(".", "_")
-      .replace("-", "_")
-      .replace(":", "_");
   }
 
   private void checkStructures()
@@ -266,7 +187,7 @@ public final class DefinitionCompiler
     }
 
     final var parameters =
-      structure.getParameterEnumeratedOrParameterHighCutOrParameterLowCut();
+      structure.getParameterEnumeratedOrParameterFractionalOrParameterHighCut();
 
     parameters.sort((o1, o2) -> {
       return Long.compareUnsigned(offsetOf(o1), offsetOf(o2));

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<schema xmlns="http://www.w3.org/2001/XMLSchema"
-        xmlns:g="urn:com.io7m.gatwick:1"
+<schema xmlns:g="urn:com.io7m.gatwick:1"
+        xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="urn:com.io7m.gatwick:1">
 
   <import namespace="http://www.w3.org/XML/1998/namespace"
@@ -78,7 +78,35 @@
     </complexType>
   </element>
 
-  <element name="ParameterNumeric">
+  <element name="ParameterFractional">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+
+      <attribute name="MinInclusive"
+                 type="double"
+                 use="required"/>
+      <attribute name="MaxInclusive"
+                 type="double"
+                 use="required"/>
+      <attribute name="Default"
+                 type="double"
+                 use="required"/>
+
+      <attribute name="PhysicalMinInclusive"
+                 type="integer"
+                 use="required"/>
+      <attribute name="PhysicalMaxInclusive"
+                 type="integer"
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="ParameterIntegerMapped">
     <complexType>
       <attribute name="Name"
                  type="string"
@@ -93,13 +121,37 @@
       <attribute name="MaxInclusive"
                  type="integer"
                  use="required"/>
+      <attribute name="Default"
+                 type="integer"
+                 use="required"/>
 
-      <attribute name="LogicalMinInclusive"
+      <attribute name="PhysicalMinInclusive"
                  type="integer"
-                 use="optional"/>
-      <attribute name="LogicalMaxInclusive"
+                 use="required"/>
+      <attribute name="PhysicalMaxInclusive"
                  type="integer"
-                 use="optional"/>
+                 use="required"/>
+    </complexType>
+  </element>
+
+  <element name="ParameterIntegerDirect">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+
+      <attribute name="MinInclusive"
+                 type="integer"
+                 use="required"/>
+      <attribute name="MaxInclusive"
+                 type="integer"
+                 use="required"/>
+      <attribute name="Default"
+                 type="integer"
+                 use="required"/>
     </complexType>
   </element>
 
@@ -151,9 +203,11 @@
                 maxOccurs="unbounded">
         <choice>
           <element ref="g:ParameterEnumerated"/>
+          <element ref="g:ParameterFractional"/>
           <element ref="g:ParameterHighCut"/>
+          <element ref="g:ParameterIntegerDirect"/>
+          <element ref="g:ParameterIntegerMapped"/>
           <element ref="g:ParameterLowCut"/>
-          <element ref="g:ParameterNumeric"/>
           <element ref="g:ParameterRate118"/>
           <element ref="g:ParameterRate118AndOff"/>
           <element ref="g:ParameterRate318"/>

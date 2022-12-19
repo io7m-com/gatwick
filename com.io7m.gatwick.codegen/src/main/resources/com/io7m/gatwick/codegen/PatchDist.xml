@@ -12,42 +12,48 @@
                        Offset="0x0001"
                        Type="PatchDist.Type"/>
 
-  <ParameterNumeric Name="DRIVE"
-                    Offset="0x0002"
-                    MinInclusive="0"
-                    MaxInclusive="120"/>
+  <ParameterIntegerDirect Name="DRIVE"
+                          Offset="0x0002"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="120"/>
 
-  <ParameterNumeric Name="TONE"
-                    Offset="0x0003"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="TONE"
+                          Offset="0x0003"
+                          Default="0"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
-  <ParameterNumeric Name="LEVEL"
-                    Offset="0x0004"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="LEVEL"
+                          Offset="0x0004"
+                          Default="50"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
-  <ParameterNumeric Name="BOTTOM"
-                    Offset="0x0005"
-                    MinInclusive="14"
-                    MaxInclusive="114"
-                    LogicalMinInclusive="-50"
-                    LogicalMaxInclusive="50"/>
+  <ParameterIntegerMapped Name="BOTTOM"
+                          Offset="0x0005"
+                          Default="0"
+                          MinInclusive="-50"
+                          MaxInclusive="50"
+                          PhysicalMinInclusive="14"
+                          PhysicalMaxInclusive="114"/>
 
-  <ParameterNumeric Name="DIRECT MIX"
-                    Offset="0x0006"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="DIRECT MIX"
+                          Offset="0x0006"
+                          Default="0"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
   <ParameterEnumerated Name="SOLO SW"
                        Offset="0x0007"
                        Type="OnOff"/>
 
-  <ParameterNumeric Name="SOLO LEVEL"
-                    Offset="0x0008"
-                    MinInclusive="0"
-                    MaxInclusive="100"/>
+  <ParameterIntegerDirect Name="SOLO LEVEL"
+                          Offset="0x0008"
+                          Default="100"
+                          MinInclusive="0"
+                          MaxInclusive="100"/>
 
 </Structure>
