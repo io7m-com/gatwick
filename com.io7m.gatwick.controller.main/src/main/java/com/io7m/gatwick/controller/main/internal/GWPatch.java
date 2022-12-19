@@ -16,7 +16,10 @@
 
 package com.io7m.gatwick.controller.main.internal;
 
+import com.io7m.gatwick.controller.api.GWPatchEffectBlockCMPType;
+import com.io7m.gatwick.controller.api.GWPatchEffectBlockNSType;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockPFXType;
+import com.io7m.gatwick.controller.api.GWPatchEffectBlockPreampType;
 import com.io7m.gatwick.controller.api.GWPatchType;
 import com.io7m.gatwick.controller.main.internal.generated.StructPatch;
 import com.io7m.gatwick.device.api.GWDeviceType;
@@ -29,6 +32,11 @@ final class GWPatch implements GWPatchType
   private final GWDeviceType device;
   private final StructPatch patchMemory;
   private final GWPatchEffectBlockPFXType pfx;
+  private final GWPatchEffectBlockCMP cmp;
+  private final GWPatchEffectBlockNS ns1;
+  private final GWPatchEffectBlockNS ns2;
+  private final GWPatchEffectBlockPreamp preamp1;
+  private final GWPatchEffectBlockPreamp preamp2;
 
   GWPatch(
     final GWDeviceType inDevice,
@@ -39,7 +47,17 @@ final class GWPatch implements GWPatchType
     this.patchMemory =
       Objects.requireNonNull(inPatchMemory, "f_patch");
     this.pfx =
-      new GWPatchEffectPFXBlock(this.patchMemory.f_pedalfx);
+      new GWPatchEffectBlockPFX(this.patchMemory.f_pedalfx);
+    this.cmp =
+      new GWPatchEffectBlockCMP(this.patchMemory.f_comp);
+    this.ns1 =
+      new GWPatchEffectBlockNS(this.patchMemory.f_ns1);
+    this.ns2 =
+      new GWPatchEffectBlockNS(this.patchMemory.f_ns2);
+    this.preamp1 =
+      new GWPatchEffectBlockPreamp(this.patchMemory.f_preampa);
+    this.preamp2 =
+      new GWPatchEffectBlockPreamp(this.patchMemory.f_preampb);
   }
 
   @Override
@@ -52,5 +70,35 @@ final class GWPatch implements GWPatchType
   public GWPatchEffectBlockPFXType pfx()
   {
     return this.pfx;
+  }
+
+  @Override
+  public GWPatchEffectBlockCMPType cmp()
+  {
+    return this.cmp;
+  }
+
+  @Override
+  public GWPatchEffectBlockNSType ns1()
+  {
+    return this.ns1;
+  }
+
+  @Override
+  public GWPatchEffectBlockNSType ns2()
+  {
+    return this.ns2;
+  }
+
+  @Override
+  public GWPatchEffectBlockPreampType preamp1()
+  {
+    return this.preamp1;
+  }
+
+  @Override
+  public GWPatchEffectBlockPreampType preamp2()
+  {
+    return this.preamp2;
   }
 }

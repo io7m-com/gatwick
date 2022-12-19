@@ -17,6 +17,7 @@
 package com.io7m.gatwick.tests.controller;
 
 import com.io7m.gatwick.controller.api.GWControllerConfiguration;
+import com.io7m.gatwick.controller.api.GWOnOffValue;
 import com.io7m.gatwick.controller.main.GWControllers;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDI;
@@ -25,6 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.regex.Pattern;
+
+import static com.io7m.gatwick.controller.api.GWOnOffValue.ON;
 
 public final class GWControllerDemo
 {
@@ -57,20 +60,8 @@ public final class GWControllerDemo
 
     try (var controller = controllers.openController(configuration)) {
       final var patch = controller.patchCurrent();
-      final var name = patch.name();
-      name.readFromDevice();
-      LOG.debug("{}", name.get());
-      name.set("HELLO FROM USB  ");
-      name.readFromDevice();
-      LOG.debug("{}", name.get());
-
-      patch.pfx().readFromDevice();
-      patch.pfx().bendPitchMinimum().set(-24);
-      patch.pfx().bendPitchMaximum().set(24);
-      patch.pfx().readFromDevice();
-
-      LOG.debug("{}", patch.pfx().bendPitchMinimum().get());
-      LOG.debug("{}", patch.pfx().bendPitchMaximum().get());
+      patch.cmp().readFromDevice();
+      patch.cmp().enabled().set(ON);
     }
   }
 }

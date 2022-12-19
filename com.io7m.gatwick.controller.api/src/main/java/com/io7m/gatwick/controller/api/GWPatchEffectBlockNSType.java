@@ -14,55 +14,33 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+
 package com.io7m.gatwick.controller.api;
 
 import com.io7m.gatwick.iovar.GWIOVariableType;
 
 /**
- * The type of patches.
+ * The patch NS effect block.
  */
 
-public interface GWPatchType
+public interface GWPatchEffectBlockNSType
+  extends GWPatchEffectBlockType
 {
   /**
-   * @return The patch name
+   * @return The threshold below which is considered noise
    */
 
-  GWIOVariableType<String> name();
+  GWIOVariableType<Integer> threshold();
 
   /**
-   * @return The PFX patch block
+   * @return The release time
    */
 
-  GWPatchEffectBlockPFXType pfx();
+  GWIOVariableType<Integer> release();
 
   /**
-   * @return The CMP patch block
+   * @return The detection source
    */
 
-  GWPatchEffectBlockCMPType cmp();
-
-  /**
-   * @return The NS1 patch block
-   */
-
-  GWPatchEffectBlockNSType ns1();
-
-  /**
-   * @return The NS2 patch block
-   */
-
-  GWPatchEffectBlockNSType ns2();
-
-  /**
-   * @return The Preamp1 patch block
-   */
-
-  GWPatchEffectBlockPreampType preamp1();
-
-  /**
-   * @return The Preamp2 patch block
-   */
-
-  GWPatchEffectBlockPreampType preamp2();
+  GWIOVariableType<GWPatchNSDetectValue> detect();
 }

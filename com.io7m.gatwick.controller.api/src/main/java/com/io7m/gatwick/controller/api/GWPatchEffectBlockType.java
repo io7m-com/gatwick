@@ -31,16 +31,4 @@ public interface GWPatchEffectBlockType extends GWIOReadableType
    */
 
   GWIOVariableType<GWOnOffValue> enabled();
-
-  /**
-   * @return The effect level value
-   */
-
-  GWIOVariableType<Integer> effectLevel();
-
-  /**
-   * @return The direct mix value
-   */
-
-  GWIOVariableType<Integer> directMix();
 }

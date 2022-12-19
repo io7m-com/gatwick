@@ -25,13 +25,13 @@ import com.io7m.gatwick.controller.main.internal.generated.StructPatchPedalFX;
 import com.io7m.gatwick.device.api.GWDeviceException;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 
-final class GWPatchEffectPFXBlock
+final class GWPatchEffectBlockPFX
   extends GWPatchEffectBlock
   implements GWPatchEffectBlockPFXType
 {
   private final StructPatchPedalFX pfx;
 
-  GWPatchEffectPFXBlock(
+  GWPatchEffectBlockPFX(
     final StructPatchPedalFX f_pedalfx)
   {
     this.pfx = f_pedalfx;

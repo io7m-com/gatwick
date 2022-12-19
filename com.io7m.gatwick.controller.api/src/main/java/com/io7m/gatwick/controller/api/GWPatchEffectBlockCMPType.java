@@ -20,10 +20,10 @@ package com.io7m.gatwick.controller.api;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 
 /**
- * The patch PFX effect block.
+ * The patch CMP effect block.
  */
 
-public interface GWPatchEffectBlockPFXType
+public interface GWPatchEffectBlockCMPType
   extends GWPatchEffectBlockType
 {
   /**
@@ -39,50 +39,44 @@ public interface GWPatchEffectBlockPFXType
   GWIOVariableType<Integer> directMix();
 
   /**
-   * @return The effect type
+   * @return The compressor type
    */
 
-  GWIOVariableType<GWPatchPedalFXTypeValue> type();
+  GWIOVariableType<GWPatchCompTypeValue> type();
 
   /**
-   * @return The wah type
+   * @return The sustain
    */
 
-  GWIOVariableType<GWPatchPedalFXWahTypeValue> wahType();
+  GWIOVariableType<Integer> sustain();
 
   /**
-   * @return The wah pedal position
+   * @return The attack
    */
 
-  GWIOVariableType<Integer> wahPosition();
+  GWIOVariableType<Integer> attack();
 
   /**
-   * @return The pedal minimum position
+   * @return The level
    */
 
-  GWIOVariableType<Integer> pedalMinimum();
+  GWIOVariableType<Integer> level();
 
   /**
-   * @return The pedal maximum position
+   * @return The tone
    */
 
-  GWIOVariableType<Integer> pedalMaximum();
+  GWIOVariableType<Integer> tone();
 
   /**
-   * @return The pitch bend pedal position
+   * @return The compression ratio
    */
 
-  GWIOVariableType<Integer> bendPosition();
+  GWIOVariableType<GWPatchCompRatioValue> ratio();
 
   /**
-   * @return The pitch bend minimum pitch
+   * @return The compression threshold
    */
 
-  GWIOVariableType<Integer> bendPitchMinimum();
-
-  /**
-   * @return The pitch bend maximum pitch
-   */
-
-  GWIOVariableType<Integer> bendPitchMaximum();
+  GWIOVariableType<Integer> threshold();
 }
