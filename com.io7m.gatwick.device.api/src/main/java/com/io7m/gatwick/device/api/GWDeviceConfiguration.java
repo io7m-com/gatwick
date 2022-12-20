@@ -23,28 +23,38 @@ import java.util.regex.Pattern;
 /**
  * Device configuration information.
  *
- * @param namePattern    Only try to open MIDI devices with a name matching this
- *                       pattern
- * @param openTimeout    The maximum length of time to wait until a device is
- *                       open
- * @param messageTimeout The maximum length of time to wait for a command
- *                       response
+ * @param namePattern           Only try to open MIDI devices with a name
+ *                              matching this pattern
+ * @param openTimeout           The maximum length of time to wait until a
+ *                              device is open
+ * @param messageTimeout        The maximum length of time to wait for a command
+ *                              response
+ * @param messageSendTries      The maximum number of times to try sending a
+ *                              message
+ * @param messageSendRetryPause The duration to pause before retrying a message
+ *                              send
  */
 
 public record GWDeviceConfiguration(
   Pattern namePattern,
   Duration openTimeout,
-  Duration messageTimeout)
+  Duration messageTimeout,
+  int messageSendTries,
+  Duration messageSendRetryPause)
 {
   /**
    * Device configuration information.
    *
-   * @param namePattern    Only try to open MIDI devices with a name matching
-   *                       this pattern
-   * @param openTimeout    The maximum length of time to wait until a device is
-   *                       open
-   * @param messageTimeout The maximum length of time to wait for a command
-   *                       response
+   * @param namePattern           Only try to open MIDI devices with a name
+   *                              matching this pattern
+   * @param openTimeout           The maximum length of time to wait until a
+   *                              device is open
+   * @param messageTimeout        The maximum length of time to wait for a
+   *                              command response
+   * @param messageSendTries      The maximum number of times to try sending a
+   *                              message
+   * @param messageSendRetryPause The duration to pause before retrying a
+   *                              message send
    */
 
   public GWDeviceConfiguration
@@ -52,5 +62,6 @@ public record GWDeviceConfiguration(
     Objects.requireNonNull(namePattern, "namePattern");
     Objects.requireNonNull(openTimeout, "openTimeout");
     Objects.requireNonNull(messageTimeout, "messageTimeout");
+    Objects.requireNonNull(messageSendRetryPause, "messageSendRetryPause");
   }
 }

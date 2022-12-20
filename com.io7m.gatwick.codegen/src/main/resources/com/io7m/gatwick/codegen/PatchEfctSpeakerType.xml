@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchEfct.SpeakerType"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="OFF" Value="0"/>
+  <Case Name="ORIGINAL" Value="1"/>
+  <Case Name="1x8" Value="2"/>
+  <Case Name="1x10" Value="3"/>
+  <Case Name="1x12" Value="4"/>
+  <Case Name="2x12" Value="5"/>
+  <Case Name="4x10" Value="6"/>
+  <Case Name="4x12" Value="7"/>
+  <Case Name="8x12" Value="8"/>
+  <Case Name="USER 1" Value="9"/>
+  <Case Name="USER 2" Value="10"/>
+  <Case Name="USER 3" Value="11"/>
+  <Case Name="USER 4" Value="12"/>
+  <Case Name="B1x15" Value="13"/>
+  <Case Name="B1x18" Value="14"/>
+  <Case Name="B2x15" Value="15"/>
+  <Case Name="B4x10" Value="16"/>
+  <Case Name="B8x10" Value="17"/>
+  <Case Name="USER 5" Value="18"/>
+  <Case Name="USER 6" Value="19"/>
+  <Case Name="USER 7" Value="20"/>
+  <Case Name="USER 8" Value="21"/>
+  <Case Name="USER 9" Value="22"/>
+  <Case Name="USER 10" Value="23"/>
+  <Case Name="USER 11" Value="24"/>
+  <Case Name="USER 12" Value="25"/>
+  <Case Name="USER 13" Value="26"/>
+  <Case Name="USER 14" Value="27"/>
+  <Case Name="USER 15" Value="28"/>
+  <Case Name="USER 16" Value="29"/>
+  <Case Name="1x12 2" Value="30"/>
+  <Case Name="2x12 2" Value="31"/>
+  <Case Name="2x12 3" Value="32"/>
+  <Case Name="2x12 4" Value="33"/>
+  <Case Name="2x12 5" Value="34"/>
+  <Case Name="4x10 2" Value="35"/>
+  <Case Name="4x12 2" Value="36"/>
+  <Case Name="4x12 3" Value="37"/>
+  <Case Name="4x12 4" Value="38"/>
+  <Case Name="4x12 5" Value="39"/>
+</Enumeration>

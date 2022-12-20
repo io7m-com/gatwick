@@ -17,6 +17,7 @@
 
 package com.io7m.gatwick.codegen.internal;
 
+import com.io7m.gatwick.codegen.jaxb.ParameterChain;
 import com.io7m.gatwick.codegen.jaxb.ParameterEnumerated;
 import com.io7m.gatwick.codegen.jaxb.ParameterFractional;
 import com.io7m.gatwick.codegen.jaxb.ParameterHighCut;
@@ -87,10 +88,19 @@ public final class GWParameterSizes
     if (p instanceof ParameterFractional pp) {
       return sizeOf(pp);
     }
+    if (p instanceof ParameterChain pp) {
+      return sizeOf(pp);
+    }
 
     throw new IllegalArgumentException(
       "Unrecognized parameter type: %s".formatted(p)
     );
+  }
+
+  private static long sizeOf(
+    final ParameterChain p)
+  {
+    return 49L;
   }
 
   private static long sizeOf(

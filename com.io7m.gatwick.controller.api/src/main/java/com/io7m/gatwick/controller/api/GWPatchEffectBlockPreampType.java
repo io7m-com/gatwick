@@ -27,6 +27,12 @@ public interface GWPatchEffectBlockPreampType
   extends GWPatchEffectBlockType
 {
   /**
+   * @return The on/off value
+   */
+
+  GWIOVariableType<GWOnOffValue> enabled();
+
+  /**
    * @return The preamp type
    */
 

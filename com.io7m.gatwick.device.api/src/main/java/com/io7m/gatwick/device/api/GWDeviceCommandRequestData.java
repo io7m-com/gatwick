@@ -39,4 +39,14 @@ public record GWDeviceCommandRequestData(
   {
     return GWDeviceResponseRequestData.class;
   }
+
+  @Override
+  public String toString()
+  {
+    return String.format(
+      "[GWDeviceCommandRequestData 0x%08x %d]",
+      Integer.valueOf(this.address),
+      Integer.valueOf(this.size)
+    );
+  }
 }

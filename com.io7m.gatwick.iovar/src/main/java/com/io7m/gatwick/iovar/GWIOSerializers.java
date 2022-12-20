@@ -16,6 +16,7 @@
 
 package com.io7m.gatwick.iovar;
 
+import java.nio.ByteBuffer;
 import java.util.Objects;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
@@ -427,5 +428,27 @@ public final class GWIOSerializers
       final var physical = base.deserializeFrom(buffer);
       return Double.valueOf(scale * physical.doubleValue());
     };
+  }
+
+  /**
+   * @return A deserializer for raw values
+   */
+
+  public static GWIOVariableDeserializeType<ByteBuffer> rawDeserializer()
+  {
+    return buffer -> {
+      final var out = ByteBuffer.allocate(buffer.remaining());
+      out.put(buffer);
+      return out;
+    };
+  }
+
+  /**
+   * @return A serializer for raw values
+   */
+
+  public static GWIOVariableSerializeType<ByteBuffer> rawSerializer()
+  {
+    return ByteBuffer::put;
   }
 }

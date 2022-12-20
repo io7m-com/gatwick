@@ -389,6 +389,9 @@ public final class GWEnumerations
   {
     final var text =
       name.replace(" ", "_")
+        .replace("(", "_")
+        .replace(")", "_")
+        .replace("#", "_SHARP")
         .replace("->", "_TO_")
         .replace(".", "_")
         .replace("-", "_NEGATIVE_")

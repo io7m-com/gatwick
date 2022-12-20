@@ -2,102 +2,53 @@
 
 <Enumeration Name="ChainElement"
              xmlns="urn:com.io7m.gatwick:1">
-  <Case Name="COMPRESSOR"
-        Value="0"/>
-  <Case Name="DISTORTION 1"
-        Value="1"/>
-  <Case Name="DISTORTION 2"
-        Value="2"/>
-  <Case Name="AIRD PREAMP 1"
-        Value="3"/>
-  <Case Name="AIRD PREAMP 2"
-        Value="4"/>
-  <Case Name="NOISE SUPPRESSOR 1"
-        Value="5"/>
-  <Case Name="NOISE SUPPRESSOR 2"
-        Value="6"/>
-  <Case Name="FX 1"
-        Value="7"/>
-  <Case Name="FX 2"
-        Value="8"/>
-  <Case Name="FX 3"
-        Value="9"/>
-  <Case Name="EQUALIZER 1"
-        Value="10"/>
-  <Case Name="EQUALIZER 2"
-        Value="11"/>
-  <Case Name="EQUALIZER 3"
-        Value="12"/>
-  <Case Name="EQUALIZER 4"
-        Value="13"/>
-  <Case Name="CHORUS"
-        Value="14"/>
-  <Case Name="DELAY 1"
-        Value="15"/>
-  <Case Name="DELAY 2"
-        Value="16"/>
-  <Case Name="DELAY 3"
-        Value="17"/>
-  <Case Name="DELAY 4"
-        Value="18"/>
-  <Case Name="MASTER DELAY"
-        Value="19"/>
-  <Case Name="RESERVED_20"
-        Value="20"/>
-  <Case Name="REVERB"
-        Value="21"/>
-  <Case Name="FOOT VOLUME"
-        Value="22"/>
-  <Case Name="PEDAL FX"
-        Value="23"/>
-  <Case Name="SEND/RETURN 1"
-        Value="24"/>
-  <Case Name="SEND/RETURN 2"
-        Value="25"/>
-  <Case Name="LOOPER"
-        Value="26"/>
-  <Case Name="SUB SP.SIMULATOR L"
-        Value="27"/>
-  <Case Name="SUB SP.SIMULATOR R"
-        Value="28"/>
-  <Case Name="MAIN SP.SIMULATOR L"
-        Value="29"/>
-  <Case Name="MAIN SP.SIMULATOR R"
-        Value="30"/>
-  <Case Name="RESERVED_31"
-        Value="31"/>
-  <Case Name="RESERVED_32"
-        Value="32"/>
-  <Case Name="RESERVED_33"
-        Value="33"/>
-  <Case Name="RESERVED_34"
-        Value="34"/>
-  <Case Name="DIVIDER 1"
-        Value="35"/>
-  <Case Name="BRANCH SPLIT1"
-        Value="36"/>
-  <Case Name="MIXER 1"
-        Value="37"/>
-  <Case Name="DIVIDER 2"
-        Value="38"/>
-  <Case Name="BRANCH SPLIT2"
-        Value="39"/>
-  <Case Name="MIXER 2"
-        Value="40"/>
-  <Case Name="DIVIDER 3"
-        Value="41"/>
-  <Case Name="BRANCH SPLIT3"
-        Value="42"/>
-  <Case Name="MIXER 3"
-        Value="43"/>
-  <Case Name="RESERVED_44"
-        Value="44"/>
-  <Case Name="SUB OUT L"
-        Value="45"/>
-  <Case Name="SUB OUT R"
-        Value="46"/>
-  <Case Name="MAIN OUT L"
-        Value="47"/>
-  <Case Name="MAIN OUT R"
-        Value="48"/>
+  <Case Value="0" Name="COMPRESSOR"/>
+  <Case Value="1" Name="DISTORTION 1"/>
+  <Case Value="2" Name="DISTORTION 2"/>
+  <Case Value="3" Name="AIRD PREAMP 1"/>
+  <Case Value="4" Name="AIRD PREAMP 2"/>
+  <Case Value="5" Name="NOISE SUPPRESSOR 1"/>
+  <Case Value="6" Name="NOISE SUPPRESSOR 2"/>
+  <Case Value="7" Name="FX 1"/>
+  <Case Value="8" Name="FX 2"/>
+  <Case Value="9" Name="FX 3"/>
+  <Case Value="10" Name="EQUALIZER 1"/>
+  <Case Value="11" Name="EQUALIZER 2"/>
+  <Case Value="12" Name="EQUALIZER 3"/>
+  <Case Value="13" Name="EQUALIZER 4"/>
+  <Case Value="14" Name="CHORUS"/>
+  <Case Value="15" Name="DELAY 1"/>
+  <Case Value="16" Name="DELAY 2"/>
+  <Case Value="17" Name="DELAY 3"/>
+  <Case Value="18" Name="DELAY 4"/>
+  <Case Value="19" Name="MASTER DELAY"/>
+  <Case Value="20" Name="FX 4"/>
+  <Case Value="21" Name="REVERB"/>
+  <Case Value="22" Name="FOOT VOLUME"/>
+  <Case Value="23" Name="PEDAL FX"/>
+  <Case Value="24" Name="SEND/RETURN 1"/>
+  <Case Value="25" Name="SEND/RETURN 2"/>
+  <Case Value="26" Name="LOOPER"/>
+  <Case Value="27" Name="SUB SP.SIMULATOR L"/>
+  <Case Value="28" Name="SUB SP.SIMULATOR R"/>
+  <Case Value="29" Name="MAIN SP.SIMULATOR L"/>
+  <Case Value="30" Name="MAIN SP.SIMULATOR R"/>
+  <Case Value="31" Name="BYPASS SUB L"/>
+  <Case Value="32" Name="BYPASS SUB R"/>
+  <Case Value="33" Name="BYPASS MAIN L"/>
+  <Case Value="34" Name="BYPASS MAIN R"/>
+  <Case Value="35" Name="DIVIDER 1"/>
+  <Case Value="36" Name="BRANCH SPLIT1"/>
+  <Case Value="37" Name="MIXER 1"/>
+  <Case Value="38" Name="DIVIDER 2"/>
+  <Case Value="39" Name="BRANCH SPLIT2"/>
+  <Case Value="40" Name="MIXER 2"/>
+  <Case Value="41" Name="DIVIDER 3"/>
+  <Case Value="42" Name="BRANCH SPLIT3"/>
+  <Case Value="43" Name="MIXER 3"/>
+  <Case Value="44" Name="RESERVED_44"/>
+  <Case Value="45" Name="SUB OUT L"/>
+  <Case Value="46" Name="SUB OUT R"/>
+  <Case Value="47" Name="MAIN OUT L"/>
+  <Case Value="48" Name="MAIN OUT R"/>
 </Enumeration>

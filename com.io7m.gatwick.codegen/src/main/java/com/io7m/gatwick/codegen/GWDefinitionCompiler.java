@@ -187,7 +187,7 @@ public final class GWDefinitionCompiler
     }
 
     final var parameters =
-      structure.getParameterEnumeratedOrParameterFractionalOrParameterHighCut();
+      structure.getParameterChainOrParameterEnumeratedOrParameterFractional();
 
     parameters.sort((o1, o2) -> {
       return Long.compareUnsigned(offsetOf(o1), offsetOf(o2));

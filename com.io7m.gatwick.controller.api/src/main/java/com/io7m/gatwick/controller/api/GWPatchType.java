@@ -65,4 +65,28 @@ public interface GWPatchType
    */
 
   GWPatchEffectBlockPreampType preamp2();
+
+  /**
+   * @return The divider 1 block
+   */
+
+  GWPatchEffectBlockDividerType divider1();
+
+  /**
+   * @return The divider 2 block
+   */
+
+  GWPatchEffectBlockDividerType divider2();
+
+  /**
+   * @return The divider 3 block
+   */
+
+  GWPatchEffectBlockDividerType divider3();
+
+  /**
+   * @return The current effects chain
+   */
+
+  GWIOVariableType<GWChain> chain();
 }

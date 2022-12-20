@@ -14,11 +14,9 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-
 package com.io7m.gatwick.controller.api;
 
 import com.io7m.gatwick.iovar.GWIOReadableType;
-import com.io7m.gatwick.iovar.GWIOVariableType;
 
 /**
  * A patch effect block.
@@ -26,9 +24,5 @@ import com.io7m.gatwick.iovar.GWIOVariableType;
 
 public interface GWPatchEffectBlockType extends GWIOReadableType
 {
-  /**
-   * @return The on/off value
-   */
 
-  GWIOVariableType<GWOnOffValue> enabled();
 }

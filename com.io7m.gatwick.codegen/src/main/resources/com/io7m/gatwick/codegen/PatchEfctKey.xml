@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchEfct.Key"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="C(Am)" Value="0"/>
+  <Case Name="Db(Bbm)" Value="1"/>
+  <Case Name="D(Bm)" Value="2"/>
+  <Case Name="Eb(Cm)" Value="3"/>
+  <Case Name="E(C#m)" Value="4"/>
+  <Case Name="F(Dm)" Value="5"/>
+  <Case Name="F#(D#m)" Value="6"/>
+  <Case Name="G(Em)" Value="7"/>
+  <Case Name="Ab(Fm)" Value="8"/>
+  <Case Name="A(F#m)" Value="9"/>
+  <Case Name="Bb(Gm)" Value="10"/>
+  <Case Name="B(G#m)" Value="11"/>
+</Enumeration>

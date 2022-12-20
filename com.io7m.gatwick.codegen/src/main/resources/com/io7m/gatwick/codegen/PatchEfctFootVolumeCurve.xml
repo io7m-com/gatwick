@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchEfct.FootVolumeCurve"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="SLOW1"
+        Value="0"/>
+  <Case Name="SLOW2"
+        Value="1"/>
+  <Case Name="NORMAL"
+        Value="2"/>
+  <Case Name="FAST"
+        Value="3"/>
+</Enumeration>

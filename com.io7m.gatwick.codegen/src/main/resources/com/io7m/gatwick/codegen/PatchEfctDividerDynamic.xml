@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchEfct.DividerDynamic"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="OFF" Value="0"/>
+  <Case Name="POLAR_POSITIVE" Value="1"/>
+  <Case Name="POLAR_NEGATIVE" Value="2"/>
+</Enumeration>

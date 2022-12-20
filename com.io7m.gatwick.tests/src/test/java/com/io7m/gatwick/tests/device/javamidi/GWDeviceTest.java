@@ -122,7 +122,9 @@ public final class GWDeviceTest
         this.devices.openDevice(new GWDeviceConfiguration(
           Pattern.compile(".*"),
           Duration.ofSeconds(10L),
-          Duration.ofSeconds(10L)
+          Duration.ofSeconds(10L),
+          1,
+          Duration.ofMillis(100L)
         ));
       });
 
@@ -156,7 +158,9 @@ public final class GWDeviceTest
         this.devices.openDevice(new GWDeviceConfiguration(
           Pattern.compile(".*"),
           Duration.ofSeconds(10L),
-          Duration.ofSeconds(10L)
+          Duration.ofSeconds(10L),
+          1,
+          Duration.ofMillis(100L)
         ));
       });
 
@@ -203,6 +207,8 @@ public final class GWDeviceTest
         this.devices.openDevice(new GWDeviceConfiguration(
           Pattern.compile(".*"),
           Duration.ofMillis(100L),
+          Duration.ofMillis(100L),
+          1,
           Duration.ofMillis(100L)
         ));
       });
@@ -311,6 +317,8 @@ public final class GWDeviceTest
       this.devices.openDevice(new GWDeviceConfiguration(
         Pattern.compile(".*"),
         Duration.ofMillis(100L),
+        Duration.ofMillis(100L),
+        1,
         Duration.ofMillis(100L)
       ));
 
@@ -406,6 +414,8 @@ public final class GWDeviceTest
         this.devices.openDevice(new GWDeviceConfiguration(
           Pattern.compile(".*"),
           Duration.ofMillis(100L),
+          Duration.ofMillis(100L),
+          1,
           Duration.ofMillis(100L)
         ));
       });
@@ -494,6 +504,8 @@ public final class GWDeviceTest
         this.devices.openDevice(new GWDeviceConfiguration(
           Pattern.compile(".*"),
           Duration.ofMillis(100L),
+          Duration.ofMillis(100L),
+          1,
           Duration.ofMillis(100L)
         ));
       });
@@ -543,7 +555,7 @@ public final class GWDeviceTest
      */
 
     doAnswer(invocation -> {
-      currentReceiver.set(invocation.getArgument(0, Receiver.class));
+      this.currentReceiver.set(invocation.getArgument(0, Receiver.class));
       return "ok";
     }).when(this.midiTransmitter)
       .setReceiver(any());
@@ -582,6 +594,8 @@ public final class GWDeviceTest
         this.devices.openDevice(new GWDeviceConfiguration(
           Pattern.compile(".*"),
           Duration.ofMillis(100L),
+          Duration.ofMillis(100L),
+          1,
           Duration.ofMillis(100L)
         ));
       });
@@ -683,7 +697,8 @@ public final class GWDeviceTest
   }
 
   /**
-   * Sending a read command times out if nothing comes back.
+   * Sending a read command times out if nothing comes back. The request
+   * is attempted three times.
    *
    * @throws Exception On errors
    */
@@ -698,7 +713,6 @@ public final class GWDeviceTest
         4
       );
 
-    final GWDeviceResponseRequestData response;
     try (var device = this.openDeviceCorrectly()) {
 
       /*
@@ -716,6 +730,9 @@ public final class GWDeviceTest
 
       assertEquals(DEVICE_TIMED_OUT, ex.errorCode());
     }
+
+    verify(this.midiReceiver, new Times(4))
+      .send(any(), eq(-1L));
   }
 
   /**
@@ -734,7 +751,6 @@ public final class GWDeviceTest
         4
       );
 
-    final GWDeviceResponseRequestData response;
     try (var device = this.openDeviceCorrectly()) {
 
       /*
@@ -881,7 +897,9 @@ public final class GWDeviceTest
       this.devices.openDevice(new GWDeviceConfiguration(
       Pattern.compile(".*"),
       Duration.ofMillis(100L),
-      Duration.ofMillis(100L)
+      Duration.ofMillis(100L),
+      3,
+      Duration.ofMillis(50L)
     ));
 
     assertTrue(device.toString().contains("GWDeviceJavaMIDI"));

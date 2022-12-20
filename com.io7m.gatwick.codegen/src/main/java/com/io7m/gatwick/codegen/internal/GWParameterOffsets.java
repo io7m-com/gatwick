@@ -17,6 +17,7 @@
 
 package com.io7m.gatwick.codegen.internal;
 
+import com.io7m.gatwick.codegen.jaxb.ParameterChain;
 import com.io7m.gatwick.codegen.jaxb.ParameterEnumerated;
 import com.io7m.gatwick.codegen.jaxb.ParameterFractional;
 import com.io7m.gatwick.codegen.jaxb.ParameterHighCut;
@@ -86,10 +87,19 @@ public final class GWParameterOffsets
     if (p instanceof StructureReference pp) {
       return offsetOf(pp);
     }
+    if (p instanceof ParameterChain pp) {
+      return offsetOf(pp);
+    }
 
     throw new IllegalArgumentException(
       "Unrecognized parameter type: %s".formatted(p)
     );
+  }
+
+  private static long offsetOf(
+    final ParameterChain p)
+  {
+    return parseHex(p.getOffset());
   }
 
   private static long offsetOf(

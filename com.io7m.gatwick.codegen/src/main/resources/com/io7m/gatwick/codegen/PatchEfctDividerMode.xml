@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchEfct.DividerMode"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="SINGLE" Value="0"/>
+  <Case Name="DUAL" Value="1"/>
+</Enumeration>

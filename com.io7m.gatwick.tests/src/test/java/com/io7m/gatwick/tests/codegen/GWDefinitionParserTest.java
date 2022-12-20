@@ -43,6 +43,6 @@ public final class GWDefinitionParserTest
     final var typeObjects =
       types.getEnumerationOrStructure();
 
-    assertEquals(163, typeObjects.size());
+    assertEquals(175, typeObjects.size());
   }
 }

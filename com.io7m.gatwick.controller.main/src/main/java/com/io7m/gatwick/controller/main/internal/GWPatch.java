@@ -16,15 +16,21 @@
 
 package com.io7m.gatwick.controller.main.internal;
 
+import com.io7m.gatwick.controller.api.GWChain;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockCMPType;
+import com.io7m.gatwick.controller.api.GWPatchEffectBlockDividerType;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockNSType;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockPFXType;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockPreampType;
 import com.io7m.gatwick.controller.api.GWPatchType;
 import com.io7m.gatwick.controller.main.internal.generated.StructPatch;
 import com.io7m.gatwick.device.api.GWDeviceType;
+import com.io7m.gatwick.iovar.GWIOVariable;
+import com.io7m.gatwick.iovar.GWIOVariableInformation;
 import com.io7m.gatwick.iovar.GWIOVariableType;
+import com.io7m.jattribute.core.Attributes;
 
+import java.nio.ByteBuffer;
 import java.util.Objects;
 
 final class GWPatch implements GWPatchType
@@ -37,9 +43,15 @@ final class GWPatch implements GWPatchType
   private final GWPatchEffectBlockNS ns2;
   private final GWPatchEffectBlockPreamp preamp1;
   private final GWPatchEffectBlockPreamp preamp2;
+  private final GWPatchEffectBlockDivider div1;
+  private final GWPatchEffectBlockDivider div2;
+  private final GWPatchEffectBlockDivider div3;
+  private final GWIOVariableType<ByteBuffer> chainBase;
+  private final GWIOVariableType<GWChain> chain;
 
   GWPatch(
     final GWDeviceType inDevice,
+    final Attributes attributes,
     final StructPatch inPatchMemory)
   {
     this.device =
@@ -58,6 +70,29 @@ final class GWPatch implements GWPatchType
       new GWPatchEffectBlockPreamp(this.patchMemory.f_preampa);
     this.preamp2 =
       new GWPatchEffectBlockPreamp(this.patchMemory.f_preampb);
+    this.div1 =
+      new GWPatchEffectBlockDivider(this.patchMemory.f_efct, 1);
+    this.div2 =
+      new GWPatchEffectBlockDivider(this.patchMemory.f_efct, 2);
+    this.div3 =
+      new GWPatchEffectBlockDivider(this.patchMemory.f_efct, 3);
+    this.chainBase =
+      this.patchMemory.f_efct.f_chain;
+
+    this.chain =
+      GWIOVariable.create(
+        this.device,
+        attributes,
+        GWChainSerializers.serializer(),
+        GWChainSerializers.deserializer(),
+        49,
+        new GWIOVariableInformation<>(
+          GWChain.defaultChain(),
+          GWChain.defaultChain(),
+          GWChain.defaultChain()
+        ),
+        this.chainBase.address()
+      );
   }
 
   @Override
@@ -100,5 +135,29 @@ final class GWPatch implements GWPatchType
   public GWPatchEffectBlockPreampType preamp2()
   {
     return this.preamp2;
+  }
+
+  @Override
+  public GWPatchEffectBlockDividerType divider1()
+  {
+    return this.div1;
+  }
+
+  @Override
+  public GWPatchEffectBlockDividerType divider2()
+  {
+    return this.div2;
+  }
+
+  @Override
+  public GWPatchEffectBlockDividerType divider3()
+  {
+    return this.div3;
+  }
+
+  @Override
+  public GWIOVariableType<GWChain> chain()
+  {
+    return this.chain;
   }
 }

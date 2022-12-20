@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchEfct.DividerCutoffFreq"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="100Hz" Value="0"/>
+  <Case Name="125Hz" Value="1"/>
+  <Case Name="160Hz" Value="2"/>
+  <Case Name="200Hz" Value="3"/>
+  <Case Name="250Hz" Value="4"/>
+  <Case Name="315Hz" Value="5"/>
+  <Case Name="400Hz" Value="6"/>
+  <Case Name="500Hz" Value="7"/>
+  <Case Name="630Hz" Value="8"/>
+  <Case Name="800Hz" Value="9"/>
+  <Case Name="1.00kHz" Value="10"/>
+  <Case Name="1.25kHz" Value="11"/>
+  <Case Name="1.60kHz" Value="12"/>
+  <Case Name="2.00kHz" Value="13"/>
+  <Case Name="2.50kHz" Value="14"/>
+  <Case Name="3.15kHz" Value="15"/>
+  <Case Name="4.00kHz" Value="16"/>
+</Enumeration>

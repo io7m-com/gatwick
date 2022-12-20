@@ -16,8 +16,8 @@
 
 package com.io7m.gatwick.tests.device.javamidi;
 
+import com.io7m.gatwick.controller.api.GWChainElementValue;
 import com.io7m.gatwick.device.api.GWDeviceCommandRequestData;
-import com.io7m.gatwick.device.api.GWDeviceCommandSetData;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDI;
 import org.slf4j.Logger;
@@ -49,7 +49,9 @@ public final class GWDeviceDemo
       new GWDeviceConfiguration(
         Pattern.compile("GT1000 \\[.*\\]"),
         Duration.ofSeconds(5L),
-        Duration.ofSeconds(1L)
+        Duration.ofSeconds(1L),
+        3,
+        Duration.ofMillis(10L)
       );
 
     try (var device = devices.openDevice(configuration)) {
@@ -89,10 +91,18 @@ public final class GWDeviceDemo
       );
 
       {
-        final var address = 0x1000_0000;
+        final var address = 0x10001068;
 
         final var response =
-          device.sendCommand(new GWDeviceCommandRequestData(address, 0x7e));
+          device.sendCommand(new GWDeviceCommandRequestData(address, 49));
+
+        for (int index = 0; index < 49; ++index) {
+          final var x = (int) response.data()[index];
+          System.out.printf(
+            "%s,%n",
+            GWChainElementValue.ofInt(x)
+          );
+        }
 
         LOG.debug(
           "[0x{}] {} {} (0x{}) ('{}')",

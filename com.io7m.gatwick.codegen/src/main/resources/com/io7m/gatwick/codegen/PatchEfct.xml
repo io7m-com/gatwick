@@ -4,9 +4,467 @@
            ExpectedSize="0x0120"
            xmlns="urn:com.io7m.gatwick:1">
 
-  <ParameterIntegerDirect Name="UNUSED"
-                          Offset="0x0000"
-                          Default="0"
+  <ParameterFractional Name="FOOT VOLUME:VOLUME MIN"
+                       Offset="0x0000"
+                       MinInclusive="0"
+                       MaxInclusive="100"
+                       Default="0"
+                       PhysicalMinInclusive="0"
+                       PhysicalMaxInclusive="1000"/>
+
+  <ParameterFractional Name="FOOT VOLUME:VOLUME MAX"
+                       Offset="0x0004"
+                       MinInclusive="0"
+                       MaxInclusive="100"
+                       Default="100"
+                       PhysicalMinInclusive="0"
+                       PhysicalMaxInclusive="1000"/>
+
+  <ParameterFractional Name="FOOT VOLUME:PEDAL POSITION"
+                       Offset="0x0008"
+                       MinInclusive="0"
+                       MaxInclusive="100"
+                       Default="100"
+                       PhysicalMinInclusive="0"
+                       PhysicalMaxInclusive="1000"/>
+
+  <ParameterEnumerated Name="FOOT VOLUME:VOLUME CURVE"
+                       Offset="0x000c"
+                       Type="PatchEfct.FootVolumeCurve"/>
+
+  <!-- DIV1 -->
+
+  <ParameterEnumerated Name="DIV1:MODE"
+                       Offset="0x000d"
+                       Type="PatchEfct.DividerMode"/>
+
+  <ParameterEnumerated Name="DIV1:CH SELECT"
+                       Offset="0x000e"
+                       Type="PatchEfct.DividerChannelSelect"/>
+
+  <!-- A -->
+
+  <ParameterEnumerated Name="DIV1 A:DYNAMIC"
+                       Offset="0x000f"
+                       Type="PatchEfct.DividerDynamic"/>
+
+  <ParameterIntegerDirect Name="DIV1 A:DYNA SENS"
+                          Offset="0x0010"
                           MinInclusive="0"
-                          MaxInclusive="0"/>
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterEnumerated Name="DIV1 A:FILTER"
+                       Offset="0x0011"
+                       Type="PatchEfct.DividerFilter"/>
+
+  <ParameterEnumerated Name="DIV1 A:CUTOFF FREQ"
+                       Offset="0x0012"
+                       Type="PatchEfct.DividerCutoffFreq"/>
+
+  <!-- B -->
+
+  <ParameterEnumerated Name="DIV1 B:DYNAMIC"
+                       Offset="0x0013"
+                       Type="PatchEfct.DividerDynamic"/>
+
+  <ParameterIntegerDirect Name="DIV1 B:DYNA SENS"
+                          Offset="0x0014"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterEnumerated Name="DIV1 B:FILTER"
+                       Offset="0x0015"
+                       Type="PatchEfct.DividerFilter"/>
+
+  <ParameterEnumerated Name="DIV1 B:CUTOFF FREQ"
+                       Offset="0x0016"
+                       Type="PatchEfct.DividerCutoffFreq"/>
+
+  <!-- MIX1 -->
+
+  <ParameterEnumerated Name="MIX1:MODE"
+                       Offset="0x0017"
+                       Type="PatchEfct.MixMode"/>
+
+  <ParameterIntegerDirect Name="MIX1:A/B BALANCE"
+                          Offset="0x0018"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterIntegerDirect Name="MIX1:SPREAD"
+                          Offset="0x0019"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <!-- DIV2 -->
+
+  <ParameterEnumerated Name="DIV2:MODE"
+                       Offset="0x001a"
+                       Type="PatchEfct.DividerMode"/>
+
+  <ParameterEnumerated Name="DIV2:CH SELECT"
+                       Offset="0x001b"
+                       Type="PatchEfct.DividerChannelSelect"/>
+
+  <!-- A -->
+
+  <ParameterEnumerated Name="DIV2 A:DYNAMIC"
+                       Offset="0x001c"
+                       Type="PatchEfct.DividerDynamic"/>
+
+  <ParameterIntegerDirect Name="DIV2 A:DYNA SENS"
+                          Offset="0x001d"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterEnumerated Name="DIV2 A:FILTER"
+                       Offset="0x001e"
+                       Type="PatchEfct.DividerFilter"/>
+
+  <ParameterEnumerated Name="DIV2 A:CUTOFF FREQ"
+                       Offset="0x001f"
+                       Type="PatchEfct.DividerCutoffFreq"/>
+
+  <!-- B -->
+
+  <ParameterEnumerated Name="DIV2 B:DYNAMIC"
+                       Offset="0x0020"
+                       Type="PatchEfct.DividerDynamic"/>
+
+  <ParameterIntegerDirect Name="DIV2 B:DYNA SENS"
+                          Offset="0x0021"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterEnumerated Name="DIV2 B:FILTER"
+                       Offset="0x0022"
+                       Type="PatchEfct.DividerFilter"/>
+
+  <ParameterEnumerated Name="DIV2 B:CUTOFF FREQ"
+                       Offset="0x0023"
+                       Type="PatchEfct.DividerCutoffFreq"/>
+
+  <!-- MIX2 -->
+
+  <ParameterEnumerated Name="MIX2:MODE"
+                       Offset="0x0024"
+                       Type="PatchEfct.MixMode"/>
+
+  <ParameterIntegerDirect Name="MIX2:A/B BALANCE"
+                          Offset="0x0025"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterIntegerDirect Name="MIX2:SPREAD"
+                          Offset="0x0026"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <!-- DIV3 -->
+
+  <ParameterEnumerated Name="DIV3:MODE"
+                       Offset="0x0027"
+                       Type="PatchEfct.DividerMode"/>
+
+  <ParameterEnumerated Name="DIV3:CH SELECT"
+                       Offset="0x0028"
+                       Type="PatchEfct.DividerChannelSelect"/>
+
+  <!-- A -->
+
+  <ParameterEnumerated Name="DIV3 A:DYNAMIC"
+                       Offset="0x0029"
+                       Type="PatchEfct.DividerDynamic"/>
+
+  <ParameterIntegerDirect Name="DIV3 A:DYNA SENS"
+                          Offset="0x002a"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterEnumerated Name="DIV3 A:FILTER"
+                       Offset="0x002b"
+                       Type="PatchEfct.DividerFilter"/>
+
+  <ParameterEnumerated Name="DIV3 A:CUTOFF FREQ"
+                       Offset="0x002c"
+                       Type="PatchEfct.DividerCutoffFreq"/>
+
+  <!-- B -->
+
+  <ParameterEnumerated Name="DIV3 B:DYNAMIC"
+                       Offset="0x002d"
+                       Type="PatchEfct.DividerDynamic"/>
+
+  <ParameterIntegerDirect Name="DIV3 B:DYNA SENS"
+                          Offset="0x002e"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterEnumerated Name="DIV3 B:FILTER"
+                       Offset="0x002f"
+                       Type="PatchEfct.DividerFilter"/>
+
+  <ParameterEnumerated Name="DIV3 B:CUTOFF FREQ"
+                       Offset="0x0030"
+                       Type="PatchEfct.DividerCutoffFreq"/>
+
+  <!-- MIX3 -->
+
+  <ParameterEnumerated Name="MIX3:MODE"
+                       Offset="0x0031"
+                       Type="PatchEfct.MixMode"/>
+
+  <ParameterIntegerDirect Name="MIX3:A/B BALANCE"
+                          Offset="0x0032"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterIntegerDirect Name="MIX3:SPREAD"
+                          Offset="0x0033"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="50"/>
+
+  <ParameterEnumerated Name="SEND/RETURN 1/2:STEREO LINK"
+                       Offset="0x0034"
+                       Type="OnOff"/>
+
+  <!-- SEND/RETURN 1 -->
+
+  <ParameterEnumerated Name="SEND/RETURN 1:ON/OFF"
+                       Offset="0x0035"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="SEND/RETURN 1:MODE"
+                       Offset="0x0036"
+                       Type="PatchEfct.SendReturnMode"/>
+
+  <ParameterIntegerDirect Name="SEND/RETURN 1:SEND LEVEL"
+                          Offset="0x0037"
+                          MinInclusive="0"
+                          MaxInclusive="200"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="SEND/RETURN 1:RETURN LEVEL"
+                          Offset="0x0039"
+                          MinInclusive="0"
+                          MaxInclusive="200"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="SEND/RETURN 1:ADJUST"
+                          Offset="0x003b"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <!-- SEND/RETURN 2 -->
+
+  <ParameterEnumerated Name="SEND/RETURN 2:ON/OFF"
+                       Offset="0x003c"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="SEND/RETURN 2:MODE"
+                       Offset="0x003d"
+                       Type="PatchEfct.SendReturnMode"/>
+
+  <ParameterIntegerDirect Name="SEND/RETURN 2:SEND LEVEL"
+                          Offset="0x003e"
+                          MinInclusive="0"
+                          MaxInclusive="200"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="SEND/RETURN 2:RETURN LEVEL"
+                          Offset="0x0040"
+                          MinInclusive="0"
+                          MaxInclusive="200"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="SEND/RETURN 2:ADJUST"
+                          Offset="0x0042"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="LOOPER:PLAY LEVEL"
+                          Offset="0x0044"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <ParameterEnumerated Name="MAIN:STEREO LINK"
+                       Offset="0x0045"
+                       Type="OnOff"/>
+
+  <!-- MAIN L -->
+
+  <ParameterEnumerated Name="MAIN L:SP TYPE"
+                       Offset="0x0046"
+                       Type="PatchEfct.SpeakerType"/>
+
+  <ParameterEnumerated Name="MAIN L:MIC TYPE"
+                       Offset="0x0047"
+                       Type="PatchEfct.MicType"/>
+
+  <ParameterEnumerated Name="MAIN L:MIC DISTANCE"
+                       Offset="0x0048"
+                       Type="PatchEfct.MicDistance"/>
+
+  <ParameterIntegerDirect Name="MAIN L:MIC POSITION"
+                          Offset="0x0049"
+                          MinInclusive="0"
+                          MaxInclusive="10"
+                          Default="0"/>
+
+  <ParameterIntegerDirect Name="MAIN L:MIC LEVEL"
+                          Offset="0x004a"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="MAIN L:DIRECT MIX"
+                          Offset="0x004b"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <!-- MAIN R -->
+
+  <ParameterEnumerated Name="MAIN R:SP TYPE"
+                       Offset="0x004c"
+                       Type="PatchEfct.SpeakerType"/>
+
+  <ParameterEnumerated Name="MAIN R:MIC TYPE"
+                       Offset="0x004d"
+                       Type="PatchEfct.MicType"/>
+
+  <ParameterEnumerated Name="MAIN R:MIC DISTANCE"
+                       Offset="0x004e"
+                       Type="PatchEfct.MicDistance"/>
+
+  <ParameterIntegerDirect Name="MAIN R:MIC POSITION"
+                          Offset="0x004f"
+                          MinInclusive="0"
+                          MaxInclusive="10"
+                          Default="0"/>
+
+  <ParameterIntegerDirect Name="MAIN R:MIC LEVEL"
+                          Offset="0x0050"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="MAIN R:DIRECT MIX"
+                          Offset="0x0051"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <!-- SUB L -->
+
+  <ParameterEnumerated Name="SUB L:SP TYPE"
+                       Offset="0x0053"
+                       Type="PatchEfct.SpeakerType"/>
+
+  <ParameterEnumerated Name="SUB L:MIC TYPE"
+                       Offset="0x0054"
+                       Type="PatchEfct.MicType"/>
+
+  <ParameterEnumerated Name="SUB L:MIC DISTANCE"
+                       Offset="0x0055"
+                       Type="PatchEfct.MicDistance"/>
+
+  <ParameterIntegerDirect Name="SUB L:MIC POSITION"
+                          Offset="0x0056"
+                          MinInclusive="0"
+                          MaxInclusive="10"
+                          Default="0"/>
+
+  <ParameterIntegerDirect Name="SUB L:MIC LEVEL"
+                          Offset="0x0057"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="SUB L:DIRECT MIX"
+                          Offset="0x0058"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <!-- SUB R -->
+
+  <ParameterEnumerated Name="SUB R:SP TYPE"
+                       Offset="0x0059"
+                       Type="PatchEfct.SpeakerType"/>
+
+  <ParameterEnumerated Name="SUB R:MIC TYPE"
+                       Offset="0x005a"
+                       Type="PatchEfct.MicType"/>
+
+  <ParameterEnumerated Name="SUB R:MIC DISTANCE"
+                       Offset="0x005b"
+                       Type="PatchEfct.MicDistance"/>
+
+  <ParameterIntegerDirect Name="SUB R:MIC POSITION"
+                          Offset="0x005c"
+                          MinInclusive="0"
+                          MaxInclusive="10"
+                          Default="0"/>
+
+  <ParameterIntegerDirect Name="SUB R:MIC LEVEL"
+                          Offset="0x005d"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="SUB R:DIRECT MIX"
+                          Offset="0x005e"
+                          MinInclusive="0"
+                          MaxInclusive="100"
+                          Default="100"/>
+
+  <!-- MASTER -->
+
+  <ParameterIntegerDirect Name="MASTER:PATCH LEVEL"
+                          Offset="0x005f"
+                          MinInclusive="0"
+                          MaxInclusive="200"
+                          Default="100"/>
+
+  <ParameterIntegerDirect Name="MASTER:BPM"
+                          Offset="0x0061"
+                          MinInclusive="400"
+                          MaxInclusive="2500"
+                          Default="400"/>
+
+  <ParameterEnumerated Name="MASTER:KEY"
+                       Offset="0x0065"
+                       Type="PatchEfct.Key"/>
+
+  <ParameterEnumerated Name="MASTER:AMP CTL 1"
+                       Offset="0x0066"
+                       Type="OnOff"/>
+
+  <ParameterEnumerated Name="MASTER:AMP CTL 2"
+                       Offset="0x0067"
+                       Type="OnOff"/>
+
+  <ParameterChain Name="CHAIN"
+                  Offset="0x0068"/>
+
+  <ParameterEnumerated Name="MASTER:CARRYOVER"
+                       Offset="0x0119"
+                       Type="OnOff"/>
+
 </Structure>

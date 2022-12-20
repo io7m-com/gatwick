@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchEfct.MixMode"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="STEREO" Value="0"/>
+  <Case Name="PAN L/R" Value="1"/>
+</Enumeration>

@@ -16,8 +16,8 @@
 
 package com.io7m.gatwick.tests.controller;
 
+import com.io7m.gatwick.controller.api.GWChain;
 import com.io7m.gatwick.controller.api.GWControllerConfiguration;
-import com.io7m.gatwick.controller.api.GWOnOffValue;
 import com.io7m.gatwick.controller.main.GWControllers;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDI;
@@ -26,8 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.regex.Pattern;
-
-import static com.io7m.gatwick.controller.api.GWOnOffValue.ON;
 
 public final class GWControllerDemo
 {
@@ -52,7 +50,9 @@ public final class GWControllerDemo
       new GWDeviceConfiguration(
         Pattern.compile("GT1000 \\[.*\\]"),
         Duration.ofSeconds(5L),
-        Duration.ofSeconds(1L)
+        Duration.ofSeconds(1L),
+        3,
+        Duration.ofMillis(10L)
       );
 
     final var configuration =
@@ -60,8 +60,12 @@ public final class GWControllerDemo
 
     try (var controller = controllers.openController(configuration)) {
       final var patch = controller.patchCurrent();
-      patch.cmp().readFromDevice();
-      patch.cmp().enabled().set(ON);
+      patch.chain().readFromDevice();
+      final var chainNow = patch.chain().get();
+
+      for (final var e : chainNow.elements()) {
+        LOG.debug("{}", e);
+      }
     }
   }
 }

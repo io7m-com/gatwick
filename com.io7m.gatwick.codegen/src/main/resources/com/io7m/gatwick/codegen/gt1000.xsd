@@ -183,6 +183,17 @@
     </complexType>
   </element>
 
+  <element name="ParameterChain">
+    <complexType>
+      <attribute name="Name"
+                 type="string"
+                 use="required"/>
+      <attribute name="Offset"
+                 type="g:HexInteger"
+                 use="required"/>
+    </complexType>
+  </element>
+
   <element name="StructureReference">
     <complexType>
       <attribute name="Name"
@@ -202,6 +213,7 @@
       <sequence minOccurs="1"
                 maxOccurs="unbounded">
         <choice>
+          <element ref="g:ParameterChain"/>
           <element ref="g:ParameterEnumerated"/>
           <element ref="g:ParameterFractional"/>
           <element ref="g:ParameterHighCut"/>

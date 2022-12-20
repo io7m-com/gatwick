@@ -14,39 +14,8 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-
-package com.io7m.gatwick.controller.api;
-
-import com.io7m.gatwick.iovar.GWIOVariableType;
-
 /**
- * The patch NS effect block.
+ * GT-1000 controller (Test suite)
  */
 
-public interface GWPatchEffectBlockNSType
-  extends GWPatchEffectBlockType
-{
-  /**
-   * @return The on/off value
-   */
-
-  GWIOVariableType<GWOnOffValue> enabled();
-
-  /**
-   * @return The threshold below which is considered noise
-   */
-
-  GWIOVariableType<Integer> threshold();
-
-  /**
-   * @return The release time
-   */
-
-  GWIOVariableType<Integer> release();
-
-  /**
-   * @return The detection source
-   */
-
-  GWIOVariableType<GWPatchNSDetectValue> detect();
-}
+package com.io7m.gatwick.tests.iovar;

@@ -18,6 +18,7 @@
 package com.io7m.gatwick.codegen.internal;
 
 import com.io7m.gatwick.codegen.GWDefinitionCompilerConfiguration;
+import com.io7m.gatwick.codegen.jaxb.ParameterChain;
 import com.io7m.gatwick.codegen.jaxb.ParameterEnumerated;
 import com.io7m.gatwick.codegen.jaxb.ParameterFractional;
 import com.io7m.gatwick.codegen.jaxb.ParameterHighCut;
@@ -57,6 +58,7 @@ import com.io7m.jodist.ParameterizedTypeName;
 import com.io7m.jodist.TypeSpec;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
@@ -144,7 +146,7 @@ public final class GWStructures
         .addCode("this.baseAddress = inBaseAddress;\n");
 
     final var parameters =
-      structure.getParameterEnumeratedOrParameterFractionalOrParameterHighCut();
+      structure.getParameterChainOrParameterEnumeratedOrParameterFractional();
 
     for (final var p : parameters) {
       spec.addField(this.createField(p));
@@ -258,6 +260,12 @@ public final class GWStructures
   }
 
   private static String fieldNameFor(
+    final ParameterChain parameter)
+  {
+    return fieldName(parameter.getName());
+  }
+
+  private static String fieldNameFor(
     final Object parameter)
   {
     if (parameter instanceof ParameterString p) {
@@ -281,6 +289,8 @@ public final class GWStructures
     } else if (parameter instanceof ParameterHighCut p) {
       return fieldNameFor(p);
     } else if (parameter instanceof ParameterEnumerated p) {
+      return fieldNameFor(p);
+    } else if (parameter instanceof ParameterChain p) {
       return fieldNameFor(p);
     }
 
@@ -315,6 +325,8 @@ public final class GWStructures
       return this.createFieldHighCutInitializer(structure, p);
     } else if (parameter instanceof ParameterEnumerated p) {
       return this.createFieldEnumeratedInitializer(structure, p);
+    } else if (parameter instanceof ParameterChain p) {
+      return GWStructures.createFieldChainInitializer(structure, p);
     }
 
     throw new IllegalStateException(
@@ -347,11 +359,28 @@ public final class GWStructures
       return this.createFieldHighCut(p);
     } else if (parameter instanceof ParameterEnumerated p) {
       return this.createFieldEnumerated(p);
+    } else if (parameter instanceof ParameterChain p) {
+      return createFieldChain(p);
     }
 
     throw new IllegalStateException(
       "Unrecognized parameter type: %s".formatted(parameter)
     );
+  }
+
+  private static FieldSpec createFieldChain(
+    final ParameterChain p)
+  {
+    final var varType =
+      ParameterizedTypeName.get(
+        ClassName.get(GWIOVariableType.class),
+        ClassName.get(ByteBuffer.class)
+      );
+
+    return FieldSpec.builder(varType, fieldName(p.getName()))
+      .addModifiers(PUBLIC)
+      .addModifiers(FINAL)
+      .build();
   }
 
   private FieldSpec createFieldEnumerated(
@@ -725,6 +754,44 @@ public final class GWStructures
       GWIORate318Note.RATE_8TH_NOTE,
       GWIORate318Milliseconds.class,
       GWIORate318Note.class
+    );
+
+    code.add("  baseAddress + 0x$L\n", offset);
+    code.add(");\n");
+    return code.build();
+  }
+
+
+  private static CodeBlock createFieldChainInitializer(
+    final Structure structure,
+    final ParameterChain p)
+  {
+    final var serializers =
+      ClassName.get(GWIOSerializers.class);
+    final var offset =
+      Long.toUnsignedString(GWHexIntegers.parseHex(p.getOffset()), 16);
+
+    final var code = CodeBlock.builder();
+    code.add("// $L.$L\n", structure.getName(), p.getName());
+    code.add(
+      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+    code.add("  inDevice,\n");
+    code.add("  inAttributes,\n");
+    code.add("  $T.rawSerializer(),\n", serializers);
+    code.add("  $T.rawDeserializer(),\n", serializers);
+
+    final var size = GWParameterSizes.sizeOf(p);
+    code.add("  $L,\n", size);
+
+    code.add(
+      "  new $T<>($T.allocate($L), $T.allocate($L), $T.allocate($L)),\n",
+      GWIOVariableInformation.class,
+      ByteBuffer.class,
+      size,
+      ByteBuffer.class,
+      size,
+      ByteBuffer.class,
+      size
     );
 
     code.add("  baseAddress + 0x$L\n", offset);

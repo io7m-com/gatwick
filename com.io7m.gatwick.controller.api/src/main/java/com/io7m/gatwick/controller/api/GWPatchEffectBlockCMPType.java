@@ -27,6 +27,12 @@ public interface GWPatchEffectBlockCMPType
   extends GWPatchEffectBlockType
 {
   /**
+   * @return The on/off value
+   */
+
+  GWIOVariableType<GWOnOffValue> enabled();
+
+  /**
    * @return The effect level value
    */
 

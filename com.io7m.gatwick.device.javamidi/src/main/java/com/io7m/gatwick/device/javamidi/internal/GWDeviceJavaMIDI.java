@@ -406,7 +406,42 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
   {
     Objects.requireNonNull(command, "command");
 
-    LOG.trace("sendCommand {}", command);
+    final var attemptMax = 3;
+    for (int attempt = 1; attempt <= attemptMax; ++attempt) {
+      try {
+        return this.sendOneMessage(command, attempt, attemptMax);
+      } catch (final GWDeviceException e) {
+        if (Objects.equals(e.errorCode(), DEVICE_TIMED_OUT)) {
+          if (attempt == attemptMax) {
+            throw e;
+          }
+          LOG.trace("pausing for retry");
+          Thread.sleep(50L);
+          continue;
+        }
+        throw e;
+      }
+    }
+
+    throw new GWDeviceException(
+      DEVICE_TIMED_OUT, "Timed out waiting for message response."
+    );
+  }
+
+  private <R extends GWDeviceResponseType> R sendOneMessage(
+    final GWDeviceCommandType<R> command,
+    final int attempt,
+    final int attemptMax)
+    throws GWDeviceException, InterruptedException
+  {
+    if (LOG.isTraceEnabled()) {
+      LOG.trace(
+        "sendCommand ({}/{}) {}",
+        Integer.valueOf(attempt),
+        Integer.valueOf(attemptMax),
+        command
+      );
+    }
 
     this.messageReceiver.barrier.reset();
     this.messageReceiver.expectCode = expectCodeFor(command);
@@ -450,8 +485,7 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
       this.messageReceiver.barrier.await(milliseconds, TimeUnit.MILLISECONDS);
     } catch (final BrokenBarrierException | TimeoutException e) {
       throw new GWDeviceException(
-        DEVICE_TIMED_OUT,
-        "Timed out waiting for message response."
+        DEVICE_TIMED_OUT, "Timed out waiting for message response."
       );
     }
 

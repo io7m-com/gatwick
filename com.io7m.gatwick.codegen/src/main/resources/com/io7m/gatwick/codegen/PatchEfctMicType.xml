@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Enumeration Name="PatchEfct.MicType"
+             xmlns="urn:com.io7m.gatwick:1">
+  <Case Name="DYN57" Value="0"/>
+  <Case Name="DYN421" Value="1"/>
+  <Case Name="CND451" Value="2"/>
+  <Case Name="CND87" Value="3"/>
+  <Case Name="FLAT" Value="4"/>
+  <Case Name="RBN121" Value="5"/>
+  <Case Name="BLEND A" Value="6"/>
+  <Case Name="BLEND B" Value="7"/>
+  <Case Name="BLEND C" Value="8"/>
+</Enumeration>
