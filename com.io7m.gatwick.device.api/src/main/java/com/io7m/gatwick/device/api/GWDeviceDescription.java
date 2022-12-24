@@ -21,11 +21,7 @@ import java.util.Objects;
 /**
  * A description of a device.
  *
- * @param midiDeviceName         The underlying MIDI device name
- * @param midiDeviceDescription  The underlying MIDI device description
- * @param midiDeviceVendor       The MIDI vendor (often "ALSA")
- * @param midiDeviceVersion      The MIDI version (often the Linux kernel
- *                               version)
+ * @param midiDevice             The underlying MIDI device
  * @param deviceManufacturer     The device manufacturer code (0x41 for Roland)
  * @param deviceFamilyCode       The device family code (0x4f03 for the
  *                               GT-1000*)
@@ -34,10 +30,7 @@ import java.util.Objects;
  */
 
 public record GWDeviceDescription(
-  String midiDeviceName,
-  String midiDeviceDescription,
-  String midiDeviceVendor,
-  String midiDeviceVersion,
+  GWDeviceMIDIDescription midiDevice,
   int deviceManufacturer,
   int deviceFamilyCode,
   int deviceFamilyNumberCode,
@@ -46,11 +39,7 @@ public record GWDeviceDescription(
   /**
    * A description of a device.
    *
-   * @param midiDeviceName         The underlying MIDI device name
-   * @param midiDeviceDescription  The underlying MIDI device description
-   * @param midiDeviceVendor       The MIDI vendor (often "ALSA")
-   * @param midiDeviceVersion      The MIDI version (often the Linux kernel
-   *                               version)
+   * @param midiDevice             The underlying MIDI device
    * @param deviceManufacturer     The device manufacturer code (0x41 for
    *                               Roland)
    * @param deviceFamilyCode       The device family code (0x4f03 for the
@@ -61,9 +50,6 @@ public record GWDeviceDescription(
 
   public GWDeviceDescription
   {
-    Objects.requireNonNull(midiDeviceName, "midiDeviceName");
-    Objects.requireNonNull(midiDeviceDescription, "midiDeviceDescription");
-    Objects.requireNonNull(midiDeviceVendor, "midiDeviceVendor");
-    Objects.requireNonNull(midiDeviceVersion, "midiDeviceVersion");
+    Objects.requireNonNull(midiDevice, "midiDevice");
   }
 }

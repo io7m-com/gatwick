@@ -16,7 +16,6 @@
 
 package com.io7m.gatwick.tests.controller;
 
-import com.io7m.gatwick.controller.api.GWChain;
 import com.io7m.gatwick.controller.api.GWControllerConfiguration;
 import com.io7m.gatwick.controller.main.GWControllers;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
@@ -25,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
-import java.util.regex.Pattern;
 
 public final class GWControllerDemo
 {
@@ -48,7 +46,10 @@ public final class GWControllerDemo
 
     final var deviceConfiguration =
       new GWDeviceConfiguration(
-        Pattern.compile("GT1000 \\[.*\\]"),
+        devices.detectDevices()
+          .result()
+          .get()
+          .get(0),
         Duration.ofSeconds(5L),
         Duration.ofSeconds(1L),
         3,

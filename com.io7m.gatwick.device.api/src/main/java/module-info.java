@@ -23,5 +23,7 @@ module com.io7m.gatwick.device.api
   requires static org.osgi.annotation.bundle;
   requires static org.osgi.annotation.versioning;
 
+  requires com.io7m.taskrecorder.core;
+
   exports com.io7m.gatwick.device.api;
 }

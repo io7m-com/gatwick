@@ -26,14 +26,20 @@
     <module>com.io7m.gatwick.controller.main</module>
     <module>com.io7m.gatwick.device.api</module>
     <module>com.io7m.gatwick.device.javamidi</module>
+    <module>com.io7m.gatwick.gui.main</module>
+    <module>com.io7m.gatwick.gui</module>
     <module>com.io7m.gatwick.iovar</module>
     <module>com.io7m.gatwick.tests</module>
   </modules>
 
   <properties>
+    <com.io7m.jade.version>1.0.2</com.io7m.jade.version>
+    <com.io7m.jxtrand.version>1.1.0</com.io7m.jxtrand.version>
     <io7m.api.previousVersion>0.0.2-SNAPSHOT</io7m.api.previousVersion>
+    <javafx.version>19</javafx.version>
     <jqwik.version>1.7.1</jqwik.version>
     <junit.version>5.9.1</junit.version>
+    <com.io7m.junreachable.version>4.0.0</com.io7m.junreachable.version>
   </properties>
 
   <licenses>
@@ -169,6 +175,66 @@
         <groupId>com.io7m.jaffirm</groupId>
         <artifactId>com.io7m.jaffirm.core</artifactId>
         <version>4.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
+        <version>${javafx.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>${javafx.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics</artifactId>
+        <version>${javafx.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-base</artifactId>
+        <version>${javafx.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.jxtrand</groupId>
+        <artifactId>com.io7m.jxtrand.vanilla</artifactId>
+        <version>${com.io7m.jxtrand.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.jxtrand</groupId>
+        <artifactId>com.io7m.jxtrand.api</artifactId>
+        <version>${com.io7m.jxtrand.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.repetoir</groupId>
+        <artifactId>com.io7m.repetoir.core</artifactId>
+        <version>0.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.jade</groupId>
+        <artifactId>com.io7m.jade.api</artifactId>
+        <version>${com.io7m.jade.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.jade</groupId>
+        <artifactId>com.io7m.jade.vanilla</artifactId>
+        <version>${com.io7m.jade.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.junreachable</groupId>
+        <artifactId>com.io7m.junreachable.core</artifactId>
+        <version>${com.io7m.junreachable.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.digal</groupId>
+        <artifactId>com.io7m.digal.core</artifactId>
+        <version>0.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.taskrecorder</groupId>
+        <artifactId>com.io7m.taskrecorder.core</artifactId>
+        <version>0.0.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

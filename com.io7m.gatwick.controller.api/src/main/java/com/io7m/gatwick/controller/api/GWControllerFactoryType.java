@@ -17,12 +17,20 @@
 
 package com.io7m.gatwick.controller.api;
 
+import com.io7m.gatwick.device.api.GWDeviceFactoryType;
+
 /**
  * A controller factory.
  */
 
 public interface GWControllerFactoryType
 {
+  /**
+   * @return The device factory used by this controller factory
+   */
+
+  GWDeviceFactoryType devices();
+
   /**
    * Open a controller.
    *

@@ -16,6 +16,10 @@
 
 package com.io7m.gatwick.device.api;
 
+import com.io7m.taskrecorder.core.TRTask;
+
+import java.util.List;
+
 /**
  * A provider of devices.
  */
@@ -34,5 +38,22 @@ public interface GWDeviceFactoryType
 
   GWDeviceType openDevice(
     GWDeviceConfiguration configuration)
+    throws GWDeviceException;
+
+  /**
+   * Detect devices that appear to be GT-1000 devices.
+   *
+   * @return A list of probable GT-1000 devices
+   */
+
+  TRTask<List<GWDeviceMIDIDescription>> detectDevices();
+
+  /**
+   * @return A list of the system's MIDI devices
+   *
+   * @throws GWDeviceException On errors
+   */
+
+  List<GWDeviceMIDIDescription> listMIDIDevices()
     throws GWDeviceException;
 }

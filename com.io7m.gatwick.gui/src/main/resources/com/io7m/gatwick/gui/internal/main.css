@@ -1,0 +1,94 @@
+.root
+{
+  -fx-font-size: 10pt;
+  -fx-font-family: "Monospaced";
+
+  -fx-base:              #202020;
+  -fx-accent:            #ffffff;
+  -fx-default-button:    #ffffff;
+  -fx-focus-color:       #ffffff;
+  -fx-faint-focus-color: #ffffff22;
+}
+
+.progress-bar
+{
+  -fx-indeterminate-bar-length: 16;
+}
+
+.progress-bar > .track
+{
+  -fx-background-insets: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-insets: 0 0 0 0;
+  -fx-padding: 0 0 0 0;
+
+  -fx-border-color:             #303030;
+  -fx-control-inner-background: #000000;
+}
+
+.progress-bar > .bar
+{
+  -fx-background-insets: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-insets: 0 0 0 0;
+  -fx-padding: 0 0 0 0;
+
+  -fx-background-color: #ffffff;
+}
+
+.menu-bar
+{
+  -fx-background-color: #202020;
+  -fx-border-color:     #303030;
+}
+
+.button,
+.check-box,
+.choice-box,
+.color-picker,
+.color-picker.split-button,
+.combo-box-base,
+.container,
+.control-buttons-tab,
+.menu-button,
+.progress-bar,
+.radio-button,
+.text-field,
+.text-area,
+.tab,
+.tab-down-button,
+.tab-header-area,
+.tab-pane,
+.toggle-button
+{
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-radius: 0 0 0 0;
+}
+
+.tabButton {
+  -fx-font-size: 8pt;
+}
+
+.errorHighlight
+{
+  -fx-background-color: #ffbbbb;
+}
+
+.noHeader .column-header-background
+{
+  -fx-max-height: 0;
+  -fx-pref-height: 0;
+  -fx-min-height: 0;
+}
+
+.statusBar
+{
+  -fx-background-color: #202020;
+  -fx-border-color:     #303030;
+}
+
+#statusConnectionText
+{
+  -fx-font-size: 8pt;
+  -fx-font-family: "Monospaced";
+}

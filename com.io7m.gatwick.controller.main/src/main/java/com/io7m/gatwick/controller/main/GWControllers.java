@@ -67,6 +67,12 @@ public final class GWControllers implements GWControllerFactoryType
   }
 
   @Override
+  public GWDeviceFactoryType devices()
+  {
+    return this.devices;
+  }
+
+  @Override
   public GWControllerType openController(
     final GWControllerConfiguration configuration)
     throws GWControllerException

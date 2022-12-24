@@ -21,6 +21,7 @@ import com.io7m.gatwick.controller.api.GWControllerConfiguration;
 import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.gatwick.controller.main.GWControllers;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
+import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDI;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDIDevicesType;
 import org.junit.jupiter.api.AfterEach;
@@ -170,7 +171,12 @@ public final class GWControllerTest
       this.controllers.openController(
         new GWControllerConfiguration(
           new GWDeviceConfiguration(
-            Pattern.compile(".*"),
+            new GWDeviceMIDIDescription(
+              info.getName(),
+              info.getDescription(),
+              info.getVendor(),
+              info.getVersion()
+            ),
             Duration.ofMillis(100L),
             Duration.ofMillis(100L),
             3,

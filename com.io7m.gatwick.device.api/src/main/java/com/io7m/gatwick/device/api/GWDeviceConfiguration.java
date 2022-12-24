@@ -18,13 +18,11 @@ package com.io7m.gatwick.device.api;
 
 import java.time.Duration;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 /**
  * Device configuration information.
  *
- * @param namePattern           Only try to open MIDI devices with a name
- *                              matching this pattern
+ * @param device                The device to attempt to open
  * @param openTimeout           The maximum length of time to wait until a
  *                              device is open
  * @param messageTimeout        The maximum length of time to wait for a command
@@ -36,7 +34,7 @@ import java.util.regex.Pattern;
  */
 
 public record GWDeviceConfiguration(
-  Pattern namePattern,
+  GWDeviceMIDIDescription device,
   Duration openTimeout,
   Duration messageTimeout,
   int messageSendTries,
@@ -45,8 +43,7 @@ public record GWDeviceConfiguration(
   /**
    * Device configuration information.
    *
-   * @param namePattern           Only try to open MIDI devices with a name
-   *                              matching this pattern
+   * @param device                The device to attempt to open
    * @param openTimeout           The maximum length of time to wait until a
    *                              device is open
    * @param messageTimeout        The maximum length of time to wait for a
@@ -59,7 +56,7 @@ public record GWDeviceConfiguration(
 
   public GWDeviceConfiguration
   {
-    Objects.requireNonNull(namePattern, "namePattern");
+    Objects.requireNonNull(device, "namePattern");
     Objects.requireNonNull(openTimeout, "openTimeout");
     Objects.requireNonNull(messageTimeout, "messageTimeout");
     Objects.requireNonNull(messageSendRetryPause, "messageSendRetryPause");

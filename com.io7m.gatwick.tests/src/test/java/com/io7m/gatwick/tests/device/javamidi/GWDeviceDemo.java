@@ -47,7 +47,10 @@ public final class GWDeviceDemo
       new GWDevicesJavaMIDI();
     final var configuration =
       new GWDeviceConfiguration(
-        Pattern.compile("GT1000 \\[.*\\]"),
+        devices.detectDevices()
+          .result()
+          .get()
+          .get(0),
         Duration.ofSeconds(5L),
         Duration.ofSeconds(1L),
         3,
@@ -59,19 +62,19 @@ public final class GWDeviceDemo
       final var description = device.description();
       LOG.debug(
         "name:          {}",
-        description.midiDeviceName()
+        description.midiDevice().midiDeviceName()
       );
       LOG.debug(
         "vendor:        {}",
-        description.midiDeviceVendor()
+        description.midiDevice().midiDeviceVendor()
       );
       LOG.debug(
         "description:   {}",
-        description.midiDeviceDescription()
+        description.midiDevice().midiDeviceDescription()
       );
       LOG.debug(
         "version:       {}",
-        description.midiDeviceVersion()
+        description.midiDevice().midiDeviceVersion()
       );
       LOG.debug(
         "manufacturer:  0x{}",

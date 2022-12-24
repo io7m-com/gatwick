@@ -22,6 +22,7 @@ import com.io7m.gatwick.device.api.GWDeviceCommandType;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceDescription;
 import com.io7m.gatwick.device.api.GWDeviceException;
+import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.device.api.GWDeviceResponseOK;
 import com.io7m.gatwick.device.api.GWDeviceResponseType;
 import com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes;
@@ -174,18 +175,23 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
         throw identityReceiver.failure;
       }
 
-      final var messageReceiver = new DeviceMessageReceiver();
+      final var messageReceiver = new DeviceMessageReceiver(configuration);
       transmitter.setReceiver(messageReceiver);
 
       final var deviceInfo =
         receiverDevice.getDeviceInfo();
 
-      final var info =
-        new GWDeviceDescription(
+      final var midiDevice =
+        new GWDeviceMIDIDescription(
           deviceInfo.getName(),
           deviceInfo.getDescription(),
           deviceInfo.getVendor(),
-          deviceInfo.getVersion(),
+          deviceInfo.getVersion()
+        );
+
+      final var info =
+        new GWDeviceDescription(
+          midiDevice,
           identityReceiver.deviceManufacturer,
           identityReceiver.deviceFamilyCode,
           identityReceiver.deviceFamilyNumberCode,
@@ -217,12 +223,17 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
 
     private final HexFormat format;
     private final CyclicBarrier barrier;
+    private final GWDeviceConfiguration configuration;
     private volatile int expectCode;
     private volatile GWDeviceResponseType response;
     private volatile GWDeviceException failure;
 
-    DeviceMessageReceiver()
+    DeviceMessageReceiver(
+      final GWDeviceConfiguration inConfiguration)
     {
+      this.configuration =
+        Objects.requireNonNull(inConfiguration, "configuration");
+
       this.format = HexFormat.of();
       this.barrier = new CyclicBarrier(2);
       this.expectCode = 0b11111111_11111111_11111111_11111111;
@@ -269,7 +280,11 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
       }
 
       try {
-        this.barrier.await();
+        final var timeout =
+          this.configuration.messageTimeout()
+            .toMillis() * 2L;
+
+        this.barrier.await(timeout, TimeUnit.MILLISECONDS);
       } catch (final Exception e) {
         final var existing = this.failure;
         if (existing != null) {

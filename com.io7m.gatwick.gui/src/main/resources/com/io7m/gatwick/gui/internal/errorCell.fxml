@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox fx:id="stepContainer" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.io7m.gatwick.gui.internal.errors.GWErrorTreeCellController">
+   <children>
+  <ImageView fx:id="stepIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+    <image>
+      <Image url="@error16.png" />
+    </image>
+  </ImageView>
+      <VBox fx:id="stepContainerInner">
+         <children>
+        <Label fx:id="stepTitle" alignment="TOP_LEFT" contentDisplay="TOP" text="%placeholder">
+          <font>
+            <Font name="Monospaced Regular" size="11.0" />
+          </font>
+        </Label>
+        <Label fx:id="stepResolution" alignment="TOP_LEFT" text="%placeholder">
+          <font>
+            <Font name="Monospaced Regular" size="11.0" />
+          </font>
+               <VBox.margin>
+                  <Insets top="8.0" />
+               </VBox.margin>
+        </Label>
+        <TextArea fx:id="stepException" editable="false" prefColumnCount="80">
+          <font>
+            <Font name="Monospaced Regular" size="11.0" />
+          </font>
+               <VBox.margin>
+                  <Insets top="8.0" />
+               </VBox.margin>
+        </TextArea>
+         </children>
+         <HBox.margin>
+            <Insets left="8.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

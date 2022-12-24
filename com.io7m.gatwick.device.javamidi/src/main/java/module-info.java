@@ -28,9 +28,10 @@ module com.io7m.gatwick.device.javamidi
 
   requires transitive com.io7m.gatwick.device.api;
 
-  requires java.desktop;
   requires com.io7m.jdeferthrow.core;
   requires com.io7m.jmulticlose.core;
+  requires com.io7m.taskrecorder.core;
+  requires java.desktop;
   requires org.slf4j;
 
   provides GWDeviceFactoryType
