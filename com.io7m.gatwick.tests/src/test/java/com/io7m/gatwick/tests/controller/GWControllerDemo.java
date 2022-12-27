@@ -42,7 +42,7 @@ public final class GWControllerDemo
     final var devices =
       new GWDevicesJavaMIDI();
     final var controllers =
-      new GWControllers(devices);
+      new GWControllers();
 
     final var deviceConfiguration =
       new GWDeviceConfiguration(
@@ -57,7 +57,10 @@ public final class GWControllerDemo
       );
 
     final var configuration =
-      new GWControllerConfiguration(deviceConfiguration);
+      new GWControllerConfiguration(
+        deviceFactory -> true,
+        deviceConfiguration
+      );
 
     try (var controller = controllers.openController(configuration)) {
       final var patch = controller.patchCurrent();

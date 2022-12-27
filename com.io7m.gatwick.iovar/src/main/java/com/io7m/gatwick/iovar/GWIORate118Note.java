@@ -176,6 +176,13 @@ public enum GWIORate118Note implements GWIORate118Type,
   }
 
   @Override
+  public GWIORate118Note fromInt(
+    final int x)
+  {
+    return ofInt(x);
+  }
+
+  @Override
   public int toInt()
   {
     return this.ordinal() + 100;
@@ -197,5 +204,11 @@ public enum GWIORate118Note implements GWIORate118Type,
   public GWIORate118Note previous()
   {
     return ofInt((this.toInt() - 1) % VALUES.length);
+  }
+
+  @Override
+  public int caseCount()
+  {
+    return VALUES.length;
   }
 }

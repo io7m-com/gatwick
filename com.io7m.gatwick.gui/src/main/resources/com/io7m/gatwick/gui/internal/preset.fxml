@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 
-<VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" />
+<StackPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.io7m.gatwick.gui.internal.preset.GWPresetController">
+   <children>
+      <VBox fx:id="deviceIsOpenContainer">
+         <children>
+            <Pane fx:id="blockGraphContainer" prefHeight="128.0" />
+            <Separator prefWidth="200.0" />
+            <VBox fx:id="dialsContainer" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+      <AnchorPane fx:id="deviceIsClosedContainer" StackPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" text="%preset.noDevice" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

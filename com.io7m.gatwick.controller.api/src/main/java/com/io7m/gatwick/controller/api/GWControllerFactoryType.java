@@ -18,6 +18,11 @@
 package com.io7m.gatwick.controller.api;
 
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
+import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
+import com.io7m.taskrecorder.core.TRTask;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A controller factory.
@@ -25,12 +30,6 @@ import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 
 public interface GWControllerFactoryType
 {
-  /**
-   * @return The device factory used by this controller factory
-   */
-
-  GWDeviceFactoryType devices();
-
   /**
    * Open a controller.
    *
@@ -43,5 +42,46 @@ public interface GWControllerFactoryType
 
   GWControllerType openController(
     GWControllerConfiguration configuration)
+    throws GWControllerException;
+
+  /**
+   * Open a controller using the given device factory.
+   *
+   * @param devices       The device factory
+   * @param configuration The controller configuration
+   *
+   * @return A controller
+   *
+   * @throws GWControllerException On errors
+   */
+
+  GWControllerType openControllerWith(
+    GWDeviceFactoryType devices,
+    GWControllerConfiguration configuration)
+    throws GWControllerException;
+
+  /**
+   * Detect devices that appear to be GT-1000 devices.
+   *
+   * @param devices The devices
+   *
+   * @return A list of probable GT-1000 devices
+   */
+
+  TRTask<List<GWDeviceMIDIDescription>> detectDevicesWith(
+    GWDeviceFactoryType devices);
+
+  /**
+   * Detect devices that appear to be GT-1000 devices.
+   *
+   * @param deviceFactoryFilter The predicate used to filter device factories
+   *
+   * @return A list of probable GT-1000 devices
+   *
+   * @throws GWControllerException On errors
+   */
+
+  TRTask<List<GWDeviceMIDIDescription>> detectDevices(
+    Predicate<GWDeviceFactoryType> deviceFactoryFilter)
     throws GWControllerException;
 }

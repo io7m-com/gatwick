@@ -30,6 +30,7 @@ module com.io7m.gatwick.controller.main
   requires com.io7m.gatwick.device.api;
   requires com.io7m.gatwick.controller.api;
   requires org.slf4j;
+  requires com.io7m.taskrecorder.core;
 
   uses GWDeviceFactoryType;
 

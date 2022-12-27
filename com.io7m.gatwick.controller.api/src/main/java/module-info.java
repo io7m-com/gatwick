@@ -25,6 +25,7 @@ module com.io7m.gatwick.controller.api
 
   requires transitive com.io7m.gatwick.device.api;
   requires transitive com.io7m.gatwick.iovar;
+  requires transitive com.io7m.taskrecorder.core;
 
   exports com.io7m.gatwick.controller.api;
 }

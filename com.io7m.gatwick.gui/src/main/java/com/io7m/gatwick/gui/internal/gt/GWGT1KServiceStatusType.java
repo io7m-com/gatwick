@@ -17,6 +17,7 @@
 
 package com.io7m.gatwick.gui.internal.gt;
 
+import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.taskrecorder.core.TRTask;
 
 import java.util.Objects;
@@ -28,28 +29,56 @@ import java.util.Objects;
 public sealed interface GWGT1KServiceStatusType
 {
   /**
-   * @return {@code true} if the status implies a device can be closed
+   * The category of status types that imply a device is closed.
    */
 
-  boolean impliesCloseable();
+  sealed interface GWGT1KServiceStatusClosedType
+    extends GWGT1KServiceStatusType
+  {
+    @Override
+    default boolean isOpen()
+    {
+      return false;
+    }
+  }
+
+  /**
+   * The category of status types that imply a device is open.
+   */
+
+  sealed interface GWGT1KServiceStatusOpenType
+    extends GWGT1KServiceStatusType
+  {
+    @Override
+    default boolean isOpen()
+    {
+      return true;
+    }
+
+    /**
+     * @return A reference to the open device
+     */
+
+    GWControllerType device();
+  }
+
+  /**
+   * @return {@code true} if the status implies a device is open
+   */
+
+  boolean isOpen();
 
   /**
    * The GT-1000 is not currently connected.
    */
 
-  enum Disconnected implements GWGT1KServiceStatusType
+  enum Disconnected implements GWGT1KServiceStatusClosedType
   {
     /**
      * The GT-1000 is not currently connected.
      */
 
-    DISCONNECTED;
-
-    @Override
-    public boolean impliesCloseable()
-    {
-      return false;
-    }
+    DISCONNECTED
   }
 
   /**
@@ -60,7 +89,7 @@ public sealed interface GWGT1KServiceStatusType
 
   record OpenFailed(
     TRTask<?> task)
-    implements GWGT1KServiceStatusType
+    implements GWGT1KServiceStatusClosedType
   {
     /**
      * An attempt to connect to the GT-1000 failed.
@@ -70,30 +99,24 @@ public sealed interface GWGT1KServiceStatusType
     {
       Objects.requireNonNull(task, "task");
     }
-
-    @Override
-    public boolean impliesCloseable()
-    {
-      return false;
-    }
   }
 
   /**
    * The GT-1000 is currently connected.
+   *
+   * @param device The device
    */
 
-  enum Connected implements GWGT1KServiceStatusType
+  record Connected(GWControllerType device)
+    implements GWGT1KServiceStatusOpenType
   {
     /**
      * The GT-1000 is currently connected.
      */
 
-    CONNECTED;
-
-    @Override
-    public boolean impliesCloseable()
+    public Connected
     {
-      return true;
+      Objects.requireNonNull(device, "device");
     }
   }
 }

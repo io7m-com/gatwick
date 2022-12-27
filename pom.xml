@@ -25,6 +25,7 @@
     <module>com.io7m.gatwick.controller.api</module>
     <module>com.io7m.gatwick.controller.main</module>
     <module>com.io7m.gatwick.device.api</module>
+    <module>com.io7m.gatwick.device.fake</module>
     <module>com.io7m.gatwick.device.javamidi</module>
     <module>com.io7m.gatwick.gui.main</module>
     <module>com.io7m.gatwick.gui</module>
@@ -229,12 +230,17 @@
       <dependency>
         <groupId>com.io7m.digal</groupId>
         <artifactId>com.io7m.digal.core</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.taskrecorder</groupId>
         <artifactId>com.io7m.taskrecorder.core</artifactId>
         <version>0.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.jcip</groupId>
+        <artifactId>com.io7m.jcip.annotations</artifactId>
+        <version>2.0.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

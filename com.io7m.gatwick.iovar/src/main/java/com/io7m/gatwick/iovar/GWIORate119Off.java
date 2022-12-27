@@ -57,6 +57,13 @@ public enum GWIORate119Off implements GWIORate119Type,
   }
 
   @Override
+  public GWIORate119Off fromInt(
+    final int x)
+  {
+    return ofInt(x);
+  }
+
+  @Override
   public int toInt()
   {
     return 0;
@@ -78,5 +85,11 @@ public enum GWIORate119Off implements GWIORate119Type,
   public GWIORate119Off previous()
   {
     return OFF;
+  }
+
+  @Override
+  public int caseCount()
+  {
+    return VALUES.length;
   }
 }

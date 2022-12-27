@@ -29,6 +29,11 @@
       <artifactId>com.io7m.gatwick.controller.api</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.gatwick.iovar</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -74,6 +79,10 @@
     <dependency>
       <groupId>com.io7m.taskrecorder</groupId>
       <artifactId>com.io7m.taskrecorder.core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.io7m.digal</groupId>
+      <artifactId>com.io7m.digal.core</artifactId>
     </dependency>
   </dependencies>
 

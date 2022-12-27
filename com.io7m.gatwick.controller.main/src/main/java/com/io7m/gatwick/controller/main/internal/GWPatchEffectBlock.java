@@ -18,9 +18,28 @@
 package com.io7m.gatwick.controller.main.internal;
 
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockType;
+import com.io7m.gatwick.iovar.GWIOVariableType;
+
+import java.util.List;
+import java.util.Objects;
 
 abstract class GWPatchEffectBlock
   implements GWPatchEffectBlockType
 {
+  private final List<GWIOVariableType<?>> variables;
 
+  protected GWPatchEffectBlock(
+    final List<GWIOVariableType<?>> inVariables)
+  {
+    this.variables =
+      List.copyOf(
+        Objects.requireNonNull(inVariables, "inVariables")
+      );
+  }
+
+  @Override
+  public final List<GWIOVariableType<?>> variables()
+  {
+    return this.variables;
+  }
 }

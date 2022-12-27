@@ -25,6 +25,8 @@ import com.io7m.gatwick.controller.main.internal.generated.StructPatchComp;
 import com.io7m.gatwick.device.api.GWDeviceException;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 
+import java.util.List;
+
 final class GWPatchEffectBlockCMP
   extends GWPatchEffectBlock
   implements GWPatchEffectBlockCMPType
@@ -32,9 +34,21 @@ final class GWPatchEffectBlockCMP
   private final StructPatchComp cmp;
 
   GWPatchEffectBlockCMP(
-    final StructPatchComp f_cmp)
+    final StructPatchComp s)
   {
-    this.cmp = f_cmp;
+    super(List.of(
+      s.f_sw,
+      s.f_type,
+      s.f_threshold,
+      s.f_sustain,
+      s.f_attack,
+      s.f_level,
+      s.f_tone,
+      s.f_ratio,
+      s.f_direct_mix
+    ));
+
+    this.cmp = s;
   }
 
   @Override

@@ -19,6 +19,7 @@ package com.io7m.gatwick.device.javamidi;
 
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceException;
+import com.io7m.gatwick.device.api.GWDeviceFactoryProperty;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.device.api.GWDeviceType;
@@ -37,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes.DEVICE_MIDI_SYSTEM_ERROR;
 import static com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes.DEVICE_NOT_FOUND;
@@ -50,6 +52,9 @@ public final class GWDevicesJavaMIDI
 {
   private static final Logger LOG =
     LoggerFactory.getLogger(GWDevicesJavaMIDI.class);
+
+  private static final Set<GWDeviceFactoryProperty> PROPERTIES =
+    Set.of(new GWDeviceFactoryProperty("java-midi"));
 
   private final GWDevicesJavaMIDIDevicesType backend;
 
@@ -141,6 +146,12 @@ public final class GWDevicesJavaMIDI
     }
 
     return detectedDevices;
+  }
+
+  @Override
+  public Set<GWDeviceFactoryProperty> properties()
+  {
+    return PROPERTIES;
   }
 
   @Override

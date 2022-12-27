@@ -19,6 +19,7 @@ package com.io7m.gatwick.gui.internal;
 
 import com.io7m.gatwick.gui.internal.gt.GWGT1KDeviceSelectionController;
 import com.io7m.gatwick.gui.internal.main.GWMainController;
+import com.io7m.gatwick.gui.internal.preset.GWPresetController;
 import com.io7m.gatwick.gui.internal.splash.GWSplashController;
 import com.io7m.repetoir.core.RPServiceDirectoryWritableType;
 import com.io7m.repetoir.core.RPServiceType;
@@ -60,6 +61,9 @@ public final class GWScreenControllerFactory
     }
     if (Objects.equals(param, GWGT1KDeviceSelectionController.class)) {
       return new GWGT1KDeviceSelectionController(this.services);
+    }
+    if (Objects.equals(param, GWPresetController.class)) {
+      return new GWPresetController(this.services);
     }
 
     throw new IllegalStateException(

@@ -176,6 +176,13 @@ public enum GWIORate318Note implements GWIORate318Type,
   }
 
   @Override
+  public GWIORate318Note fromInt(
+    final int x)
+  {
+    return ofInt(x);
+  }
+
+  @Override
   public int toInt()
   {
     return this.ordinal() + 300;
@@ -197,5 +204,11 @@ public enum GWIORate318Note implements GWIORate318Type,
   public GWIORate318Note previous()
   {
     throw new IllegalStateException();
+  }
+
+  @Override
+  public int caseCount()
+  {
+    return VALUES.length;
   }
 }

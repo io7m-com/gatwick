@@ -30,6 +30,13 @@ public final class GWControllerStandardErrorCodes
   public static final GWControllerErrorCode DEVICE_ERROR =
     new GWControllerErrorCode("controller-device-error");
 
+  /**
+   * No suitable device factories are available to create a controller.
+   */
+
+  public static final GWControllerErrorCode DEVICE_NO_SUITABLE_FACTORIES =
+    new GWControllerErrorCode("controller-device-no-suitable-factories");
+
   private GWControllerStandardErrorCodes()
   {
 

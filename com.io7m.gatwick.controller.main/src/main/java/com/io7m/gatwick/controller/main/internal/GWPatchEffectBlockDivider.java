@@ -27,6 +27,8 @@ import com.io7m.gatwick.controller.main.internal.generated.StructPatchEfct;
 import com.io7m.gatwick.device.api.GWDeviceException;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 
+import java.util.List;
+
 final class GWPatchEffectBlockDivider
   extends GWPatchEffectBlock
   implements GWPatchEffectBlockDividerType
@@ -44,10 +46,12 @@ final class GWPatchEffectBlockDivider
   private final GWIOVariableType<GWPatchEfctDividerCutoffFreqValue> div_b_cutoff;
 
   GWPatchEffectBlockDivider(
-    final StructPatchEfct f_efct,
+    final StructPatchEfct s,
     final int index)
   {
-    this.efct = f_efct;
+    super(List.of());
+
+    this.efct = s;
 
     switch (index) {
       case 1 -> {

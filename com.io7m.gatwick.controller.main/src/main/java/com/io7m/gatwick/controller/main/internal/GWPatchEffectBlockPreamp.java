@@ -25,6 +25,8 @@ import com.io7m.gatwick.controller.main.internal.generated.StructPatchPreamp;
 import com.io7m.gatwick.device.api.GWDeviceException;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 
+import java.util.List;
+
 final class GWPatchEffectBlockPreamp
   extends GWPatchEffectBlock
   implements GWPatchEffectBlockPreampType
@@ -32,9 +34,26 @@ final class GWPatchEffectBlockPreamp
   private final StructPatchPreamp preamp;
 
   GWPatchEffectBlockPreamp(
-    final StructPatchPreamp f_preamp)
+    final StructPatchPreamp s)
   {
-    this.preamp = f_preamp;
+    super(List.of(
+      s.f_sw,
+      s.f_type,
+      s.f_gain,
+      s.f_sag,
+      s.f_resonance,
+      s.f_level,
+      s.f_bass,
+      s.f_middle,
+      s.f_treble,
+      s.f_presence,
+      s.f_bright,
+      s.f_gain_sw,
+      s.f_solo_sw,
+      s.f_solo_level
+    ));
+
+    this.preamp = s;
   }
 
   @Override

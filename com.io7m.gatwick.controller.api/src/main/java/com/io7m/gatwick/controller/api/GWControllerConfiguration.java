@@ -17,26 +17,34 @@
 package com.io7m.gatwick.controller.api;
 
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
+import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Controller configuration information.
  *
+ * @param deviceFactoryFilter A predicate that decides whether a device
+ *                            factory is suitable
  * @param deviceConfiguration The device configuration
  */
 
 public record GWControllerConfiguration(
+  Predicate<GWDeviceFactoryType> deviceFactoryFilter,
   GWDeviceConfiguration deviceConfiguration)
 {
   /**
    * Controller configuration information.
    *
+   * @param deviceFactoryFilter A predicate that decides whether a device
+   *                            factory is suitable
    * @param deviceConfiguration The device configuration
    */
 
   public GWControllerConfiguration
   {
+    Objects.requireNonNull(deviceFactoryFilter, "deviceFactoryFilter");
     Objects.requireNonNull(deviceConfiguration, "deviceConfiguration");
   }
 }

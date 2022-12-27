@@ -20,6 +20,7 @@ package com.io7m.gatwick.gui.internal.gt;
 import com.io7m.gatwick.controller.api.GWControllerConfiguration;
 import com.io7m.gatwick.controller.api.GWControllerFactoryType;
 import com.io7m.gatwick.controller.api.GWControllerType;
+import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.gui.internal.GWStrings;
 import com.io7m.jmulticlose.core.CloseableCollection;
@@ -40,8 +41,8 @@ import java.util.ServiceLoader;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Predicate;
 
-import static com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Connected.CONNECTED;
 import static com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Disconnected.DISCONNECTED;
 
 /**
@@ -156,9 +157,12 @@ public final class GWGT1KService implements GWGT1KServiceType
         this.controller =
           this.resources.add(controllers.openController(configuration));
 
+        task.setResult(this.controller);
         task.setSucceeded();
         Platform.runLater(() -> {
-          this.status.set(CONNECTED);
+          this.status.set(
+            new GWGT1KServiceStatusType.Connected(this.controller)
+          );
         });
 
         future.complete(task);
@@ -186,8 +190,11 @@ public final class GWGT1KService implements GWGT1KServiceType
   }
 
   @Override
-  public CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>> detectDevices()
+  public CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>> detectDevices(
+    final Predicate<GWDeviceFactoryType> deviceFactoryFilter)
   {
+    Objects.requireNonNull(deviceFactoryFilter, "deviceFactoryFilter");
+
     final var future =
       new CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>>();
 
@@ -198,7 +205,7 @@ public final class GWGT1KService implements GWGT1KServiceType
 
       try {
         final var controllers = findControllers();
-        future.complete(controllers.devices().detectDevices());
+        future.complete(controllers.detectDevices(deviceFactoryFilter));
       } catch (final Throwable e) {
         task.setFailed(e.getMessage(), e);
         future.completeExceptionally(e);

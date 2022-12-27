@@ -25,6 +25,8 @@ import com.io7m.gatwick.controller.main.internal.generated.StructPatchPedalFX;
 import com.io7m.gatwick.device.api.GWDeviceException;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 
+import java.util.List;
+
 final class GWPatchEffectBlockPFX
   extends GWPatchEffectBlock
   implements GWPatchEffectBlockPFXType
@@ -32,9 +34,23 @@ final class GWPatchEffectBlockPFX
   private final StructPatchPedalFX pfx;
 
   GWPatchEffectBlockPFX(
-    final StructPatchPedalFX f_pedalfx)
+    final StructPatchPedalFX s)
   {
-    this.pfx = f_pedalfx;
+    super(List.of(
+      s.f_sw,
+      s.f_effect_level,
+      s.f_direct_mix,
+      s.f_type,
+      s.f_wah_type,
+      s.f_wah_pedal_position,
+      s.f_pedal_min,
+      s.f_pedal_max,
+      s.f_pedal_bend_pedal_position,
+      s.f_pitch_min,
+      s.f_pitch_max
+    ));
+
+    this.pfx = s;
   }
 
   @Override

@@ -18,6 +18,7 @@
 package com.io7m.gatwick.gui.internal.gt;
 
 import com.io7m.gatwick.controller.api.GWControllerConfiguration;
+import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.repetoir.core.RPServiceType;
 import com.io7m.taskrecorder.core.TRTask;
@@ -25,6 +26,7 @@ import javafx.beans.property.ReadOnlyProperty;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 
 /**
  * The GT-1000 service.
@@ -52,8 +54,11 @@ public interface GWGT1KServiceType extends RPServiceType, AutoCloseable
   /**
    * Detect devices.
    *
+   * @param deviceFactoryFilter The device factory filter predicate
+   *
    * @return The operation in progress
    */
 
-  CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>> detectDevices();
+  CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>> detectDevices(
+    Predicate<GWDeviceFactoryType> deviceFactoryFilter);
 }

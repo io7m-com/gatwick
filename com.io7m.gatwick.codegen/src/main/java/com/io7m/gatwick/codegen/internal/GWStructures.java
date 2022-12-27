@@ -326,7 +326,7 @@ public final class GWStructures
     } else if (parameter instanceof ParameterEnumerated p) {
       return this.createFieldEnumeratedInitializer(structure, p);
     } else if (parameter instanceof ParameterChain p) {
-      return GWStructures.createFieldChainInitializer(structure, p);
+      return createFieldChainInitializer(structure, p);
     }
 
     throw new IllegalStateException(
@@ -583,8 +583,10 @@ public final class GWStructures
     code.add("  $T.serializeSize(),\n", enumType);
 
     code.add(
-      "  new $T<>($T.first(), $T.first(), $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.first(), $T.first(), $T.last()),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      enumType,
       enumType,
       enumType,
       enumType
@@ -616,8 +618,10 @@ public final class GWStructures
     code.add("  $T.serializeSize(),\n", enumType);
 
     code.add(
-      "  new $T<>($T.first(), $T.first(), $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.first(), $T.first(), $T.last()),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      enumType,
       enumType,
       enumType,
       enumType
@@ -649,8 +653,10 @@ public final class GWStructures
     code.add("  $T.serializeSize(),\n", enumType);
 
     code.add(
-      "  new $T<>($T.first(), $T.first(), $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.first(), $T.first(), $T.last()),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      enumType,
       enumType,
       enumType,
       enumType
@@ -681,8 +687,10 @@ public final class GWStructures
     code.add("  1,\n", serializers);
 
     code.add(
-      "  new $T<>($T.$L, $T.$L, $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.$L, $T.$L, $T.last()),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      GWIORate119Type.class,
       GWIORate119Off.class,
       GWIORate119Off.OFF,
       GWIORate119Off.class,
@@ -715,8 +723,10 @@ public final class GWStructures
     code.add("  1,\n", serializers);
 
     code.add(
-      "  new $T<>($T.$L, new $T(0), $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.$L, new $T(0), $T.last()),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      GWIORate118Type.class,
       GWIORate118Note.class,
       GWIORate118Note.RATE_8TH_NOTE,
       GWIORate118Milliseconds.class,
@@ -748,8 +758,10 @@ public final class GWStructures
     code.add("  2,\n", serializers);
 
     code.add(
-      "  new $T<>($T.$L, new $T(0), $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.$L, new $T(0), $T.last()),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      GWIORate318Type.class,
       GWIORate318Note.class,
       GWIORate318Note.RATE_8TH_NOTE,
       GWIORate318Milliseconds.class,
@@ -760,7 +772,6 @@ public final class GWStructures
     code.add(");\n");
     return code.build();
   }
-
 
   private static CodeBlock createFieldChainInitializer(
     final Structure structure,
@@ -784,8 +795,10 @@ public final class GWStructures
     code.add("  $L,\n", size);
 
     code.add(
-      "  new $T<>($T.allocate($L), $T.allocate($L), $T.allocate($L)),\n",
+      "  new $T<>($S, $T.class, $T.allocate($L), $T.allocate($L), $T.allocate($L)),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      ByteBuffer.class,
       ByteBuffer.class,
       size,
       ByteBuffer.class,
@@ -895,8 +908,10 @@ public final class GWStructures
     );
     code.add("  $L,\n", Integer.valueOf(serializers.size));
     code.add(
-      "  new $T<>($L, $L, $L),\n",
+      "  new $T<>($S, $T.class, $L, $L, $L),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      Integer.class,
       Integer.valueOf(def.intValueExact()),
       Integer.valueOf(min.intValueExact()),
       Integer.valueOf(max.intValueExact())
@@ -959,8 +974,10 @@ public final class GWStructures
     code.add("  $L,\n", Integer.valueOf(baseSerializers.size));
 
     code.add(
-      "  new $T<>($L, $L, $L),\n",
+      "  new $T<>($S, $T.class, $L, $L, $L),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      Double.class,
       Double.valueOf(def),
       Double.valueOf(min),
       Double.valueOf(max)
@@ -1023,8 +1040,10 @@ public final class GWStructures
     code.add("  $L,\n", Integer.valueOf(baseSerializers.size));
 
     code.add(
-      "  new $T<>($L, $L, $L),\n",
+      "  new $T<>($S, $T.class, $L, $L, $L),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      Integer.class,
       Integer.valueOf(def.intValueExact()),
       Integer.valueOf(min.intValueExact()),
       Integer.valueOf(max.intValueExact())
@@ -1053,8 +1072,10 @@ public final class GWStructures
     code.add("  $L,\n", Long.valueOf(p.getLength()));
 
     code.add(
-      "  new $T<>($S, $S, $S),\n",
+      "  new $T<>($S, $T.class, $S, $S, $S),\n",
       GWIOVariableInformation.class,
+      p.getName(),
+      String.class,
       "",
       "",
       "~".repeat(Math.toIntExact(p.getLength()))

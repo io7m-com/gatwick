@@ -21,6 +21,8 @@ import java.util.Objects;
 /**
  * Information about an I/O variable.
  *
+ * @param label                 The variable label
+ * @param valueClass            The common supertype of the variable values
  * @param valueInitial          The initial variable value
  * @param valueMinimumInclusive The minimum value
  * @param valueMaximumInclusive The maximum value
@@ -28,6 +30,8 @@ import java.util.Objects;
  */
 
 public record GWIOVariableInformation<T>(
+  String label,
+  Class<T> valueClass,
   T valueInitial,
   T valueMinimumInclusive,
   T valueMaximumInclusive)
@@ -35,6 +39,8 @@ public record GWIOVariableInformation<T>(
   /**
    * Information about an I/O variable.
    *
+   * @param label                 The variable label
+   * @param valueClass            The common supertype of the variable values
    * @param valueInitial          The initial variable value
    * @param valueMinimumInclusive The minimum value
    * @param valueMaximumInclusive The maximum value
@@ -42,6 +48,8 @@ public record GWIOVariableInformation<T>(
 
   public GWIOVariableInformation
   {
+    Objects.requireNonNull(label, "label");
+    Objects.requireNonNull(valueClass, "valueClass");
     Objects.requireNonNull(valueInitial, "valueInitial");
     Objects.requireNonNull(valueMaximumInclusive, "valueMaximumInclusive");
     Objects.requireNonNull(valueMaximumInclusive, "valueMaximumInclusive");

@@ -19,6 +19,7 @@ package com.io7m.gatwick.device.api;
 import com.io7m.taskrecorder.core.TRTask;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * A provider of devices.
@@ -26,6 +27,15 @@ import java.util.List;
 
 public interface GWDeviceFactoryType
 {
+  /**
+   * A set of device factory properties that can be used to select from
+   * different factory implementations.
+   *
+   * @return The properties exposed by the factory
+   */
+
+  Set<GWDeviceFactoryProperty> properties();
+
   /**
    * Open a device.
    *

@@ -14,16 +14,37 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+package com.io7m.gatwick.device.api;
+
+import java.util.Objects;
+import java.util.regex.Pattern;
+
 /**
- * GT-1000 controller (Device API)
+ * A device factory property.
+ *
+ * @param value The property value
  */
 
-module com.io7m.gatwick.device.api
+public record GWDeviceFactoryProperty(
+  String value)
 {
-  requires static org.osgi.annotation.bundle;
-  requires static org.osgi.annotation.versioning;
+  private static final Pattern VALID_PROPERTY =
+    Pattern.compile("[a-z][a-z0-9\\-]+");
 
-  requires transitive com.io7m.taskrecorder.core;
+  /**
+   * A device factory property.
+   *
+   * @param value The property value
+   */
 
-  exports com.io7m.gatwick.device.api;
+  public GWDeviceFactoryProperty
+  {
+    Objects.requireNonNull(value, "value");
+
+    if (!VALID_PROPERTY.matcher(value).matches()) {
+      throw new IllegalArgumentException(
+        "Properties must match %s".formatted(VALID_PROPERTY)
+      );
+    }
+  }
 }

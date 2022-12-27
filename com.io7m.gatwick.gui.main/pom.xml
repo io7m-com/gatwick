@@ -31,6 +31,11 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.gatwick.device.fake</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>com.io7m.gatwick.controller.main</artifactId>
       <version>${project.version}</version>
     </dependency>

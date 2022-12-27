@@ -118,6 +118,8 @@ public final class GWEnumerations
     builder.addMethod(makeEnumerationFirstMethod(className, enumeration));
     builder.addMethod(makeEnumerationLastMethod(className, enumeration));
     builder.addMethod(makeEnumerationOfIntegerMethod(className, enumeration));
+    builder.addMethod(makeEnumerationCaseCountMethod(enumeration));
+    builder.addMethod(makeEnumerationFromIntegerMethod(className));
     builder.addMethod(makeEnumerationDeserializerMethod(className));
     builder.addMethod(makeEnumerationSerializerMethod(className));
     builder.addMethod(makeEnumerationSerializeSize(enumeration));
@@ -356,6 +358,29 @@ public final class GWEnumerations
     code = code.add(";");
 
     spec.addCode(code.build());
+    return spec.build();
+  }
+
+  private static MethodSpec makeEnumerationFromIntegerMethod(
+    final ClassName className)
+  {
+    final var spec = MethodSpec.methodBuilder("fromInt");
+    spec.returns(className);
+    spec.addAnnotation(Override.class);
+    spec.addModifiers(PUBLIC);
+    spec.addParameter(int.class, "x");
+    spec.addCode("return $T.ofInt(x);", className);
+    return spec.build();
+  }
+
+  private static MethodSpec makeEnumerationCaseCountMethod(
+    final Enumeration enumeration)
+  {
+    final var spec = MethodSpec.methodBuilder("caseCount");
+    spec.returns(int.class);
+    spec.addAnnotation(Override.class);
+    spec.addModifiers(PUBLIC);
+    spec.addCode("return $L;", enumeration.getCase().size());
     return spec.build();
   }
 

@@ -19,6 +19,8 @@ package com.io7m.gatwick.gui.internal.gt;
 
 import com.io7m.gatwick.controller.api.GWControllerConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
+import com.io7m.gatwick.device.api.GWDeviceFactoryProperty;
+import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.gui.internal.GWApplication;
 import com.io7m.gatwick.gui.internal.GWCSS;
@@ -146,7 +148,7 @@ public final class GWGT1KDeviceSelectionController
       this.strings.format("devices.detecting")
     );
 
-    this.gt.detectDevices()
+    this.gt.detectDevices(GWGT1KDeviceSelectionController::filterDeviceFactory)
       .whenComplete((task, exception) -> {
         Platform.runLater(() -> {
           this.refreshButton.setDisable(false);
@@ -159,6 +161,16 @@ public final class GWGT1KDeviceSelectionController
           }
         });
       });
+  }
+
+  private static boolean filterDeviceFactory(
+    final GWDeviceFactoryType deviceFactory)
+  {
+    final var properties = deviceFactory.properties();
+    if (properties.contains(new GWDeviceFactoryProperty("fake"))) {
+      return true;
+    }
+    return false;
   }
 
   private void onDeviceListReceived(
@@ -197,6 +209,7 @@ public final class GWGT1KDeviceSelectionController
         .get();
 
     this.gt.open(new GWControllerConfiguration(
+      GWGT1KDeviceSelectionController::filterDeviceFactory,
       new GWDeviceConfiguration(
         device,
         Duration.ofSeconds(3L),

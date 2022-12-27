@@ -35,6 +35,7 @@ import javax.sound.midi.Receiver;
 import javax.sound.midi.SysexMessage;
 import javax.sound.midi.Transmitter;
 import java.time.Duration;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -79,7 +80,7 @@ public final class GWControllerTest
     this.devices =
       new GWDevicesJavaMIDI(this.backend);
     this.controllers =
-      new GWControllers(this.devices);
+      new GWControllers();
   }
 
   @AfterEach
@@ -168,8 +169,12 @@ public final class GWControllerTest
       .send(any(), anyLong());
 
     final var controller =
-      this.controllers.openController(
+      this.controllers.openControllerWith(
+        this.devices,
         new GWControllerConfiguration(
+          gwDeviceFactoryType -> Objects.equals(
+            gwDeviceFactoryType,
+            this.devices),
           new GWDeviceConfiguration(
             new GWDeviceMIDIDescription(
               info.getName(),

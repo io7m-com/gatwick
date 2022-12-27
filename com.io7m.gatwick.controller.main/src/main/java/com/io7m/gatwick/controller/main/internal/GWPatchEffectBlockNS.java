@@ -14,7 +14,6 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-
 package com.io7m.gatwick.controller.main.internal;
 
 import com.io7m.gatwick.controller.api.GWOnOffValue;
@@ -24,6 +23,8 @@ import com.io7m.gatwick.controller.main.internal.generated.StructPatchNS;
 import com.io7m.gatwick.device.api.GWDeviceException;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 
+import java.util.List;
+
 final class GWPatchEffectBlockNS
   extends GWPatchEffectBlock
   implements GWPatchEffectBlockNSType
@@ -31,9 +32,16 @@ final class GWPatchEffectBlockNS
   private final StructPatchNS ns;
 
   GWPatchEffectBlockNS(
-    final StructPatchNS f_ns)
+    final StructPatchNS s)
   {
-    this.ns = f_ns;
+    super(List.of(
+      s.f_sw,
+      s.f_threshold,
+      s.f_release,
+      s.f_detect
+    ));
+
+    this.ns = s;
   }
 
   @Override

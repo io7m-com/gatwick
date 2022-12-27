@@ -14,16 +14,26 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+import com.io7m.gatwick.device.api.GWDeviceFactoryType;
+import com.io7m.gatwick.device.fake.GWDevicesFake;
+
 /**
- * GT-1000 controller (Device API)
+ * GT-1000 controller (Device fake implementation)
  */
 
-module com.io7m.gatwick.device.api
+module com.io7m.gatwick.device.fake
 {
   requires static org.osgi.annotation.bundle;
   requires static org.osgi.annotation.versioning;
 
+  requires transitive com.io7m.gatwick.device.api;
   requires transitive com.io7m.taskrecorder.core;
 
-  exports com.io7m.gatwick.device.api;
+  requires com.io7m.jcip.annotations;
+  requires org.slf4j;
+
+  provides GWDeviceFactoryType
+    with GWDevicesFake;
+
+  exports com.io7m.gatwick.device.fake;
 }

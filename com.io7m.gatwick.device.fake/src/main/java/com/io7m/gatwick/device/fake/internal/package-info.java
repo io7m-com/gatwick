@@ -15,15 +15,10 @@
  */
 
 /**
- * GT-1000 controller (Device API)
+ * GT-1000 controller (Device fake implementation [internals])
  */
 
-module com.io7m.gatwick.device.api
-{
-  requires static org.osgi.annotation.bundle;
-  requires static org.osgi.annotation.versioning;
+@Version("1.0.0")
+package com.io7m.gatwick.device.fake.internal;
 
-  requires transitive com.io7m.taskrecorder.core;
-
-  exports com.io7m.gatwick.device.api;
-}
+import org.osgi.annotation.versioning.Version;

@@ -166,7 +166,7 @@ public final class GWMainController implements GWScreenControllerType
   private void gtStatusChanged(
     final GWGT1KServiceStatusType status)
   {
-    this.menuDeviceOpen.setDisable(status.impliesCloseable());
+    this.menuDeviceOpen.setDisable(status.isOpen());
 
     if (status instanceof Disconnected) {
       this.statusConnectionText.setText(

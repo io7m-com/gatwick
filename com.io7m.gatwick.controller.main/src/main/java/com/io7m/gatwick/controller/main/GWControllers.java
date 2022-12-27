@@ -22,10 +22,14 @@ import com.io7m.gatwick.controller.api.GWControllerFactoryType;
 import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.gatwick.controller.main.internal.GWController;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
+import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
+import com.io7m.taskrecorder.core.TRTask;
 
-import java.util.Objects;
-import java.util.ServiceConfigurationError;
+import java.util.List;
 import java.util.ServiceLoader;
+import java.util.function.Predicate;
+
+import static com.io7m.gatwick.controller.api.GWControllerStandardErrorCodes.DEVICE_NO_SUITABLE_FACTORIES;
 
 /**
  * A factory of controllers.
@@ -33,43 +37,36 @@ import java.util.ServiceLoader;
 
 public final class GWControllers implements GWControllerFactoryType
 {
-  private final GWDeviceFactoryType devices;
-
   /**
-   * Create a factory of controllers. Dependencies are loaded from ServiceLoader.
+   * Create a factory of controllers.
    */
 
   public GWControllers()
   {
-    this(
-      ServiceLoader.load(GWDeviceFactoryType.class)
-        .findFirst()
-        .orElseThrow(() -> {
-          return new ServiceConfigurationError(
-            "No services available of type %s"
-              .formatted(GWDeviceFactoryType.class)
-          );
-        })
+
+  }
+
+  private static GWDeviceFactoryType findDeviceFactory(
+    final Predicate<GWDeviceFactoryType> filter)
+    throws GWControllerException
+  {
+    final var loader =
+      ServiceLoader.load(GWDeviceFactoryType.class);
+    final var iterator =
+      loader.iterator();
+
+    while (iterator.hasNext()) {
+      final var devices = iterator.next();
+      if (filter.test(devices)) {
+        return devices;
+      }
+    }
+
+    throw new GWControllerException(
+      DEVICE_NO_SUITABLE_FACTORIES,
+      "No suitable services available of type %s"
+        .formatted(GWDeviceFactoryType.class)
     );
-  }
-
-  /**
-   * Create a factory of controllers.
-   *
-   * @param inDevices The device factory
-   */
-
-  public GWControllers(
-    final GWDeviceFactoryType inDevices)
-  {
-    this.devices =
-      Objects.requireNonNull(inDevices, "devices");
-  }
-
-  @Override
-  public GWDeviceFactoryType devices()
-  {
-    return this.devices;
   }
 
   @Override
@@ -77,6 +74,33 @@ public final class GWControllers implements GWControllerFactoryType
     final GWControllerConfiguration configuration)
     throws GWControllerException
   {
-    return GWController.open(this.devices, configuration);
+    return this.openControllerWith(
+      findDeviceFactory(configuration.deviceFactoryFilter()),
+      configuration
+    );
+  }
+
+  @Override
+  public GWControllerType openControllerWith(
+    final GWDeviceFactoryType devices,
+    final GWControllerConfiguration configuration)
+    throws GWControllerException
+  {
+    return GWController.open(devices, configuration);
+  }
+
+  @Override
+  public TRTask<List<GWDeviceMIDIDescription>> detectDevicesWith(
+    final GWDeviceFactoryType devices)
+  {
+    return devices.detectDevices();
+  }
+
+  @Override
+  public TRTask<List<GWDeviceMIDIDescription>> detectDevices(
+    final Predicate<GWDeviceFactoryType> deviceFactoryFilter)
+    throws GWControllerException
+  {
+    return this.detectDevicesWith(findDeviceFactory(deviceFactoryFilter));
   }
 }

@@ -17,6 +17,9 @@
 package com.io7m.gatwick.controller.api;
 
 import com.io7m.gatwick.iovar.GWIOReadableType;
+import com.io7m.gatwick.iovar.GWIOVariableType;
+
+import java.util.List;
 
 /**
  * A patch effect block.
@@ -24,5 +27,9 @@ import com.io7m.gatwick.iovar.GWIOReadableType;
 
 public interface GWPatchEffectBlockType extends GWIOReadableType
 {
+  /**
+   * @return The list of variables exposed
+   */
 
+  List<GWIOVariableType<?>> variables();
 }

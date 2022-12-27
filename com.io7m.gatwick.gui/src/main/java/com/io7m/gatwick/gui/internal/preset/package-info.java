@@ -15,15 +15,7 @@
  */
 
 /**
- * GT-1000 controller (Device API)
+ * GT-1000 controller (GUI [internals])
  */
 
-module com.io7m.gatwick.device.api
-{
-  requires static org.osgi.annotation.bundle;
-  requires static org.osgi.annotation.versioning;
-
-  requires transitive com.io7m.taskrecorder.core;
-
-  exports com.io7m.gatwick.device.api;
-}
+package com.io7m.gatwick.gui.internal.preset;

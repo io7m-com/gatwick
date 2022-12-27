@@ -87,6 +87,8 @@ final class GWPatch implements GWPatchType
         GWChainSerializers.deserializer(),
         49,
         new GWIOVariableInformation<>(
+          "CHAIN",
+          GWChain.class,
           GWChain.defaultChain(),
           GWChain.defaultChain(),
           GWChain.defaultChain()

@@ -26,6 +26,14 @@ package com.io7m.gatwick.iovar;
 public interface GWIOExtendedEnumerationType<T extends Enum<T> & Comparable<T>>
 {
   /**
+   * @param x The integer value
+   *
+   * @return The enumeration case of the given integer
+   */
+
+  GWIOExtendedEnumerationType<T> fromInt(int x);
+
+  /**
    * @return The integer index of this enumeration constant
    */
 
@@ -48,4 +56,10 @@ public interface GWIOExtendedEnumerationType<T extends Enum<T> & Comparable<T>>
    */
 
   T previous();
+
+  /**
+   * @return The number of cases
+   */
+
+  int caseCount();
 }
