@@ -4,10 +4,10 @@
   -fx-font-family: "Monospaced";
 
   -fx-base:              #202020;
-  -fx-accent:            #0093c9;
-  -fx-default-button:    #0093c9;
-  -fx-focus-color:       #0093c9;
-  -fx-faint-focus-color: #0093c922;
+  -fx-accent:            #00f9c9;
+  -fx-default-button:    #00f9c9;
+  -fx-focus-color:       #00f9c9;
+  -fx-faint-focus-color: #00f9c922;
 }
 
 .progress-bar
@@ -170,4 +170,9 @@
 .textShadow
 {
   -fx-text-fill: #000000;
+}
+
+.dial
+{
+  dial-radial-gauge-color: #00f9c9;
 }

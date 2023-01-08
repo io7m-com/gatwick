@@ -105,6 +105,8 @@ public abstract class GWEffectBlockPanel extends GWDeviceAwarePanel
       final var dial =
         control.dial();
 
+      dial.getStyleClass()
+          .add("dial");
       dial.dialRadialGaugeSize()
         .setValue(Double.valueOf(6.0));
 
