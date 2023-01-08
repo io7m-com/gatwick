@@ -24,6 +24,8 @@ import com.io7m.gatwick.controller.main.internal.GWController;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.taskrecorder.core.TRTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -37,6 +39,9 @@ import static com.io7m.gatwick.controller.api.GWControllerStandardErrorCodes.DEV
 
 public final class GWControllers implements GWControllerFactoryType
 {
+  private static final Logger LOG =
+    LoggerFactory.getLogger(GWControllers.class);
+
   /**
    * Create a factory of controllers.
    */
@@ -99,8 +104,19 @@ public final class GWControllers implements GWControllerFactoryType
   @Override
   public TRTask<List<GWDeviceMIDIDescription>> detectDevices(
     final Predicate<GWDeviceFactoryType> deviceFactoryFilter)
-    throws GWControllerException
   {
-    return this.detectDevicesWith(findDeviceFactory(deviceFactoryFilter));
+    final var task =
+      TRTask.<List<GWDeviceMIDIDescription>>create(
+        LOG, "Detecting devices...");
+
+    final GWDeviceFactoryType deviceFactory;
+    try {
+      deviceFactory = findDeviceFactory(deviceFactoryFilter);
+    } catch (final GWControllerException e) {
+      task.setFailed(e.getMessage(), e);
+      return task;
+    }
+
+    return this.detectDevicesWith(deviceFactory);
   }
 }

@@ -19,5 +19,10 @@
             checks="HiddenField"/>
   <suppress files="GWIORate119Milliseconds\.java"
             checks="HiddenField"/>
-  
+
+  <suppress files="GWNodeShape\.java"
+            checks="CyclomaticComplexity"/>
+  <suppress files="GWPresetController\.java"
+            checks="CyclomaticComplexity"/>
+
 </suppressions>

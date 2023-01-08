@@ -19,7 +19,12 @@ package com.io7m.gatwick.gui.internal.splash;
 
 import com.io7m.gatwick.gui.internal.GWBootCompleted;
 import com.io7m.gatwick.gui.internal.GWScreenControllerType;
+import com.io7m.gatwick.gui.internal.config.GWConfigurationServiceType;
 import com.io7m.gatwick.gui.internal.exec.GWBackgroundExecutorType;
+import com.io7m.gatwick.preferences.GWPreferencesService;
+import com.io7m.gatwick.preferences.GWPreferencesServiceType;
+import com.io7m.jade.api.ApplicationDirectoriesType;
+import com.io7m.jattribute.core.Attributes;
 import com.io7m.repetoir.core.RPServiceDirectoryWritableType;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -31,6 +36,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -45,6 +51,9 @@ public final class GWSplashController implements GWScreenControllerType
 {
   private final RPServiceDirectoryWritableType services;
   private final GWBackgroundExecutorType executor;
+  private final GWConfigurationServiceType configs;
+  private final Attributes attributes;
+  private final ApplicationDirectoriesType directories;
 
   @FXML private ImageView splashLogo;
   @FXML private Pane splashPane;
@@ -54,16 +63,26 @@ public final class GWSplashController implements GWScreenControllerType
   /**
    * The splash screen.
    *
-   * @param inServices The service directory
+   * @param inServices    The service directory
+   * @param inAttributes  An attribute creator
+   * @param inDirectories The application directories
    */
 
   public GWSplashController(
-    final RPServiceDirectoryWritableType inServices)
+    final RPServiceDirectoryWritableType inServices,
+    final Attributes inAttributes,
+    final ApplicationDirectoriesType inDirectories)
   {
     this.services =
       Objects.requireNonNull(inServices, "services");
     this.executor =
       inServices.requireService(GWBackgroundExecutorType.class);
+    this.configs =
+      inServices.requireService(GWConfigurationServiceType.class);
+    this.attributes =
+      Objects.requireNonNull(inAttributes, "attributes");
+    this.directories =
+      Objects.requireNonNull(inDirectories, "directories");
   }
 
   @Override
@@ -81,6 +100,30 @@ public final class GWSplashController implements GWScreenControllerType
     neon.setCycleCount(Animation.INDEFINITE);
     neon.playFromStart();
 
+    this.executor.executor()
+      .execute(() -> {
+        try {
+          this.loadServices();
+        } finally {
+          this.publishBootCompletedService();
+        }
+      });
+  }
+
+  private void loadServices()
+  {
+    this.services.register(
+      GWPreferencesServiceType.class,
+      GWPreferencesService.create(
+        this.directories,
+        java.time.Duration.of(10L, ChronoUnit.SECONDS),
+        this.attributes
+      )
+    );
+  }
+
+  private void publishBootCompletedService()
+  {
     this.executor.executor()
       .schedule(() -> {
         this.services.register(GWBootCompleted.class, new GWBootCompleted());

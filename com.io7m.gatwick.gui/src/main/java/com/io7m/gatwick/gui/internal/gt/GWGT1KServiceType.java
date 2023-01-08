@@ -61,4 +61,15 @@ public interface GWGT1KServiceType extends RPServiceType, AutoCloseable
 
   CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>> detectDevices(
     Predicate<GWDeviceFactoryType> deviceFactoryFilter);
+
+  /**
+   * Execute a function on the device thread.
+   *
+   * @param runnable The function
+   *
+   * @return The operation in progress
+   */
+
+  CompletableFuture<?> executeOnDevice(
+    GWGT1KRunnableType runnable);
 }

@@ -77,11 +77,8 @@ public interface GWControllerFactoryType
    * @param deviceFactoryFilter The predicate used to filter device factories
    *
    * @return A list of probable GT-1000 devices
-   *
-   * @throws GWControllerException On errors
    */
 
   TRTask<List<GWDeviceMIDIDescription>> detectDevices(
-    Predicate<GWDeviceFactoryType> deviceFactoryFilter)
-    throws GWControllerException;
+    Predicate<GWDeviceFactoryType> deviceFactoryFilter);
 }

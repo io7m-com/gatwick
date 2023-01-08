@@ -16,11 +16,17 @@
 
 package com.io7m.gatwick.device.fake.internal;
 
+import com.io7m.gatwick.device.api.GWDeviceCommandRequestData;
+import com.io7m.gatwick.device.api.GWDeviceCommandSetData;
 import com.io7m.gatwick.device.api.GWDeviceCommandType;
 import com.io7m.gatwick.device.api.GWDeviceDescription;
 import com.io7m.gatwick.device.api.GWDeviceException;
+import com.io7m.gatwick.device.api.GWDeviceResponseOK;
+import com.io7m.gatwick.device.api.GWDeviceResponseRequestData;
 import com.io7m.gatwick.device.api.GWDeviceResponseType;
 import com.io7m.gatwick.device.api.GWDeviceType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -32,6 +38,9 @@ import static com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes.DEVICE_MIDI
 
 public final class GWDeviceFake implements GWDeviceType
 {
+  private static final Logger LOG =
+    LoggerFactory.getLogger(GWDeviceFake.class);
+
   private final long id;
   private final GWDeviceDescription description;
 
@@ -62,7 +71,32 @@ public final class GWDeviceFake implements GWDeviceType
     final GWDeviceCommandType<R> command)
     throws GWDeviceException
   {
+    LOG.trace("sendCommand: {}", command);
+
+    if (command instanceof GWDeviceCommandSetData setData) {
+      return (R) this.sendCommandSetData(setData);
+    }
+    if (command instanceof GWDeviceCommandRequestData requestData) {
+      return (R) this.sendCommandRequestData(requestData);
+    }
+
     throw new GWDeviceException(DEVICE_MIDI_SYSTEM_ERROR, "MIDI system error");
+  }
+
+  private GWDeviceResponseRequestData sendCommandRequestData(
+    final GWDeviceCommandRequestData requestData)
+  {
+    return new GWDeviceResponseRequestData(
+      requestData.address(),
+      new byte[requestData.size()],
+      0
+    );
+  }
+
+  private GWDeviceResponseOK sendCommandSetData(
+    final GWDeviceCommandSetData setData)
+  {
+    return GWDeviceResponseOK.ok();
   }
 
   @Override

@@ -1,19 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.text.Font?>
 
 <StackPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.io7m.gatwick.gui.internal.preset.GWPresetController">
    <children>
       <VBox fx:id="deviceIsOpenContainer">
          <children>
-            <Pane fx:id="blockGraphContainer" prefHeight="128.0" />
+            <ScrollPane fx:id="blockGraphContainer" fitToHeight="true" focusTraversable="false" hbarPolicy="ALWAYS" minHeight="-Infinity" prefHeight="192.0" vbarPolicy="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></ScrollPane>
+            <HBox fx:id="presetHeader" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0">
+               <children>
+                  <ImageView fx:id="presetHeaderIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@speaker24.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <StackPane>
+                     <children>
+                        <Label fx:id="presetHeaderTextShadow" text="%placeholder">
+                           <font>
+                              <Font name="Monospaced Bold" size="13.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets left="1.0" top="1.0" />
+                           </StackPane.margin>
+                           <styleClass>
+                              <String fx:value="textShadow" />
+                              <String fx:value="presetHeaderText" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="presetHeaderText" styleClass="presetHeaderText" text="%placeholder">
+                           <font>
+                              <Font name="Monospaced Bold" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="8.0" right="8.0" />
+                     </HBox.margin>
+                  </StackPane>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets right="8.0" />
+               </padding>
+            </HBox>
             <Separator prefWidth="200.0" />
             <VBox fx:id="dialsContainer" VBox.vgrow="ALWAYS">
                <VBox.margin>

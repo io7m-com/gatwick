@@ -25,9 +25,11 @@ open module com.io7m.gatwick.gui
 {
   requires com.io7m.gatwick.device.api;
   requires com.io7m.gatwick.controller.api;
+  requires com.io7m.gatwick.preferences;
 
   requires com.io7m.digal.core;
   requires com.io7m.jade.api;
+  requires com.io7m.jaffirm.core;
   requires com.io7m.jmulticlose.core;
   requires com.io7m.junreachable.core;
   requires com.io7m.jxtrand.api;

@@ -15,12 +15,14 @@
  */
 
 
-package com.io7m.gatwick.gui.internal.gt;
+package com.io7m.gatwick.gui.internal.preset;
 
 import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.gatwick.gui.internal.GWScreenControllerType;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.GWGT1KServiceStatusClosedType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.GWGT1KServiceStatusOpenType;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import javafx.scene.layout.FlowPane;
 
@@ -28,7 +30,7 @@ import javafx.scene.layout.FlowPane;
  * An abstract panel for components that need to be device-aware.
  */
 
-public abstract class GWGT1DeviceAwarePanel extends FlowPane
+public abstract class GWDeviceAwarePanel extends FlowPane
   implements GWScreenControllerType
 {
   private final GWGT1KServiceType gt;
@@ -39,7 +41,7 @@ public abstract class GWGT1DeviceAwarePanel extends FlowPane
    * @param services The service directory
    */
 
-  public GWGT1DeviceAwarePanel(
+  public GWDeviceAwarePanel(
     final RPServiceDirectoryType services)
   {
     this.gt =
@@ -48,6 +50,11 @@ public abstract class GWGT1DeviceAwarePanel extends FlowPane
       .addListener((observable, oldValue, newValue) -> {
         this.onGTStateChanged(oldValue, newValue);
       });
+  }
+
+  protected final GWGT1KServiceType gtService()
+  {
+    return this.gt;
   }
 
   private void onGTStateChanged(

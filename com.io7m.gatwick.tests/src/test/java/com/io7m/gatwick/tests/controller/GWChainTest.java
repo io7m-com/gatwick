@@ -18,6 +18,7 @@ package com.io7m.gatwick.tests.controller;
 
 import com.io7m.gatwick.controller.api.GWChain;
 import com.io7m.gatwick.controller.api.GWChainElementValue;
+import com.io7m.gatwick.controller.api.GWChainGraphValidityException;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 
@@ -31,40 +32,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class GWChainTest
 {
   @Property
-  public void testMoveSelf(
-    final @ForAll GWChainElementValue element)
-  {
-    final var elements =
-      new ArrayList<>(List.of(GWChainElementValue.values()));
-
-    Collections.shuffle(elements);
-
-    final var chain0 =
-      GWChain.of(elements);
-    final var chain1 =
-      chain0.moveBefore(element, element);
-
-    assertEquals(chain0, chain1);
-  }
-
-  @Property
-  public void testMoveFirst(
-    final @ForAll GWChainElementValue element)
-  {
-    final var elements =
-      new ArrayList<>(List.of(GWChainElementValue.values()));
-
-    Collections.shuffle(elements);
-
-    final var chain0 =
-      GWChain.of(elements);
-    final var chain1 =
-      chain0.moveBefore(element, elements.get(0));
-
-    assertEquals(element, chain1.elements().get(0));
-  }
-
-  @Property
   public void testTooShort()
   {
     final var elements =
@@ -73,7 +40,7 @@ public final class GWChainTest
     Collections.shuffle(elements);
     elements.remove(0);
 
-    assertThrows(IllegalArgumentException.class, () -> {
+    assertThrows(GWChainGraphValidityException.class, () -> {
       GWChain.of(elements);
     });
   }
@@ -87,7 +54,7 @@ public final class GWChainTest
       elements.add(element);
     }
 
-    assertThrows(IllegalArgumentException.class, () -> {
+    assertThrows(GWChainGraphValidityException.class, () -> {
       GWChain.of(elements);
     });
   }

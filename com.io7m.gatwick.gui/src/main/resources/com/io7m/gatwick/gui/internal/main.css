@@ -4,10 +4,10 @@
   -fx-font-family: "Monospaced";
 
   -fx-base:              #202020;
-  -fx-accent:            #ffffff;
-  -fx-default-button:    #ffffff;
-  -fx-focus-color:       #ffffff;
-  -fx-faint-focus-color: #ffffff22;
+  -fx-accent:            #0093c9;
+  -fx-default-button:    #0093c9;
+  -fx-focus-color:       #0093c9;
+  -fx-faint-focus-color: #0093c922;
 }
 
 .progress-bar
@@ -34,6 +34,66 @@
   -fx-padding: 0 0 0 0;
 
   -fx-background-color: #ffffff;
+}
+
+.scroll-bar > .thumb
+{
+  -fx-background-insets: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-insets: 0 0 0 0;
+  -fx-padding: 0 0 0 0;
+
+  -fx-border-color:     #606060;
+  -fx-background-color: #303030;
+}
+
+.scroll-bar:hover > .thumb,
+.scroll-bar:pressed > .thumb
+{
+  -fx-background-insets: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-insets: 0 0 0 0;
+  -fx-padding: 0 0 0 0;
+
+  -fx-border-color:     #606060;
+  -fx-background-color: #505050;
+}
+
+.scroll-bar > .track
+{
+  -fx-background-insets: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-insets: 0 0 0 0;
+  -fx-padding: 0 0 0 0;
+
+  -fx-border-color:     #606060;
+  -fx-background-color: #202020;
+}
+
+.scroll-bar > .decrement-button
+{
+  -fx-background-insets: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-insets: 0 0 0 0;
+  -fx-padding: 0 0 0 0;
+
+  -fx-border-color: #606060;
+}
+
+.scroll-bar > .increment-button
+{
+  -fx-background-insets: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-insets: 0 0 0 0;
+  -fx-padding: 0 0 0 0;
+
+  -fx-border-color: #606060;
+}
+
+.scroll-bar > .increment-button > .increment-arrow,
+.scroll-bar > .decrement-button > .decrement-arrow
+{
+  -fx-background-color: #00aaff;
 }
 
 .menu-bar
@@ -89,6 +149,25 @@
 
 #statusConnectionText
 {
-  -fx-font-size: 8pt;
+  -fx-font-size:   8pt;
   -fx-font-family: "Monospaced";
+}
+
+.presetHeaderText
+{
+  -fx-font-size:   10pt;
+  -fx-font-weight: bold;
+  -fx-font-family: "Monospaced";
+}
+
+.preferencesHeaderText
+{
+  -fx-font-size:   12pt;
+  -fx-font-weight: bold;
+  -fx-font-family: "Monospaced";
+}
+
+.textShadow
+{
+  -fx-text-fill: #000000;
 }

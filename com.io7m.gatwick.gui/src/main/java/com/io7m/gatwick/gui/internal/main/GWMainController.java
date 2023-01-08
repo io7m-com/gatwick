@@ -24,12 +24,14 @@ import com.io7m.gatwick.gui.internal.GWScreenControllerType;
 import com.io7m.gatwick.gui.internal.GWStrings;
 import com.io7m.gatwick.gui.internal.errors.GWErrorDialogs;
 import com.io7m.gatwick.gui.internal.exec.GWBackgroundExecutorType;
-import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KDeviceSelectionController;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Connected;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Disconnected;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.OpenFailed;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.PerformingIO;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceType;
+import com.io7m.gatwick.gui.internal.preferences.GWPreferencesController;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import com.io7m.repetoir.core.RPServiceEventType;
 import com.io7m.repetoir.core.RPServiceEventType.RPServiceRegistered;
@@ -62,6 +64,7 @@ import java.util.ResourceBundle;
 
 import static com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Disconnected.DISCONNECTED;
 import static javafx.animation.Interpolator.EASE_BOTH;
+import static javafx.scene.paint.Color.GOLD;
 import static javafx.scene.paint.Color.LIMEGREEN;
 
 /**
@@ -190,6 +193,14 @@ public final class GWMainController implements GWScreenControllerType
         this.strings.format("statusConnected")
       );
       this.statusConnectionLED.setFill(LIMEGREEN);
+      return;
+    }
+
+    if (status instanceof PerformingIO) {
+      this.statusConnectionText.setText(
+        this.strings.format("statusPerformingIO")
+      );
+      this.statusConnectionLED.setFill(GOLD);
       return;
     }
   }
@@ -330,7 +341,14 @@ public final class GWMainController implements GWScreenControllerType
   }
 
   @FXML
-  private void onMenuQuitSelected()
+  private void onMenuFilePreferencesSelected()
+    throws IOException
+  {
+    GWPreferencesController.open(this.services);
+  }
+
+  @FXML
+  private void onMenuFileQuitSelected()
   {
     try {
       this.services.close();

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="urn:com.io7m.gatwick:preferences:1"
+        xmlns:p="urn:com.io7m.gatwick:preferences:1">
+
+  <element name="Device">
+    <annotation>
+      <documentation>
+        Device preferences.
+      </documentation>
+    </annotation>
+
+    <complexType>
+      <sequence>
+        <any minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+
+      <attribute name="ShowFakeDevices"
+                 type="boolean">
+        <annotation>
+          <documentation>
+            Whether to include fake software devices when detecting devices.
+          </documentation>
+        </annotation>
+      </attribute>
+
+      <anyAttribute/>
+    </complexType>
+  </element>
+
+  <element name="Preferences">
+    <annotation>
+      <documentation>
+        Preferences.
+      </documentation>
+    </annotation>
+
+    <complexType>
+      <sequence>
+        <element ref="p:Device"
+                 minOccurs="1"
+                 maxOccurs="1"/>
+        <any minOccurs="0"
+             maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+  </element>
+
+</schema>

@@ -78,6 +78,7 @@ import static com.io7m.gatwick.controller.api.GWChainElementValue.SUB_SP_SIMULAT
 public final class GWChain
 {
   private static final GWChain DEFAULT;
+  private static final int CHAIN_SIZE = 49;
 
   static {
     DEFAULT = new GWChain(
@@ -135,6 +136,7 @@ public final class GWChain
     );
   }
 
+  private final GWChainGraphType graph;
   private final List<GWChainElementValue> chain;
 
   private GWChain(
@@ -144,8 +146,8 @@ public final class GWChain
       Objects.requireNonNull(inChain, "chain")
     );
 
-    if (this.chain.size() != 49) {
-      throw new IllegalArgumentException(
+    if (this.chain.size() != CHAIN_SIZE) {
+      throw new GWChainGraphValidityException(
         "Chain must have 49 elements."
       );
     }
@@ -156,10 +158,50 @@ public final class GWChain
         .count();
 
     if (noDup != 49L) {
-      throw new IllegalArgumentException(
+      throw new GWChainGraphValidityException(
         "Chain must have 49 distinct elements."
       );
     }
+
+    /*
+     * Build graph for validity checking.
+     */
+
+    this.graph =
+      GWChainGraph.create(inChain);
+  }
+
+  /**
+   * @return The required size of an effects chain
+   */
+
+  public static int chainSize()
+  {
+    return CHAIN_SIZE;
+  }
+
+  /**
+   * @return The default chain
+   */
+
+  public static GWChain defaultChain()
+  {
+    return DEFAULT;
+  }
+
+  /**
+   * Create an effect chain from the given list of elements. Every value of
+   * {@link GWChainElementValue} must be present in the list exactly once.
+   *
+   * @param inChain The elements
+   *
+   * @return The chain
+   */
+
+  public static GWChain of(
+    final List<GWChainElementValue> inChain)
+  {
+    return new GWChain(inChain);
   }
 
   /**
@@ -191,27 +233,12 @@ public final class GWChain
   }
 
   /**
-   * @return The default chain
+   * @return This chain as a graph
    */
 
-  public static GWChain defaultChain()
+  public GWChainGraphType graph()
   {
-    return DEFAULT;
-  }
-
-  /**
-   * Create an effect chain from the given list of elements. Every value of
-   * {@link GWChainElementValue} must be present in the list exactly once.
-   *
-   * @param inChain The elements
-   *
-   * @return The chain
-   */
-
-  public static GWChain of(
-    final List<GWChainElementValue> inChain)
-  {
-    return new GWChain(inChain);
+    return this.graph;
   }
 
   /**

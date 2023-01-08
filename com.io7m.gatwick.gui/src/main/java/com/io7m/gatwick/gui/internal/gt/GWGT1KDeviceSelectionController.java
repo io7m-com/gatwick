@@ -28,6 +28,8 @@ import com.io7m.gatwick.gui.internal.GWScreenControllerFactory;
 import com.io7m.gatwick.gui.internal.GWScreenControllerType;
 import com.io7m.gatwick.gui.internal.GWStrings;
 import com.io7m.gatwick.gui.internal.errors.GWErrorDialogs;
+import com.io7m.gatwick.preferences.GWPreferences;
+import com.io7m.gatwick.preferences.GWPreferencesServiceType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import com.io7m.taskrecorder.core.TRTask;
 import javafx.application.Platform;
@@ -61,10 +63,10 @@ import static javafx.stage.Modality.APPLICATION_MODAL;
 public final class GWGT1KDeviceSelectionController
   implements GWScreenControllerType
 {
-  private final RPServiceDirectoryType services;
   private final GWGT1KServiceType gt;
   private final GWStrings strings;
   private final GWErrorDialogs errors;
+  private final GWPreferencesServiceType preferences;
 
   @FXML private Button openButton;
   @FXML private TableView<GWDeviceMIDIDescription> midiDevices;
@@ -84,14 +86,16 @@ public final class GWGT1KDeviceSelectionController
   public GWGT1KDeviceSelectionController(
     final RPServiceDirectoryType inServices)
   {
-    this.services =
-      Objects.requireNonNull(inServices, "services");
+    Objects.requireNonNull(inServices, "services");
+
     this.gt =
       inServices.requireService(GWGT1KServiceType.class);
     this.strings =
       inServices.requireService(GWStrings.class);
     this.errors =
       inServices.requireService(GWErrorDialogs.class);
+    this.preferences =
+      inServices.requireService(GWPreferencesServiceType.class);
   }
 
   @Override
@@ -148,27 +152,34 @@ public final class GWGT1KDeviceSelectionController
       this.strings.format("devices.detecting")
     );
 
-    this.gt.detectDevices(GWGT1KDeviceSelectionController::filterDeviceFactory)
-      .whenComplete((task, exception) -> {
-        Platform.runLater(() -> {
-          this.refreshButton.setDisable(false);
-          this.refreshProgress.setVisible(false);
+    this.gt.detectDevices(devices -> {
+      return filterDeviceFactory(
+        this.preferences.preferences().get(),
+        devices
+      );
+    }).whenComplete((task, exception) -> {
+      Platform.runLater(() -> {
+        this.refreshButton.setDisable(false);
+        this.refreshProgress.setVisible(false);
 
-          if (task != null) {
-            this.onDeviceListReceived(task);
-          } else {
-            this.refreshStatusText.setText("");
-          }
-        });
+        if (task != null) {
+          this.onDeviceListReceived(task);
+        } else {
+          this.refreshStatusText.setText(exception.getMessage());
+        }
       });
+    });
   }
 
   private static boolean filterDeviceFactory(
+    final GWPreferences preferences,
     final GWDeviceFactoryType deviceFactory)
   {
     final var properties = deviceFactory.properties();
-    if (properties.contains(new GWDeviceFactoryProperty("fake"))) {
-      return true;
+    if (preferences.device().showFakeDevices()) {
+      if (properties.contains(new GWDeviceFactoryProperty("fake"))) {
+        return true;
+      }
     }
     return false;
   }
@@ -209,7 +220,12 @@ public final class GWGT1KDeviceSelectionController
         .get();
 
     this.gt.open(new GWControllerConfiguration(
-      GWGT1KDeviceSelectionController::filterDeviceFactory,
+      devices -> {
+        return filterDeviceFactory(
+          this.preferences.preferences().get(),
+          devices
+        );
+      },
       new GWDeviceConfiguration(
         device,
         Duration.ofSeconds(3L),

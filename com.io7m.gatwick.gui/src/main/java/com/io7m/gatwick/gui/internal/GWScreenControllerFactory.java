@@ -19,8 +19,11 @@ package com.io7m.gatwick.gui.internal;
 
 import com.io7m.gatwick.gui.internal.gt.GWGT1KDeviceSelectionController;
 import com.io7m.gatwick.gui.internal.main.GWMainController;
+import com.io7m.gatwick.gui.internal.preferences.GWPreferencesController;
 import com.io7m.gatwick.gui.internal.preset.GWPresetController;
 import com.io7m.gatwick.gui.internal.splash.GWSplashController;
+import com.io7m.jade.api.ApplicationDirectoriesType;
+import com.io7m.jattribute.core.Attributes;
 import com.io7m.repetoir.core.RPServiceDirectoryWritableType;
 import com.io7m.repetoir.core.RPServiceType;
 import javafx.util.Callback;
@@ -35,18 +38,28 @@ public final class GWScreenControllerFactory
   implements Callback<Class<?>, Object>, RPServiceType
 {
   private final RPServiceDirectoryWritableType services;
+  private final Attributes attributes;
+  private final ApplicationDirectoriesType directories;
 
   /**
    * The factory of screen controllers.
    *
-   * @param inServices The service directory
+   * @param inServices    The service directory
+   * @param inAttributes  The attributes
+   * @param inDirectories The directories
    */
 
   public GWScreenControllerFactory(
-    final RPServiceDirectoryWritableType inServices)
+    final RPServiceDirectoryWritableType inServices,
+    final Attributes inAttributes,
+    final ApplicationDirectoriesType inDirectories)
   {
     this.services =
       Objects.requireNonNull(inServices, "services");
+    this.attributes =
+      Objects.requireNonNull(inAttributes, "inAttributes");
+    this.directories =
+      Objects.requireNonNull(inDirectories, "inDirectories");
   }
 
   @Override
@@ -56,12 +69,23 @@ public final class GWScreenControllerFactory
     if (Objects.equals(param, GWMainController.class)) {
       return new GWMainController(this.services);
     }
-    if (Objects.equals(param, GWSplashController.class)) {
-      return new GWSplashController(this.services);
+
+    if (Objects.equals(param, GWPreferencesController.class)) {
+      return new GWPreferencesController(this.services);
     }
+
+    if (Objects.equals(param, GWSplashController.class)) {
+      return new GWSplashController(
+        this.services,
+        this.attributes,
+        this.directories
+      );
+    }
+
     if (Objects.equals(param, GWGT1KDeviceSelectionController.class)) {
       return new GWGT1KDeviceSelectionController(this.services);
     }
+
     if (Objects.equals(param, GWPresetController.class)) {
       return new GWPresetController(this.services);
     }

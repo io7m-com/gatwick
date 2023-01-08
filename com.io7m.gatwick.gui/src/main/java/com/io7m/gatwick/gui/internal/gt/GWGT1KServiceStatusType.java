@@ -119,4 +119,23 @@ public sealed interface GWGT1KServiceStatusType
       Objects.requireNonNull(device, "device");
     }
   }
+
+  /**
+   * The GT-1000 is currently performing I/O.
+   *
+   * @param device The device
+   */
+
+  record PerformingIO(GWControllerType device)
+    implements GWGT1KServiceStatusOpenType
+  {
+    /**
+     * The GT-1000 is currently performing I/O.
+     */
+
+    public PerformingIO
+    {
+      Objects.requireNonNull(device, "device");
+    }
+  }
 }

@@ -18,19 +18,24 @@
 package com.io7m.gatwick.gui.internal;
 
 import com.io7m.gatwick.gui.GWConfiguration;
+import com.io7m.gatwick.gui.internal.config.GWConfigurationService;
+import com.io7m.gatwick.gui.internal.config.GWConfigurationServiceType;
 import com.io7m.gatwick.gui.internal.errors.GWErrorDialogs;
 import com.io7m.gatwick.gui.internal.exec.GWBackgroundExecutor;
 import com.io7m.gatwick.gui.internal.exec.GWBackgroundExecutorType;
-import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KService;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceType;
 import com.io7m.gatwick.gui.internal.icons.GWIconService;
 import com.io7m.gatwick.gui.internal.icons.GWIconServiceType;
+import com.io7m.jattribute.core.Attributes;
 import com.io7m.repetoir.core.RPServiceDirectory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -40,6 +45,9 @@ import java.util.Objects;
 
 public final class GWApplication extends Application
 {
+  private static final Logger LOG =
+    LoggerFactory.getLogger(GWApplication.class);
+
   private final GWConfiguration configuration;
 
   /**
@@ -72,7 +80,15 @@ public final class GWApplication extends Application
     final var executor = GWBackgroundExecutor.create();
     services.register(GWBackgroundExecutorType.class, executor);
 
-    final var controllers = new GWScreenControllerFactory(services);
+    final var controllers =
+      new GWScreenControllerFactory(
+        services,
+        Attributes.create(throwable -> {
+          LOG.debug("error assigning attribute value: ", throwable);
+        }),
+        this.configuration.directories()
+      );
+
     services.register(GWScreenControllerFactory.class, controllers);
 
     final var gtservice = GWGT1KService.create(services);
@@ -84,6 +100,11 @@ public final class GWApplication extends Application
     final var errors = new GWErrorDialogs(services);
     services.register(GWErrorDialogs.class, errors);
 
+    services.register(
+      GWConfigurationServiceType.class,
+      new GWConfigurationService(this.configuration)
+    );
+
     final var mainLoader = new FXMLLoader(mainXML, strings.resources());
     mainLoader.setControllerFactory(controllers);
 
@@ -91,6 +112,8 @@ public final class GWApplication extends Application
     GWCSS.setCSS(pane);
 
     stage.setTitle(strings.format("title"));
+    stage.setMinWidth(640.0);
+    stage.setMinHeight(480.0);
     stage.setWidth(1280.0);
     stage.setHeight(720.0);
     stage.setScene(new Scene(pane));

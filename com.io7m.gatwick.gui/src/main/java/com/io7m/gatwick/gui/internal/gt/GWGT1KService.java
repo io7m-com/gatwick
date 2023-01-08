@@ -23,6 +23,9 @@ import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.gui.internal.GWStrings;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Connected;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.OpenFailed;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.PerformingIO;
 import com.io7m.jmulticlose.core.CloseableCollection;
 import com.io7m.jmulticlose.core.CloseableCollectionType;
 import com.io7m.jmulticlose.core.ClosingResourceFailedException;
@@ -159,18 +162,12 @@ public final class GWGT1KService implements GWGT1KServiceType
 
         task.setResult(this.controller);
         task.setSucceeded();
-        Platform.runLater(() -> {
-          this.status.set(
-            new GWGT1KServiceStatusType.Connected(this.controller)
-          );
-        });
+        Platform.runLater(() -> this.status.set(new Connected(this.controller)));
 
         future.complete(task);
       } catch (final Throwable e) {
         task.setFailed(e.getMessage(), e);
-        Platform.runLater(() -> {
-          this.status.set(new GWGT1KServiceStatusType.OpenFailed(task));
-        });
+        Platform.runLater(() -> this.status.set(new OpenFailed(task)));
         future.completeExceptionally(e);
       }
     });
@@ -211,6 +208,34 @@ public final class GWGT1KService implements GWGT1KServiceType
         future.completeExceptionally(e);
       }
     });
+    return future;
+  }
+
+  @Override
+  public CompletableFuture<?> executeOnDevice(
+    final GWGT1KRunnableType runnable)
+  {
+    Objects.requireNonNull(runnable, "runnable");
+
+    final var future = new CompletableFuture<>();
+    this.executor.execute(() -> {
+      try {
+        final var ctrl = this.controller;
+        if (ctrl == null) {
+          future.completeExceptionally(
+            new IllegalStateException("Device is not open."));
+          return;
+        }
+
+        Platform.runLater(() -> this.status.set(new PerformingIO(this.controller)));
+        runnable.execute(ctrl);
+        future.complete(null);
+        Platform.runLater(() -> this.status.set(new Connected(this.controller)));
+      } catch (final Throwable e) {
+        future.completeExceptionally(e);
+      }
+    });
+
     return future;
   }
 }
