@@ -46,7 +46,7 @@ public final class GWPresetController implements GWScreenControllerType
 {
   private final RPServiceDirectoryType services;
   private final GWGT1KServiceType gt;
-  private final EnumMap<GWChainElementValue, GWEffectBlockPanel> panels;
+  private final EnumMap<GWChainElementValue, GWEffectBlockPanel<?>> panels;
 
   @FXML private Pane deviceIsClosedContainer;
   @FXML private Pane deviceIsOpenContainer;
@@ -75,8 +75,8 @@ public final class GWPresetController implements GWScreenControllerType
 
     for (final var name : GWChainElementValue.values()) {
       this.panels.put(name, switch (name) {
-        case AIRD_PREAMP_1 -> null;
-        case AIRD_PREAMP_2 -> null;
+        case AIRD_PREAMP_1 -> new GWEffectBlockPanelPreamp1(this.services);
+        case AIRD_PREAMP_2 -> new GWEffectBlockPanelPreamp2(this.services);
         case BRANCH_SPLIT1 -> null;
         case BRANCH_SPLIT2 -> null;
         case BRANCH_SPLIT3 -> null;
@@ -90,8 +90,8 @@ public final class GWPresetController implements GWScreenControllerType
         case DELAY_2 -> null;
         case DELAY_3 -> null;
         case DELAY_4 -> null;
-        case DISTORTION_1 -> null;
-        case DISTORTION_2 -> null;
+        case DISTORTION_1 -> new GWEffectBlockPanelDS1(this.services);
+        case DISTORTION_2 -> new GWEffectBlockPanelDS2(this.services);
         case DIVIDER_1 -> null;
         case DIVIDER_2 -> null;
         case DIVIDER_3 -> null;
@@ -115,7 +115,7 @@ public final class GWPresetController implements GWScreenControllerType
         case MIXER_3 -> null;
         case NOISE_SUPPRESSOR_1 -> new GWEffectBlockPanelNS1(this.services);
         case NOISE_SUPPRESSOR_2 -> new GWEffectBlockPanelNS2(this.services);
-        case PEDAL_FX -> null;
+        case PEDAL_FX -> new GWEffectBlockPanelPFX(this.services);
         case RESERVED_44 -> null;
         case REVERB -> null;
         case SEND_SLASH_RETURN_1 -> null;
@@ -211,8 +211,11 @@ public final class GWPresetController implements GWScreenControllerType
       return;
     }
 
+    final var info =
+      GWChainElementValue.info();
     final var label =
-      node.name().label();
+      info.label(node.name());
+
     final var newBackground =
       new Background(new BackgroundFill(node.mainColor(), null, null));
 
@@ -221,7 +224,9 @@ public final class GWPresetController implements GWScreenControllerType
     this.presetHeaderIcon.setImage(node.icon());
     this.presetHeader.setBackground(newBackground);
 
-    final var panel = this.panels.get(node.name());
+    final var panel =
+      this.panels.get(node.name());
+
     if (panel != null) {
       dials.add(panel);
       panel.readFromDevice();

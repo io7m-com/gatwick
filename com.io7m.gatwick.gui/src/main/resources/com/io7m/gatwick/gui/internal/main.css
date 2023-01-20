@@ -93,7 +93,7 @@
 .scroll-bar > .increment-button > .increment-arrow,
 .scroll-bar > .decrement-button > .decrement-arrow
 {
-  -fx-background-color: #00aaff;
+  -fx-background-color: #00f9c9;
 }
 
 .menu-bar
@@ -175,4 +175,10 @@
 .dial
 {
   dial-radial-gauge-color: #00f9c9;
+}
+
+.dialLabel
+{
+  -fx-font-size:   8pt;
+  -fx-font-family: "Monospaced";
 }

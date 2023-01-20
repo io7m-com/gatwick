@@ -27,6 +27,13 @@ import javafx.scene.image.Image;
 public interface GWIconServiceType extends RPServiceType
 {
   /**
+   * @param name The name
+   * @return The icon with the given name
+   */
+
+  Image icon(String name);
+
+  /**
    * @return The 16x16 task icon.
    */
 

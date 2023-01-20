@@ -26,9 +26,8 @@ import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.device.api.GWDeviceType;
 import com.io7m.gatwick.device.fake.internal.GWDeviceFake;
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskRecorderType;
 import net.jcip.annotations.GuardedBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,9 +43,6 @@ import static com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes.DEVICE_NOT_
 public final class GWDevicesFake
   implements GWDeviceFactoryType
 {
-  private static final Logger LOG =
-    LoggerFactory.getLogger(GWDevicesFake.class);
-
   private static final Set<GWDeviceFactoryProperty> PROPERTIES =
     Set.of(new GWDeviceFactoryProperty("fake"));
 
@@ -130,25 +126,23 @@ public final class GWDevicesFake
   }
 
   @Override
-  public TRTask<List<GWDeviceMIDIDescription>> detectDevices()
+  public TRTask<List<GWDeviceMIDIDescription>> detectDevices(
+    final TRTaskRecorderType<?> recorder)
   {
-    final var recorder =
-      TRTask.<List<GWDeviceMIDIDescription>>create(
-        LOG, "Detecting devices...");
-
-    recorder.setSucceeded("Detected devices.");
-
-    final List<GWDeviceMIDIDescription> results;
-    synchronized (this.deviceLock) {
-      results = this.devicesNotOpen.values()
-        .stream()
-        .map(GWDeviceFake::description)
-        .map(GWDeviceDescription::midiDevice)
-        .toList();
+    try (var subRec =
+           recorder.<List<GWDeviceMIDIDescription>>beginSubtask(
+      "Detecting devices...")) {
+      final List<GWDeviceMIDIDescription> results;
+      synchronized (this.deviceLock) {
+        results = this.devicesNotOpen.values()
+          .stream()
+          .map(GWDeviceFake::description)
+          .map(GWDeviceDescription::midiDevice)
+          .toList();
+      }
+      subRec.setTaskSucceeded("Detected devices.", results);
+      return subRec.toTask();
     }
-
-    recorder.setResult(results);
-    return recorder;
   }
 
   @Override

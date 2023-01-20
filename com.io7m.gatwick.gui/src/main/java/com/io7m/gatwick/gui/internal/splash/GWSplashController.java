@@ -21,6 +21,8 @@ import com.io7m.gatwick.gui.internal.GWBootCompleted;
 import com.io7m.gatwick.gui.internal.GWScreenControllerType;
 import com.io7m.gatwick.gui.internal.config.GWConfigurationServiceType;
 import com.io7m.gatwick.gui.internal.exec.GWBackgroundExecutorType;
+import com.io7m.gatwick.gui.internal.icons.GWIconSetService;
+import com.io7m.gatwick.gui.internal.icons.GWIconSetServiceType;
 import com.io7m.gatwick.preferences.GWPreferencesService;
 import com.io7m.gatwick.preferences.GWPreferencesServiceType;
 import com.io7m.jade.api.ApplicationDirectoriesType;
@@ -120,6 +122,11 @@ public final class GWSplashController implements GWScreenControllerType
         this.attributes
       )
     );
+
+    this.services.register(
+      GWIconSetServiceType.class,
+      GWIconSetService.create()
+    );
   }
 
   private void publishBootCompletedService()
@@ -127,6 +134,6 @@ public final class GWSplashController implements GWScreenControllerType
     this.executor.executor()
       .schedule(() -> {
         this.services.register(GWBootCompleted.class, new GWBootCompleted());
-      }, 3L, TimeUnit.SECONDS);
+      }, 0L, TimeUnit.SECONDS);
   }
 }

@@ -18,10 +18,11 @@
 package com.io7m.gatwick.gui.internal.errors;
 
 import com.io7m.gatwick.gui.internal.icons.GWIconServiceType;
-import com.io7m.taskrecorder.core.TRFailed;
 import com.io7m.taskrecorder.core.TRStep;
-import com.io7m.taskrecorder.core.TRStepType;
+import com.io7m.taskrecorder.core.TRStepFailed;
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskFailed;
+import com.io7m.taskrecorder.core.TRTaskItemType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -69,24 +70,30 @@ public final class GWErrorTreeCellController implements Initializable
    */
 
   public void setItem(
-    final TRStepType item)
+    final TRTaskItemType item)
   {
-    if (item.resolution() instanceof TRFailed) {
-      this.stepIcon.setImage(this.icons.error16());
-    } else {
-      this.stepIcon.setImage(this.icons.task16());
-    }
-
     if (item instanceof TRTask<?> task) {
-      this.stepTitle.setText(item.name());
+      if (task.resolution() instanceof TRTaskFailed<?>) {
+        this.stepIcon.setImage(this.icons.error16());
+      } else {
+        this.stepIcon.setImage(this.icons.task16());
+      }
+
+      this.stepTitle.setText(item.description());
       this.stepResolution.setVisible(false);
       this.stepException.setVisible(false);
       return;
     }
 
     if (item instanceof TRStep step) {
+      if (step.resolution() instanceof TRStepFailed) {
+        this.stepIcon.setImage(this.icons.error16());
+      } else {
+        this.stepIcon.setImage(this.icons.task16());
+      }
+
       this.stepIcon.setVisible(true);
-      this.stepTitle.setText(item.name());
+      this.stepTitle.setText(item.description());
 
       final var resolution = step.resolution().message();
       if (resolution.isEmpty()) {
@@ -96,7 +103,7 @@ public final class GWErrorTreeCellController implements Initializable
         this.stepResolution.setText(resolution);
       }
 
-      if (step.resolution() instanceof TRFailed failed) {
+      if (step.resolution() instanceof TRStepFailed failed) {
         final var exceptionOpt = failed.exception();
         if (exceptionOpt.isPresent()) {
           final var bytes = new ByteArrayOutputStream();

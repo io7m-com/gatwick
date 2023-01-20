@@ -17,12 +17,16 @@
 
 package com.io7m.gatwick.iovar;
 
+import java.util.List;
+
+import static com.io7m.gatwick.iovar.GWIOSerializers.rate119Deserializer;
+import static com.io7m.gatwick.iovar.GWIOSerializers.rate119Serializer;
+
 /**
  * An "off" value for rates.
  */
 
-public enum GWIORate119Off implements GWIORate119Type,
-  GWIOExtendedEnumerationType<GWIORate119Off>
+public enum GWIORate119Off implements GWIORate119Type
 {
   /**
    * An "off" value for rates.
@@ -56,40 +60,95 @@ public enum GWIORate119Off implements GWIORate119Type,
     );
   }
 
-  @Override
-  public GWIORate119Off fromInt(
-    final int x)
+  private static final GWIOEnumerationInfoType<GWIORate119Off> INFO =
+    new Info();
+
+  /**
+   * @return Enumeration info
+   */
+
+  public static GWIOEnumerationInfoType<GWIORate119Off> info()
   {
-    return ofInt(x);
+    return INFO;
   }
 
-  @Override
-  public int toInt()
+  private static final class Info
+    implements GWIOEnumerationInfoType<GWIORate119Off>
   {
-    return 0;
-  }
+    private Info()
+    {
 
-  @Override
-  public String label()
-  {
-    return this.toString();
-  }
+    }
 
-  @Override
-  public GWIORate119Off next()
-  {
-    return OFF;
-  }
+    @Override
+    public Class<GWIORate119Off> enumerationClass()
+    {
+      return GWIORate119Off.class;
+    }
 
-  @Override
-  public GWIORate119Off previous()
-  {
-    return OFF;
-  }
+    @Override
+    public GWIORate119Off fromInt(
+      final int x)
+    {
+      return ofInt(x);
+    }
 
-  @Override
-  public int caseCount()
-  {
-    return VALUES.length;
+    @Override
+    public int toInt(
+      final GWIORate119Off x)
+    {
+      return x.ordinal();
+    }
+
+    @Override
+    public String label(
+      final GWIORate119Off x)
+    {
+      return x.toString();
+    }
+
+    @Override
+    public GWIORate119Off next(
+      final GWIORate119Off x)
+    {
+      return ofInt((this.toInt(x) + 1) % VALUES.length);
+    }
+
+    @Override
+    public GWIORate119Off previous(
+      final GWIORate119Off x)
+    {
+      return ofInt((this.toInt(x) - 1) % VALUES.length);
+    }
+
+    @Override
+    public int caseCount()
+    {
+      return VALUES.length;
+    }
+
+    @Override
+    public List<GWIORate119Off> valueList()
+    {
+      return List.of(values());
+    }
+
+    @Override
+    public GWIOVariableDeserializeType<GWIORate119Off> deserializer()
+    {
+      return (GWIOVariableDeserializeType<GWIORate119Off>) (Object) rate119Deserializer();
+    }
+
+    @Override
+    public GWIOVariableSerializeType<GWIORate119Off> serializer()
+    {
+      return (GWIOVariableSerializeType<GWIORate119Off>) (Object) rate119Serializer();
+    }
+
+    @Override
+    public int serializeSize()
+    {
+      return 1;
+    }
   }
 }

@@ -16,14 +16,17 @@
 
 package com.io7m.gatwick.tests.controller;
 
-import com.io7m.gatwick.controller.api.GWControllerConfiguration;
 import com.io7m.gatwick.controller.main.GWControllers;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
+import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDI;
+import com.io7m.taskrecorder.core.TRTaskRecorder;
+import com.io7m.taskrecorder.core.TRTaskSucceeded;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.List;
 
 public final class GWControllerDemo
 {
@@ -44,25 +47,22 @@ public final class GWControllerDemo
     final var controllers =
       new GWControllers();
 
+    final var detectTask =
+      devices.detectDevices(TRTaskRecorder.create(LOG, "Detecting..."));
+
+    final var success =
+      (TRTaskSucceeded<List<GWDeviceMIDIDescription>>) detectTask.resolution();
+
     final var deviceConfiguration =
       new GWDeviceConfiguration(
-        devices.detectDevices()
-          .result()
-          .get()
-          .get(0),
+        success.result().get(0),
         Duration.ofSeconds(5L),
         Duration.ofSeconds(1L),
         3,
         Duration.ofMillis(10L)
       );
 
-    final var configuration =
-      new GWControllerConfiguration(
-        deviceFactory -> true,
-        deviceConfiguration
-      );
-
-    try (var controller = controllers.openController(configuration)) {
+    try (var controller = controllers.openController(devices, deviceConfiguration)) {
       final var patch = controller.patchCurrent();
       patch.chain().readFromDevice();
       final var chainNow = patch.chain().get();

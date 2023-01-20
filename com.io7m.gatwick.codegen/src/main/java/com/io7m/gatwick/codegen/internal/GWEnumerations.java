@@ -18,7 +18,7 @@ package com.io7m.gatwick.codegen.internal;
 
 import com.io7m.gatwick.codegen.GWDefinitionCompilerConfiguration;
 import com.io7m.gatwick.codegen.jaxb.Enumeration;
-import com.io7m.gatwick.iovar.GWIOExtendedEnumerationType;
+import com.io7m.gatwick.iovar.GWIOEnumerationInfoType;
 import com.io7m.gatwick.iovar.GWIOSerializers;
 import com.io7m.gatwick.iovar.GWIOVariableDeserializeType;
 import com.io7m.gatwick.iovar.GWIOVariableSerializeType;
@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -100,39 +101,138 @@ public final class GWEnumerations
         makeEnumerationName(enumeration.getName())
       );
 
-    final var builder = TypeSpec.enumBuilder(className);
-    builder.addSuperinterface(ParameterizedTypeName.get(
-      ClassName.get(GWIOExtendedEnumerationType.class),
-      className
-    ));
-
-    builder.addModifiers(PUBLIC);
+    final var classBuilder = TypeSpec.enumBuilder(className);
+    classBuilder.addModifiers(PUBLIC);
     for (final var caseV : enumeration.getCase()) {
-      builder.addEnumConstant(makeEnumerationConstant(caseV.getName()));
+      classBuilder.addEnumConstant(makeEnumerationConstant(caseV.getName()));
     }
 
-    builder.addField(makeEnumerationSerializerField(className));
-    builder.addField(makeEnumerationDeserializerField(className));
-    builder.addMethod(makeEnumerationIntegerMethod(enumeration));
-    builder.addMethod(makeEnumerationLabelMethod(enumeration));
-    builder.addMethod(makeEnumerationFirstMethod(className, enumeration));
-    builder.addMethod(makeEnumerationLastMethod(className, enumeration));
-    builder.addMethod(makeEnumerationOfIntegerMethod(className, enumeration));
-    builder.addMethod(makeEnumerationCaseCountMethod(enumeration));
-    builder.addMethod(makeEnumerationFromIntegerMethod(className));
-    builder.addMethod(makeEnumerationDeserializerMethod(className));
-    builder.addMethod(makeEnumerationSerializerMethod(className));
-    builder.addMethod(makeEnumerationSerializeSize(enumeration));
-    builder.addMethod(makeEnumerationPrevious(enumeration, className));
-    builder.addMethod(makeEnumerationNext(enumeration, className));
+    classBuilder.addField(makeInfoField(className));
+    classBuilder.addMethod(makeInfoCreationMethod(enumeration, className));
+    classBuilder.addMethod(makeEnumerationInfoMethod(className));
 
     final var enumT =
-      builder.build();
+      classBuilder.build();
     final var javaFile =
       JavaFile.builder(this.configuration.enumerationPackage(), enumT)
         .build();
 
     this.files.add(javaFile.writeToPath(this.configuration.outputDirectory()));
+  }
+
+  private static MethodSpec makeEnumerationInfoMethod(
+    final ClassName className)
+  {
+    final var type =
+      ParameterizedTypeName.get(
+        ClassName.get(GWIOEnumerationInfoType.class),
+        className
+      );
+
+    final var builder = MethodSpec.methodBuilder("info");
+    builder.addModifiers(PUBLIC);
+    builder.addModifiers(STATIC);
+    builder.returns(type);
+    builder.addCode("return $L;", "$INFO");
+    return builder.build();
+  }
+
+  private static MethodSpec makeInfoCreationMethod(
+    final Enumeration enumeration,
+    final ClassName className)
+  {
+    final var type =
+      ParameterizedTypeName.get(
+        ClassName.get(GWIOEnumerationInfoType.class),
+        className
+      );
+
+    final var builder = MethodSpec.methodBuilder("makeInfo");
+    builder.addModifiers(PRIVATE);
+    builder.addModifiers(STATIC);
+    builder.returns(type);
+
+    final var anonBuilder =
+      TypeSpec.anonymousClassBuilder("");
+    anonBuilder.addSuperinterface(type);
+
+    anonBuilder.addField(makeEnumerationValueListField(className));
+    anonBuilder.addMethods(
+      List.of(
+        makeEnumerationIntegerMethod(enumeration, className),
+        makeEnumerationLabelMethod(enumeration, className),
+        makeEnumerationCaseCountMethod(enumeration),
+        makeEnumerationFromIntegerMethod(enumeration, className),
+        makeEnumerationDeserializerMethod(className),
+        makeEnumerationSerializerMethod(className),
+        makeEnumerationSerializeSize(enumeration),
+        makeEnumerationPrevious(enumeration, className),
+        makeEnumerationNext(enumeration, className),
+        makeEnumerationValueList(className),
+        makeEnumerationClassMethod(className)
+      )
+    );
+
+    builder.addCode("return $L;", anonBuilder.build());
+    return builder.build();
+  }
+
+  private static MethodSpec makeEnumerationClassMethod(
+    final ClassName className)
+  {
+    final var classType =
+      ParameterizedTypeName.get(ClassName.get(Class.class), className);
+
+    return MethodSpec.methodBuilder("enumerationClass")
+      .addModifiers(PUBLIC)
+      .addAnnotation(Override.class)
+      .returns(classType)
+      .addCode("return $T.class;", className)
+      .build();
+  }
+
+  private static FieldSpec makeInfoField(
+    final ClassName className)
+  {
+    final var type =
+      ParameterizedTypeName.get(
+        ClassName.get(GWIOEnumerationInfoType.class),
+        className
+      );
+
+    final var builder =
+      FieldSpec.builder(type, "$INFO", PRIVATE, STATIC, FINAL);
+
+    builder.initializer("makeInfo()");
+    return builder.build();
+  }
+
+  private static FieldSpec makeEnumerationValueListField(
+    final ClassName className)
+  {
+    final var listType =
+      ParameterizedTypeName.get(ClassName.get(List.class), className);
+
+    return FieldSpec.builder(listType, "$VALUES")
+      .addModifiers(PRIVATE)
+      .addModifiers(FINAL)
+      .addModifiers(STATIC)
+      .initializer("$T.of($T.values());", List.class, className)
+      .build();
+  }
+
+  private static MethodSpec makeEnumerationValueList(
+    final ClassName className)
+  {
+    final var listType =
+      ParameterizedTypeName.get(ClassName.get(List.class), className);
+
+    return MethodSpec.methodBuilder("valueList")
+      .addModifiers(PUBLIC)
+      .addAnnotation(Override.class)
+      .returns(listType)
+      .addCode("return $L;", "$VALUES")
+      .build();
   }
 
   private static MethodSpec makeEnumerationPrevious(
@@ -142,10 +242,11 @@ public final class GWEnumerations
     return MethodSpec.methodBuilder("previous")
       .addModifiers(PUBLIC)
       .addAnnotation(Override.class)
+      .addParameter(className, "$x")
       .returns(className)
       .addCode(
-        "return $T.ofInt((this.toInt() - 1) % $L);",
-        className,
+        "return this.fromInt((this.toInt($L) - 1) % $L);",
+        "$x",
         Integer.valueOf(enumeration.getCase().size()))
       .build();
   }
@@ -157,10 +258,11 @@ public final class GWEnumerations
     return MethodSpec.methodBuilder("next")
       .addModifiers(PUBLIC)
       .addAnnotation(Override.class)
+      .addParameter(className, "$x")
       .returns(className)
       .addCode(
-        "return $T.ofInt((this.toInt() + 1) % $L);",
-        className,
+        "return this.fromInt((this.toInt($L) + 1) % $L);",
+        "$x",
         Integer.valueOf(enumeration.getCase().size()))
       .build();
   }
@@ -178,8 +280,8 @@ public final class GWEnumerations
     }
 
     return MethodSpec.methodBuilder("serializeSize")
+      .addAnnotation(Override.class)
       .addModifiers(PUBLIC)
-      .addModifiers(STATIC)
       .returns(int.class)
       .addCode("return $L;", Integer.valueOf(size))
       .build();
@@ -195,11 +297,13 @@ public final class GWEnumerations
       );
 
     return MethodSpec.methodBuilder("serializer")
+      .addAnnotation(Override.class)
       .addModifiers(PUBLIC)
-      .addModifiers(STATIC)
       .returns(type)
-      .addCode("return $L;", "$SERIALIZER")
-      .build();
+      .addCode(
+        "return (b, x) -> { $T.uint8Serializer().serializeTo(b, this.toInt(x)); };",
+        GWIOSerializers.class
+      ).build();
   }
 
   private static MethodSpec makeEnumerationDeserializerMethod(
@@ -212,56 +316,14 @@ public final class GWEnumerations
       );
 
     return MethodSpec.methodBuilder("deserializer")
+      .addAnnotation(Override.class)
       .addModifiers(PUBLIC)
-      .addModifiers(STATIC)
       .returns(type)
-      .addCode("return $L;", "$DESERIALIZER")
+      .addCode(
+        "return b -> this.fromInt($T.uint8Deserializer().deserializeFrom(b));",
+        GWIOSerializers.class
+      )
       .build();
-  }
-
-  private static FieldSpec makeEnumerationSerializerField(
-    final ClassName className)
-  {
-    final var type =
-      ParameterizedTypeName.get(
-        ClassName.get(GWIOVariableSerializeType.class),
-        className
-      );
-
-    final var field =
-      FieldSpec.builder(type, "$SERIALIZER", STATIC, PRIVATE, FINAL);
-
-    final var code = CodeBlock.builder();
-    code.add(
-      "\n  (b, x) -> { $T.uint8Serializer().serializeTo(b, x.toInt()); }\n",
-      GWIOSerializers.class
-    );
-
-    field.initializer(code.build());
-    return field.build();
-  }
-
-  private static FieldSpec makeEnumerationDeserializerField(
-    final ClassName className)
-  {
-    final var type =
-      ParameterizedTypeName.get(
-        ClassName.get(GWIOVariableDeserializeType.class),
-        className
-      );
-
-    final var field =
-      FieldSpec.builder(type, "$DESERIALIZER", STATIC, PRIVATE, FINAL);
-
-    final var code = CodeBlock.builder();
-    code.add(
-      "\n  b -> $T.ofInt($T.uint8Deserializer().deserializeFrom(b));",
-      className,
-      GWIOSerializers.class
-    );
-
-    field.initializer(code.build());
-    return field.build();
   }
 
   private static MethodSpec makeEnumerationFirstMethod(
@@ -283,8 +345,8 @@ public final class GWEnumerations
   }
 
   private static MethodSpec makeEnumerationLastMethod(
-    final ClassName className,
-    final Enumeration enumeration)
+    final Enumeration enumeration,
+    final ClassName className)
   {
     final var spec = MethodSpec.methodBuilder("last");
     spec.returns(className);
@@ -301,15 +363,17 @@ public final class GWEnumerations
   }
 
   private static MethodSpec makeEnumerationIntegerMethod(
-    final Enumeration enumeration)
+    final Enumeration enumeration,
+    final ClassName className)
   {
     final var spec = MethodSpec.methodBuilder("toInt");
     spec.returns(int.class);
+    spec.addParameter(className, "$x");
     spec.addAnnotation(Override.class);
     spec.addModifiers(PUBLIC);
 
     var code = CodeBlock.builder();
-    code = code.beginControlFlow("return switch (this)");
+    code = code.beginControlFlow("return switch ($L)", "$x");
 
     for (final var caseV : enumeration.getCase()) {
       code = code.addStatement(
@@ -325,14 +389,13 @@ public final class GWEnumerations
     return spec.build();
   }
 
-  private static MethodSpec makeEnumerationOfIntegerMethod(
-    final ClassName className,
-    final Enumeration enumeration)
+  private static MethodSpec makeEnumerationFromIntegerMethod(
+    final Enumeration enumeration,
+    final ClassName className)
   {
-    final var spec = MethodSpec.methodBuilder("ofInt");
+    final var spec = MethodSpec.methodBuilder("fromInt");
     spec.returns(className);
     spec.addModifiers(PUBLIC);
-    spec.addModifiers(STATIC);
     spec.addParameter(int.class, "x");
 
     var code = CodeBlock.builder();
@@ -361,18 +424,6 @@ public final class GWEnumerations
     return spec.build();
   }
 
-  private static MethodSpec makeEnumerationFromIntegerMethod(
-    final ClassName className)
-  {
-    final var spec = MethodSpec.methodBuilder("fromInt");
-    spec.returns(className);
-    spec.addAnnotation(Override.class);
-    spec.addModifiers(PUBLIC);
-    spec.addParameter(int.class, "x");
-    spec.addCode("return $T.ofInt(x);", className);
-    return spec.build();
-  }
-
   private static MethodSpec makeEnumerationCaseCountMethod(
     final Enumeration enumeration)
   {
@@ -385,15 +436,17 @@ public final class GWEnumerations
   }
 
   private static MethodSpec makeEnumerationLabelMethod(
-    final Enumeration enumeration)
+    final Enumeration enumeration,
+    final ClassName className)
   {
     final var spec = MethodSpec.methodBuilder("label");
     spec.returns(String.class);
+    spec.addParameter(className, "$x");
     spec.addAnnotation(Override.class);
     spec.addModifiers(PUBLIC);
 
     var code = CodeBlock.builder();
-    code = code.beginControlFlow("return switch (this)");
+    code = code.beginControlFlow("return switch ($L)", "$x");
 
     for (final var caseV : enumeration.getCase()) {
       code = code.addStatement(
@@ -438,7 +491,7 @@ public final class GWEnumerations
       .replace(".", "")
       .replace("-", "")
       .replace(":", "")
-      + "Value";
+           + "Value";
   }
 
   static ClassName makeEnumerationClassName(

@@ -18,11 +18,13 @@
 package com.io7m.gatwick.gui.internal.preset;
 
 import com.io7m.gatwick.controller.api.GWControllerType;
+import com.io7m.gatwick.controller.api.GWOnOffValue;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -30,7 +32,7 @@ import java.util.ResourceBundle;
  */
 
 public final class GWEffectBlockPanelCMP
-  extends GWEffectBlockPanel
+  extends GWEffectBlockPanel<GWOnOffValue>
 {
   /**
    * A panel for the CMP block.
@@ -45,8 +47,16 @@ public final class GWEffectBlockPanelCMP
   }
 
   @Override
-  protected List<GWIOVariableType<?>> variablesForDials(
+  protected Optional<GWIOVariableType<GWOnOffValue>> selectableType(
     final GWControllerType device)
+  {
+    return Optional.empty();
+  }
+
+  @Override
+  protected List<GWIOVariableType<?>> variablesForDials(
+    final GWControllerType device,
+    final GWOnOffValue type)
   {
     return device.patchCurrent()
       .cmp()

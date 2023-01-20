@@ -49,7 +49,7 @@ abstract sealed class GWNodeShape
     Font.font("Monospaced", FontWeight.BOLD, 13.0);
 
   protected static final Color NODE_SELECTION_COLOR =
-    Color.web("0093c9");
+    Color.web("00f9c9");
 
   protected static final double NODE_SELECTION_WEIGHT = 7.0;
 

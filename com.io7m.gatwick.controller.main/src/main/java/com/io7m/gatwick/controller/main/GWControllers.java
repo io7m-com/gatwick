@@ -16,17 +16,21 @@
 
 package com.io7m.gatwick.controller.main;
 
-import com.io7m.gatwick.controller.api.GWControllerConfiguration;
+import com.io7m.gatwick.controller.api.GWControllerDetectedDevice;
 import com.io7m.gatwick.controller.api.GWControllerException;
 import com.io7m.gatwick.controller.api.GWControllerFactoryType;
 import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.gatwick.controller.main.internal.GWController;
+import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskRecorderType;
+import com.io7m.taskrecorder.core.TRTaskSucceeded;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.function.Predicate;
@@ -76,47 +80,58 @@ public final class GWControllers implements GWControllerFactoryType
 
   @Override
   public GWControllerType openController(
-    final GWControllerConfiguration configuration)
+    final GWDeviceFactoryType deviceFactory,
+    final GWDeviceConfiguration deviceConfiguration)
     throws GWControllerException
   {
-    return this.openControllerWith(
-      findDeviceFactory(configuration.deviceFactoryFilter()),
-      configuration
-    );
+    return GWController.open(deviceFactory, deviceConfiguration);
   }
 
   @Override
-  public GWControllerType openControllerWith(
-    final GWDeviceFactoryType devices,
-    final GWControllerConfiguration configuration)
-    throws GWControllerException
+  public TRTask<List<GWControllerDetectedDevice>> detectDevicesWith(
+    final TRTaskRecorderType<?> recorder,
+    final List<GWDeviceFactoryType> devices)
   {
-    return GWController.open(devices, configuration);
+    final var allDevices =
+      new ArrayList<GWControllerDetectedDevice>(8);
+
+    try (var subRec =
+           recorder.<List<GWControllerDetectedDevice>>beginSubtask(
+      "Detecting devices...")) {
+
+      for (final var deviceFactory : devices) {
+        final var result =
+          deviceFactory.detectDevices(subRec);
+        final var resolution =
+          result.resolution();
+
+        if (resolution instanceof TRTaskSucceeded<List<GWDeviceMIDIDescription>> success) {
+          final var detected = success.result();
+          for (final var device : detected) {
+            allDevices.add(new GWControllerDetectedDevice(deviceFactory, device));
+          }
+        }
+      }
+
+      subRec.setTaskSucceeded("", List.copyOf(allDevices));
+      return subRec.toTask();
+    }
   }
 
   @Override
-  public TRTask<List<GWDeviceMIDIDescription>> detectDevicesWith(
-    final GWDeviceFactoryType devices)
-  {
-    return devices.detectDevices();
-  }
-
-  @Override
-  public TRTask<List<GWDeviceMIDIDescription>> detectDevices(
+  public TRTask<List<GWControllerDetectedDevice>> detectDevices(
+    final TRTaskRecorderType<?> recorder,
     final Predicate<GWDeviceFactoryType> deviceFactoryFilter)
   {
-    final var task =
-      TRTask.<List<GWDeviceMIDIDescription>>create(
-        LOG, "Detecting devices...");
+    final var loader =
+      ServiceLoader.load(GWDeviceFactoryType.class);
 
-    final GWDeviceFactoryType deviceFactory;
-    try {
-      deviceFactory = findDeviceFactory(deviceFactoryFilter);
-    } catch (final GWControllerException e) {
-      task.setFailed(e.getMessage(), e);
-      return task;
-    }
+    final var factories =
+      loader.stream()
+        .map(ServiceLoader.Provider::get)
+        .filter(deviceFactoryFilter)
+        .toList();
 
-    return this.detectDevicesWith(deviceFactory);
+    return this.detectDevicesWith(recorder, factories);
   }
 }

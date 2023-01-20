@@ -89,4 +89,16 @@ public interface GWPatchType
    */
 
   GWIOVariableType<GWChain> chain();
+
+  /**
+   * @return The DS1 patch block
+   */
+
+  GWPatchEffectBlockDistortionType dist1();
+
+  /**
+   * @return The DS2 patch block
+   */
+
+  GWPatchEffectBlockDistortionType dist2();
 }

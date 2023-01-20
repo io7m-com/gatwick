@@ -17,12 +17,16 @@
 
 package com.io7m.gatwick.iovar;
 
+import java.util.List;
+
+import static com.io7m.gatwick.iovar.GWIOSerializers.rate119Deserializer;
+import static com.io7m.gatwick.iovar.GWIOSerializers.rate119Serializer;
+
 /**
  * Musical durations for rates.
  */
 
-public enum GWIORate119Note implements GWIORate119Type,
-  GWIOExtendedEnumerationType<GWIORate119Note>
+public enum GWIORate119Note implements GWIORate119Type
 {
   /**
    * The double whole note duration.
@@ -175,40 +179,95 @@ public enum GWIORate119Note implements GWIORate119Type,
     return RATE_32ND_NOTE;
   }
 
-  @Override
-  public GWIORate119Note fromInt(
-    final int x)
+  private static final GWIOEnumerationInfoType<GWIORate119Note> INFO =
+    new Info();
+
+  /**
+   * @return Enumeration info
+   */
+
+  public static GWIOEnumerationInfoType<GWIORate119Note> info()
   {
-    return ofInt(x);
+    return INFO;
   }
 
-  @Override
-  public int toInt()
+  private static final class Info
+    implements GWIOEnumerationInfoType<GWIORate119Note>
   {
-    return this.ordinal() + 101;
-  }
+    private Info()
+    {
 
-  @Override
-  public String label()
-  {
-    return this.toString();
-  }
+    }
 
-  @Override
-  public GWIORate119Note next()
-  {
-    return ofInt((this.toInt() + 1) % VALUES.length);
-  }
+    @Override
+    public Class<GWIORate119Note> enumerationClass()
+    {
+      return GWIORate119Note.class;
+    }
 
-  @Override
-  public GWIORate119Note previous()
-  {
-    return ofInt((this.toInt() - 1) % VALUES.length);
-  }
+    @Override
+    public GWIORate119Note fromInt(
+      final int x)
+    {
+      return ofInt(x);
+    }
 
-  @Override
-  public int caseCount()
-  {
-    return VALUES.length;
+    @Override
+    public int toInt(
+      final GWIORate119Note x)
+    {
+      return x.ordinal() + 101;
+    }
+
+    @Override
+    public String label(
+      final GWIORate119Note x)
+    {
+      return x.toString();
+    }
+
+    @Override
+    public GWIORate119Note next(
+      final GWIORate119Note x)
+    {
+      return ofInt((this.toInt(x) + 1) % VALUES.length);
+    }
+
+    @Override
+    public GWIORate119Note previous(
+      final GWIORate119Note x)
+    {
+      return ofInt((this.toInt(x) - 1) % VALUES.length);
+    }
+
+    @Override
+    public int caseCount()
+    {
+      return VALUES.length;
+    }
+
+    @Override
+    public List<GWIORate119Note> valueList()
+    {
+      return List.of(values());
+    }
+
+    @Override
+    public GWIOVariableDeserializeType<GWIORate119Note> deserializer()
+    {
+      return (GWIOVariableDeserializeType<GWIORate119Note>) (Object) rate119Deserializer();
+    }
+
+    @Override
+    public GWIOVariableSerializeType<GWIORate119Note> serializer()
+    {
+      return (GWIOVariableSerializeType<GWIORate119Note>) (Object) rate119Serializer();
+    }
+
+    @Override
+    public int serializeSize()
+    {
+      return 1;
+    }
   }
 }

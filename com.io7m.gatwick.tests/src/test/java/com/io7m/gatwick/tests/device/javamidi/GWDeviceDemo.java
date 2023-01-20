@@ -19,12 +19,17 @@ package com.io7m.gatwick.tests.device.javamidi;
 import com.io7m.gatwick.controller.api.GWChainElementValue;
 import com.io7m.gatwick.device.api.GWDeviceCommandRequestData;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
+import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDI;
+import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskRecorder;
+import com.io7m.taskrecorder.core.TRTaskSucceeded;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.HexFormat;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
@@ -45,12 +50,16 @@ public final class GWDeviceDemo
   {
     final var devices =
       new GWDevicesJavaMIDI();
+
+    final var detectTask =
+      devices.detectDevices(TRTaskRecorder.create(LOG, "Detecting..."));
+
+    final var success =
+      (TRTaskSucceeded<List<GWDeviceMIDIDescription>>) detectTask.resolution();
+
     final var configuration =
       new GWDeviceConfiguration(
-        devices.detectDevices()
-          .result()
-          .get()
-          .get(0),
+        success.result().get(0),
         Duration.ofSeconds(5L),
         Duration.ofSeconds(1L),
         3,
@@ -99,11 +108,11 @@ public final class GWDeviceDemo
         final var response =
           device.sendCommand(new GWDeviceCommandRequestData(address, 49));
 
-        for (int index = 0; index < 49; ++index) {
+        for (var index = 0; index < 49; ++index) {
           final var x = (int) response.data()[index];
           System.out.printf(
             "%s,%n",
-            GWChainElementValue.ofInt(x)
+            GWChainElementValue.info().fromInt(x)
           );
         }
 

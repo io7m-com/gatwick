@@ -64,14 +64,15 @@
                </padding>
             </HBox>
             <Separator prefWidth="200.0" />
-            <VBox fx:id="dialsContainer" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </padding>
-            </VBox>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="dialsContainer">
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
       <AnchorPane fx:id="deviceIsClosedContainer" StackPane.alignment="CENTER">

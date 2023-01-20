@@ -17,11 +17,10 @@
 
 package com.io7m.gatwick.gui.internal.gt;
 
-import com.io7m.gatwick.controller.api.GWControllerConfiguration;
+import com.io7m.gatwick.controller.api.GWControllerDetectedDevice;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceFactoryProperty;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
-import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.gui.internal.GWApplication;
 import com.io7m.gatwick.gui.internal.GWCSS;
 import com.io7m.gatwick.gui.internal.GWScreenControllerFactory;
@@ -32,6 +31,7 @@ import com.io7m.gatwick.preferences.GWPreferences;
 import com.io7m.gatwick.preferences.GWPreferencesServiceType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskSucceeded;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -69,13 +69,13 @@ public final class GWGT1KDeviceSelectionController
   private final GWPreferencesServiceType preferences;
 
   @FXML private Button openButton;
-  @FXML private TableView<GWDeviceMIDIDescription> midiDevices;
+  @FXML private TableView<GWControllerDetectedDevice> midiDevices;
   @FXML private Button refreshButton;
   @FXML private Label refreshStatusText;
   @FXML private ProgressBar refreshProgress;
   @FXML private Button refreshWhy;
 
-  private TRTask<List<GWDeviceMIDIDescription>> taskLast;
+  private TRTask<List<GWControllerDetectedDevice>> taskLast;
 
   /**
    * The controller for device selection.
@@ -109,17 +109,23 @@ public final class GWGT1KDeviceSelectionController
       this.midiDevices.getColumns();
 
     final var nameColumn =
-      (TableColumn<GWDeviceMIDIDescription, String>) tableColumns.get(0);
+      (TableColumn<GWControllerDetectedDevice, String>) tableColumns.get(0);
     final var descriptionColumn =
-      (TableColumn<GWDeviceMIDIDescription, String>) tableColumns.get(1);
+      (TableColumn<GWControllerDetectedDevice, String>) tableColumns.get(1);
 
     nameColumn.setCellValueFactory(param -> {
-      final var description = param.getValue();
+      final var detected =
+        param.getValue();
+      final var description =
+        detected.description();
       return new ReadOnlyStringWrapper(description.midiDeviceName());
     });
 
     descriptionColumn.setCellValueFactory(param -> {
-      final var description = param.getValue();
+      final var detected =
+        param.getValue();
+      final var description =
+        detected.description();
       return new ReadOnlyStringWrapper(
         String.format(
           "%s, %s, %s",
@@ -176,21 +182,28 @@ public final class GWGT1KDeviceSelectionController
     final GWDeviceFactoryType deviceFactory)
   {
     final var properties = deviceFactory.properties();
-    if (preferences.device().showFakeDevices()) {
-      if (properties.contains(new GWDeviceFactoryProperty("fake"))) {
-        return true;
-      }
+
+    if (properties.contains(new GWDeviceFactoryProperty("fake"))) {
+      return preferences.device().showFakeDevices();
     }
-    return false;
+
+    return true;
   }
 
   private void onDeviceListReceived(
-    final TRTask<List<GWDeviceMIDIDescription>> task)
+    final TRTask<List<GWControllerDetectedDevice>> task)
   {
     this.taskLast = task;
 
-    final var deviceList =
-      task.result().orElse(List.of());
+    final var resolution =
+      task.resolution();
+
+    final List<GWControllerDetectedDevice> deviceList;
+    if (resolution instanceof TRTaskSucceeded<List<GWControllerDetectedDevice>> succeeded) {
+      deviceList = succeeded.result();
+    } else {
+      deviceList = List.of();
+    }
 
     this.refreshWhy.setVisible(true);
     this.refreshStatusText.setText(
@@ -214,26 +227,21 @@ public final class GWGT1KDeviceSelectionController
   @FXML
   private void onOpenSelected()
   {
-    final var device =
+    final var detected =
       this.midiDevices.getSelectionModel()
         .selectedItemProperty()
         .get();
 
-    this.gt.open(new GWControllerConfiguration(
-      devices -> {
-        return filterDeviceFactory(
-          this.preferences.preferences().get(),
-          devices
-        );
-      },
+    this.gt.open(
+      detected.deviceFactory(),
       new GWDeviceConfiguration(
-        device,
+        detected.description(),
         Duration.ofSeconds(3L),
         Duration.ofSeconds(3L),
         3,
         Duration.ofMillis(100L)
       )
-    ));
+    );
 
     final var stage =
       (Stage) this.openButton.getScene()

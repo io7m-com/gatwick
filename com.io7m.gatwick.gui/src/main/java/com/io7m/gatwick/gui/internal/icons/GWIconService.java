@@ -19,25 +19,15 @@ package com.io7m.gatwick.gui.internal.icons;
 
 import javafx.scene.image.Image;
 
-import java.util.Objects;
-
 /**
  * The icon service.
  */
 
 public final class GWIconService implements GWIconServiceType
 {
-  private final Image error16;
-  private final Image task16;
-
-  private GWIconService(
-    final Image inError16,
-    final Image inTask16)
+  private GWIconService()
   {
-    this.error16 =
-      Objects.requireNonNull(inError16, "error16");
-    this.task16 =
-      Objects.requireNonNull(inTask16, "task16");
+
   }
 
   /**
@@ -48,29 +38,25 @@ public final class GWIconService implements GWIconServiceType
 
   public static GWIconServiceType create()
   {
-    final var error16 =
-      new Image(
-        GWIconService.class.getResource(
-            "/com/io7m/gatwick/gui/internal/error16.png")
-          .toString(),
-        true
-      );
+    return new GWIconService();
+  }
 
-    final var task16 =
-      new Image(
-        GWIconService.class.getResource(
-            "/com/io7m/gatwick/gui/internal/task16.png")
-          .toString(),
-        true
-      );
-
-    return new GWIconService(error16, task16);
+  @Override
+  public Image icon(
+    final String name)
+  {
+    return new Image(
+      GWIconService.class.getResource(
+          "/com/io7m/gatwick/gui/internal/%s".formatted(name))
+        .toString(),
+      true
+    );
   }
 
   @Override
   public Image task16()
   {
-    return this.task16;
+    return this.icon("task16.png");
   }
 
   @Override
@@ -82,7 +68,7 @@ public final class GWIconService implements GWIconServiceType
   @Override
   public Image error16()
   {
-    return this.error16;
+    return this.icon("error16.png");
   }
 
   @Override

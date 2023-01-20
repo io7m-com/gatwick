@@ -17,7 +17,6 @@
 
 package com.io7m.gatwick.tests.controller;
 
-import com.io7m.gatwick.controller.api.GWControllerConfiguration;
 import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.gatwick.controller.main.GWControllers;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
@@ -40,7 +39,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -169,24 +167,19 @@ public final class GWControllerTest
       .send(any(), anyLong());
 
     final var controller =
-      this.controllers.openControllerWith(
+      this.controllers.openController(
         this.devices,
-        new GWControllerConfiguration(
-          gwDeviceFactoryType -> Objects.equals(
-            gwDeviceFactoryType,
-            this.devices),
-          new GWDeviceConfiguration(
-            new GWDeviceMIDIDescription(
-              info.getName(),
-              info.getDescription(),
-              info.getVendor(),
-              info.getVersion()
-            ),
-            Duration.ofMillis(100L),
-            Duration.ofMillis(100L),
-            3,
-            Duration.ofMillis(50L)
-          )
+        new GWDeviceConfiguration(
+          new GWDeviceMIDIDescription(
+            info.getName(),
+            info.getDescription(),
+            info.getVendor(),
+            info.getVersion()
+          ),
+          Duration.ofMillis(100L),
+          Duration.ofMillis(100L),
+          3,
+          Duration.ofMillis(50L)
         )
       );
 

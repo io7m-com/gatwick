@@ -17,9 +17,9 @@
 
 package com.io7m.gatwick.gui.internal.gt;
 
-import com.io7m.gatwick.controller.api.GWControllerConfiguration;
+import com.io7m.gatwick.controller.api.GWControllerDetectedDevice;
+import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
-import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.repetoir.core.RPServiceType;
 import com.io7m.taskrecorder.core.TRTask;
 import javafx.beans.property.ReadOnlyProperty;
@@ -43,13 +43,15 @@ public interface GWGT1KServiceType extends RPServiceType, AutoCloseable
   /**
    * Try to open a device.
    *
+   * @param deviceFactory The device factory
    * @param configuration The configuration
    *
    * @return The operation in progress
    */
 
   CompletableFuture<TRTask<?>> open(
-    GWControllerConfiguration configuration);
+    GWDeviceFactoryType deviceFactory,
+    GWDeviceConfiguration configuration);
 
   /**
    * Detect devices.
@@ -59,7 +61,7 @@ public interface GWGT1KServiceType extends RPServiceType, AutoCloseable
    * @return The operation in progress
    */
 
-  CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>> detectDevices(
+  CompletableFuture<TRTask<List<GWControllerDetectedDevice>>> detectDevices(
     Predicate<GWDeviceFactoryType> deviceFactoryFilter);
 
   /**
@@ -72,4 +74,18 @@ public interface GWGT1KServiceType extends RPServiceType, AutoCloseable
 
   CompletableFuture<?> executeOnDevice(
     GWGT1KRunnableType runnable);
+
+  /**
+   * @return {@code true} if a device is open
+   */
+
+  boolean isOpen();
+
+  /**
+   * Close the open device, if one is open.
+   *
+   * @return The operation in progress
+   */
+
+  CompletableFuture<?> closeDevice();
 }

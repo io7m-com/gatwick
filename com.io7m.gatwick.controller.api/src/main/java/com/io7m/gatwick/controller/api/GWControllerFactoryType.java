@@ -17,9 +17,10 @@
 
 package com.io7m.gatwick.controller.api;
 
+import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
-import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskRecorderType;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -33,7 +34,8 @@ public interface GWControllerFactoryType
   /**
    * Open a controller.
    *
-   * @param configuration The controller configuration
+   * @param deviceFactory       The device factory
+   * @param deviceConfiguration The device configuration
    *
    * @return A controller
    *
@@ -41,44 +43,33 @@ public interface GWControllerFactoryType
    */
 
   GWControllerType openController(
-    GWControllerConfiguration configuration)
-    throws GWControllerException;
-
-  /**
-   * Open a controller using the given device factory.
-   *
-   * @param devices       The device factory
-   * @param configuration The controller configuration
-   *
-   * @return A controller
-   *
-   * @throws GWControllerException On errors
-   */
-
-  GWControllerType openControllerWith(
-    GWDeviceFactoryType devices,
-    GWControllerConfiguration configuration)
+    GWDeviceFactoryType deviceFactory,
+    GWDeviceConfiguration deviceConfiguration)
     throws GWControllerException;
 
   /**
    * Detect devices that appear to be GT-1000 devices.
    *
-   * @param devices The devices
+   * @param recorder A task recorder
+   * @param devices  The device factories
    *
    * @return A list of probable GT-1000 devices
    */
 
-  TRTask<List<GWDeviceMIDIDescription>> detectDevicesWith(
-    GWDeviceFactoryType devices);
+  TRTask<List<GWControllerDetectedDevice>> detectDevicesWith(
+    TRTaskRecorderType<?> recorder,
+    List<GWDeviceFactoryType> devices);
 
   /**
    * Detect devices that appear to be GT-1000 devices.
    *
+   * @param recorder            A task recorder
    * @param deviceFactoryFilter The predicate used to filter device factories
    *
    * @return A list of probable GT-1000 devices
    */
 
-  TRTask<List<GWDeviceMIDIDescription>> detectDevices(
+  TRTask<List<GWControllerDetectedDevice>> detectDevices(
+    TRTaskRecorderType<?> recorder,
     Predicate<GWDeviceFactoryType> deviceFactoryFilter);
 }

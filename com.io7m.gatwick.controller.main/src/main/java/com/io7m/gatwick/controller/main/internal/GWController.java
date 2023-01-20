@@ -17,11 +17,11 @@
 
 package com.io7m.gatwick.controller.main.internal;
 
-import com.io7m.gatwick.controller.api.GWControllerConfiguration;
 import com.io7m.gatwick.controller.api.GWControllerException;
 import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.gatwick.controller.api.GWPatchType;
 import com.io7m.gatwick.controller.main.internal.generated.StructGT_1000;
+import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceException;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceType;
@@ -77,13 +77,11 @@ public final class GWController implements GWControllerType
 
   public static GWControllerType open(
     final GWDeviceFactoryType devices,
-    final GWControllerConfiguration configuration)
+    final GWDeviceConfiguration configuration)
     throws GWControllerException
   {
     try {
-      return new GWController(
-        devices.openDevice(configuration.deviceConfiguration())
-      );
+      return new GWController(devices.openDevice(configuration));
     } catch (final GWDeviceException e) {
       throw new GWControllerException(DEVICE_ERROR, e.getMessage(), e);
     }

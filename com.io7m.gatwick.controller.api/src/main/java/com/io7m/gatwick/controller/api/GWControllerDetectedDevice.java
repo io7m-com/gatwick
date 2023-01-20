@@ -16,35 +16,32 @@
 
 package com.io7m.gatwick.controller.api;
 
-import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
+import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 
 /**
- * Controller configuration information.
+ * A detected device associated with the device factory used to detect it.
  *
- * @param deviceFactoryFilter A predicate that decides whether a device
- *                            factory is suitable
- * @param deviceConfiguration The device configuration
+ * @param deviceFactory The device factory
+ * @param description   The device description
  */
 
-public record GWControllerConfiguration(
-  Predicate<GWDeviceFactoryType> deviceFactoryFilter,
-  GWDeviceConfiguration deviceConfiguration)
+public record GWControllerDetectedDevice(
+  GWDeviceFactoryType deviceFactory,
+  GWDeviceMIDIDescription description)
 {
   /**
-   * Controller configuration information.
+   * A detected device associated with the device factory used to detect it.
    *
-   * @param deviceFactoryFilter A predicate that decides whether a device
-   *                            factory is suitable
-   * @param deviceConfiguration The device configuration
+   * @param deviceFactory The device factory
+   * @param description   The device description
    */
 
-  public GWControllerConfiguration
+  public GWControllerDetectedDevice
   {
-    Objects.requireNonNull(deviceFactoryFilter, "deviceFactoryFilter");
-    Objects.requireNonNull(deviceConfiguration, "deviceConfiguration");
+    Objects.requireNonNull(deviceFactory, "deviceFactory");
+    Objects.requireNonNull(description, "description");
   }
 }

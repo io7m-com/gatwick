@@ -24,13 +24,13 @@ import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.GWGT1KServiceSta
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.GWGT1KServiceStatusOpenType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 
 /**
  * An abstract panel for components that need to be device-aware.
  */
 
-public abstract class GWDeviceAwarePanel extends FlowPane
+public abstract class GWDeviceAwarePanel extends VBox
   implements GWScreenControllerType
 {
   private final GWGT1KServiceType gt;

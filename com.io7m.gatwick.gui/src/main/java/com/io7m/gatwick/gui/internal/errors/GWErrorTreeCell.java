@@ -19,7 +19,7 @@ package com.io7m.gatwick.gui.internal.errors;
 
 import com.io7m.gatwick.gui.internal.GWStrings;
 import com.io7m.gatwick.gui.internal.icons.GWIconServiceType;
-import com.io7m.taskrecorder.core.TRStepType;
+import com.io7m.taskrecorder.core.TRTaskItemType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TreeCell;
 import javafx.scene.layout.Pane;
@@ -34,7 +34,7 @@ import static javafx.scene.control.ContentDisplay.GRAPHIC_ONLY;
  * A cell within an error tree.
  */
 
-public final class GWErrorTreeCell extends TreeCell<TRStepType>
+public final class GWErrorTreeCell extends TreeCell<TRTaskItemType>
 {
   private final Pane root;
   private final GWErrorTreeCellController controller;
@@ -69,7 +69,7 @@ public final class GWErrorTreeCell extends TreeCell<TRStepType>
 
   @Override
   protected void updateItem(
-    final TRStepType item,
+    final TRTaskItemType item,
     final boolean empty)
   {
     super.updateItem(item, empty);

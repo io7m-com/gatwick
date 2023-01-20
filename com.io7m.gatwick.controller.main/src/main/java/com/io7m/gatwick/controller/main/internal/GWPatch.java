@@ -18,6 +18,7 @@ package com.io7m.gatwick.controller.main.internal;
 
 import com.io7m.gatwick.controller.api.GWChain;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockCMPType;
+import com.io7m.gatwick.controller.api.GWPatchEffectBlockDistortionType;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockDividerType;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockNSType;
 import com.io7m.gatwick.controller.api.GWPatchEffectBlockPFXType;
@@ -48,6 +49,8 @@ final class GWPatch implements GWPatchType
   private final GWPatchEffectBlockDivider div3;
   private final GWIOVariableType<ByteBuffer> chainBase;
   private final GWIOVariableType<GWChain> chain;
+  private final GWPatchEffectBlockDistortion ds1;
+  private final GWPatchEffectBlockDistortion ds2;
 
   GWPatch(
     final GWDeviceType inDevice,
@@ -76,6 +79,11 @@ final class GWPatch implements GWPatchType
       new GWPatchEffectBlockDivider(this.patchMemory.f_efct, 2);
     this.div3 =
       new GWPatchEffectBlockDivider(this.patchMemory.f_efct, 3);
+    this.ds1 =
+      new GWPatchEffectBlockDistortion(this.patchMemory.f_dist1);
+    this.ds2 =
+      new GWPatchEffectBlockDistortion(this.patchMemory.f_dist2);
+
     this.chainBase =
       this.patchMemory.f_efct.f_chain;
 
@@ -161,5 +169,17 @@ final class GWPatch implements GWPatchType
   public GWIOVariableType<GWChain> chain()
   {
     return this.chain;
+  }
+
+  @Override
+  public GWPatchEffectBlockDistortionType dist1()
+  {
+    return this.ds1;
+  }
+
+  @Override
+  public GWPatchEffectBlockDistortionType dist2()
+  {
+    return this.ds2;
   }
 }

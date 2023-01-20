@@ -36,7 +36,8 @@ final class GWChainSerializers
     return (buffer, value) -> {
       final var elements = value.elements();
       for (int index = 0; index < elements.size(); ++index) {
-        buffer.put(index, (byte) elements.get(index).toInt());
+        final var e = elements.get(index);
+        buffer.put(index, (byte) GWChainElementValue.info().toInt(e));
       }
     };
   }
@@ -47,7 +48,7 @@ final class GWChainSerializers
       final var elements = new ArrayList<GWChainElementValue>(49);
       for (int index = 0; index < 49; ++index) {
         elements.add(
-          GWChainElementValue.ofInt((int) buffer.get(index) & 0xff)
+          GWChainElementValue.info().fromInt((int) buffer.get(index) & 0xff)
         );
       }
       return GWChain.of(elements);

@@ -15,51 +15,34 @@
  */
 
 
-package com.io7m.gatwick.iovar;
+package com.io7m.gatwick.gui.internal.preset;
+
+import com.io7m.gatwick.controller.api.GWControllerType;
+import com.io7m.gatwick.controller.api.GWPatchEffectBlockPreampType;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
 
 /**
- * An extended enumeration type.
- *
- * @param <T> The base enumeration type
+ * A panel for the preamp block.
  */
 
-public interface GWIOExtendedEnumerationType<T extends Enum<T> & Comparable<T>>
+public final class GWEffectBlockPanelPreamp2 extends GWEffectBlockPanelPreamp
 {
   /**
-   * @param x The integer value
+   * A panel for the preamp block.
    *
-   * @return The enumeration case of the given integer
+   * @param services The service directory
    */
 
-  GWIOExtendedEnumerationType<T> fromInt(int x);
+  public GWEffectBlockPanelPreamp2(
+    final RPServiceDirectoryType services)
+  {
+    super(services);
+  }
 
-  /**
-   * @return The integer index of this enumeration constant
-   */
-
-  int toInt();
-
-  /**
-   * @return The readable label of this enumeration constant
-   */
-
-  String label();
-
-  /**
-   * @return The next enumeration constant (wrapping around to the first)
-   */
-
-  T next();
-
-  /**
-   * @return The previous enumeration constant (wrapping around to the last)
-   */
-
-  T previous();
-
-  /**
-   * @return The number of cases
-   */
-
-  int caseCount();
+  @Override
+  protected GWPatchEffectBlockPreampType preamp(
+    final GWControllerType device)
+  {
+    return device.patchCurrent().preamp2();
+  }
 }

@@ -16,6 +16,8 @@
 
 import com.io7m.gatwick.controller.api.GWControllerFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
+import com.io7m.gatwick.gui.internal.icons.GWIconEnumerationSetPreamp;
+import com.io7m.gatwick.gui.internal.icons.GWIconEnumerationSetType;
 
 /**
  * GT-1000 controller (GUI)
@@ -42,6 +44,11 @@ open module com.io7m.gatwick.gui
 
   uses GWControllerFactoryType;
   uses GWDeviceFactoryType;
+
+  provides GWIconEnumerationSetType
+    with GWIconEnumerationSetPreamp;
+
+  uses GWIconEnumerationSetType;
 
   exports com.io7m.gatwick.gui;
 }

@@ -169,13 +169,12 @@ public final class GWMainController implements GWScreenControllerType
   private void gtStatusChanged(
     final GWGT1KServiceStatusType status)
   {
-    this.menuDeviceOpen.setDisable(status.isOpen());
-
     if (status instanceof Disconnected) {
       this.statusConnectionText.setText(
         this.strings.format("statusDisconnected")
       );
       this.statusConnectionLED.setFill(Color.DARKGREY);
+      this.menuDeviceOpen.setText(this.strings.format("menu.device.open"));
       return;
     }
 
@@ -185,6 +184,7 @@ public final class GWMainController implements GWScreenControllerType
       );
       this.statusConnectionLED.setFill(Color.RED);
       this.errors.open(failed.task());
+      this.menuDeviceOpen.setText(this.strings.format("menu.device.open"));
       return;
     }
 
@@ -193,6 +193,7 @@ public final class GWMainController implements GWScreenControllerType
         this.strings.format("statusConnected")
       );
       this.statusConnectionLED.setFill(LIMEGREEN);
+      this.menuDeviceOpen.setText(this.strings.format("menu.device.close"));
       return;
     }
 
@@ -201,6 +202,7 @@ public final class GWMainController implements GWScreenControllerType
         this.strings.format("statusPerformingIO")
       );
       this.statusConnectionLED.setFill(GOLD);
+      this.menuDeviceOpen.setText(this.strings.format("menu.device.close"));
       return;
     }
   }
@@ -337,7 +339,11 @@ public final class GWMainController implements GWScreenControllerType
   private void onMenuDeviceOpenSelected()
     throws IOException
   {
-    GWGT1KDeviceSelectionController.open(this.services);
+    if (!this.gtService.isOpen()) {
+      GWGT1KDeviceSelectionController.open(this.services);
+    } else {
+      this.gtService.closeDevice();
+    }
   }
 
   @FXML

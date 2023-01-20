@@ -17,6 +17,7 @@
 package com.io7m.gatwick.device.api;
 
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskRecorderType;
 
 import java.util.List;
 import java.util.Set;
@@ -53,10 +54,12 @@ public interface GWDeviceFactoryType
   /**
    * Detect devices that appear to be GT-1000 devices.
    *
+   * @param recorder A task recorder
    * @return A list of probable GT-1000 devices
    */
 
-  TRTask<List<GWDeviceMIDIDescription>> detectDevices();
+  TRTask<List<GWDeviceMIDIDescription>> detectDevices(
+    TRTaskRecorderType<?> recorder);
 
   /**
    * @return A list of the system's MIDI devices

@@ -167,7 +167,7 @@ public final class GWIOSerializers
       if (value instanceof GWIORate118Milliseconds milliseconds) {
         buffer.put(0, (byte) (milliseconds.value() & 0xff));
       } else if (value instanceof GWIORate118Note note) {
-        buffer.put(0, (byte) (note.toInt() & 0xff));
+        buffer.put(0, (byte) (GWIORate118Note.info().toInt(note) & 0xff));
       } else {
         throw new IllegalStateException();
       }
@@ -203,7 +203,8 @@ public final class GWIOSerializers
       } else if (value instanceof GWIORate318Note note) {
         uint8As16Serializer().serializeTo(
           buffer,
-          Integer.valueOf(note.toInt()));
+          Integer.valueOf(GWIORate318Note.info().toInt(note))
+        );
       } else {
         throw new IllegalStateException();
       }
@@ -241,7 +242,8 @@ public final class GWIOSerializers
       } else if (value instanceof GWIORate119Note note) {
         uint8As16Serializer().serializeTo(
           buffer,
-          Integer.valueOf(note.toInt()));
+          Integer.valueOf(GWIORate119Note.info().toInt(note))
+        );
       } else {
         throw new IllegalStateException();
       }

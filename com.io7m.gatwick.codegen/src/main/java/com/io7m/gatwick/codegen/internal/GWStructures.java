@@ -578,12 +578,12 @@ public final class GWStructures
       "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
-    code.add("  $T.serializer(),\n", enumType);
-    code.add("  $T.deserializer(),\n", enumType);
-    code.add("  $T.serializeSize(),\n", enumType);
+    code.add("  $T.info().serializer(),\n", enumType);
+    code.add("  $T.info().deserializer(),\n", enumType);
+    code.add("  $T.info().serializeSize(),\n", enumType);
 
     code.add(
-      "  new $T<>($S, $T.class, $T.first(), $T.first(), $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.info().first(), $T.info().first(), $T.info().last()),\n",
       GWIOVariableInformation.class,
       p.getName(),
       enumType,
@@ -613,12 +613,12 @@ public final class GWStructures
       "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
-    code.add("  $T.serializer(),\n", enumType);
-    code.add("  $T.deserializer(),\n", enumType);
-    code.add("  $T.serializeSize(),\n", enumType);
+    code.add("  $T.info().serializer(),\n", enumType);
+    code.add("  $T.info().deserializer(),\n", enumType);
+    code.add("  $T.info().serializeSize(),\n", enumType);
 
     code.add(
-      "  new $T<>($S, $T.class, $T.first(), $T.first(), $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.info().first(), $T.info().first(), $T.info().last()),\n",
       GWIOVariableInformation.class,
       p.getName(),
       enumType,
@@ -648,12 +648,12 @@ public final class GWStructures
       "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
-    code.add("  $T.serializer(),\n", enumType);
-    code.add("  $T.deserializer(),\n", enumType);
-    code.add("  $T.serializeSize(),\n", enumType);
+    code.add("  $T.info().serializer(),\n", enumType);
+    code.add("  $T.info().deserializer(),\n", enumType);
+    code.add("  $T.info().serializeSize(),\n", enumType);
 
     code.add(
-      "  new $T<>($S, $T.class, $T.first(), $T.first(), $T.last()),\n",
+      "  new $T<>($S, $T.class, $T.info().first(), $T.info().first(), $T.info().last()),\n",
       GWIOVariableInformation.class,
       p.getName(),
       enumType,

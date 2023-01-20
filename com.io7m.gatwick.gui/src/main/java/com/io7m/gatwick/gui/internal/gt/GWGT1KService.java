@@ -17,9 +17,10 @@
 
 package com.io7m.gatwick.gui.internal.gt;
 
-import com.io7m.gatwick.controller.api.GWControllerConfiguration;
+import com.io7m.gatwick.controller.api.GWControllerDetectedDevice;
 import com.io7m.gatwick.controller.api.GWControllerFactoryType;
 import com.io7m.gatwick.controller.api.GWControllerType;
+import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.gui.internal.GWStrings;
@@ -31,6 +32,7 @@ import com.io7m.jmulticlose.core.CloseableCollectionType;
 import com.io7m.jmulticlose.core.ClosingResourceFailedException;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskRecorder;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.concurrent.CompletableFuture;
@@ -110,6 +113,18 @@ public final class GWGT1KService implements GWGT1KServiceType
     return new GWGT1KService(resources, executor, strings);
   }
 
+  private static GWControllerFactoryType findControllers()
+  {
+    return ServiceLoader.load(GWControllerFactoryType.class)
+      .findFirst()
+      .orElseThrow(() -> {
+        throw new ServiceConfigurationError(
+          "No services available of type %s"
+            .formatted(GWControllerFactoryType.class)
+        );
+      });
+  }
+
   @Override
   public String description()
   {
@@ -137,8 +152,10 @@ public final class GWGT1KService implements GWGT1KServiceType
 
   @Override
   public CompletableFuture<TRTask<?>> open(
-    final GWControllerConfiguration configuration)
+    final GWDeviceFactoryType deviceFactory,
+    final GWDeviceConfiguration configuration)
   {
+    Objects.requireNonNull(deviceFactory, "deviceFactory");
     Objects.requireNonNull(configuration, "configuration");
 
     final var future =
@@ -146,7 +163,7 @@ public final class GWGT1KService implements GWGT1KServiceType
 
     this.executor.execute(() -> {
       final var task =
-        TRTask.create(LOG, this.strings.format("task.openDevice"));
+        TRTaskRecorder.create(LOG, this.strings.format("task.openDevice"));
 
       try {
         final var controllers =
@@ -158,53 +175,43 @@ public final class GWGT1KService implements GWGT1KServiceType
         }
 
         this.controller =
-          this.resources.add(controllers.openController(configuration));
+          this.resources.add(controllers.openController(
+            deviceFactory,
+            configuration
+          ));
 
-        task.setResult(this.controller);
-        task.setSucceeded();
+        task.setTaskSucceeded("", this.controller);
         Platform.runLater(() -> this.status.set(new Connected(this.controller)));
 
-        future.complete(task);
+        future.complete(task.toTask());
       } catch (final Throwable e) {
-        task.setFailed(e.getMessage(), e);
-        Platform.runLater(() -> this.status.set(new OpenFailed(task)));
+        task.setTaskFailed(e.getMessage(), Optional.of(e));
+        Platform.runLater(() -> this.status.set(new OpenFailed(task.toTask())));
         future.completeExceptionally(e);
       }
     });
     return future;
   }
 
-  private static GWControllerFactoryType findControllers()
-  {
-    return ServiceLoader.load(GWControllerFactoryType.class)
-      .findFirst()
-      .orElseThrow(() -> {
-        throw new ServiceConfigurationError(
-          "No services available of type %s"
-            .formatted(GWControllerFactoryType.class)
-        );
-      });
-  }
-
   @Override
-  public CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>> detectDevices(
+  public CompletableFuture<TRTask<List<GWControllerDetectedDevice>>> detectDevices(
     final Predicate<GWDeviceFactoryType> deviceFactoryFilter)
   {
     Objects.requireNonNull(deviceFactoryFilter, "deviceFactoryFilter");
 
     final var future =
-      new CompletableFuture<TRTask<List<GWDeviceMIDIDescription>>>();
+      new CompletableFuture<TRTask<List<GWControllerDetectedDevice>>>();
 
     this.executor.execute(() -> {
       final var task =
-        TRTask.<List<GWDeviceMIDIDescription>>create(
+        TRTaskRecorder.<List<GWDeviceMIDIDescription>>create(
           LOG, this.strings.format("task.listDevices"));
 
       try {
         final var controllers = findControllers();
-        future.complete(controllers.detectDevices(deviceFactoryFilter));
+        future.complete(controllers.detectDevices(task, deviceFactoryFilter));
       } catch (final Throwable e) {
-        task.setFailed(e.getMessage(), e);
+        task.setTaskFailed(e.getMessage(), Optional.of(e));
         future.completeExceptionally(e);
       }
     });
@@ -231,6 +238,34 @@ public final class GWGT1KService implements GWGT1KServiceType
         runnable.execute(ctrl);
         future.complete(null);
         Platform.runLater(() -> this.status.set(new Connected(this.controller)));
+      } catch (final Throwable e) {
+        future.completeExceptionally(e);
+      }
+    });
+
+    return future;
+  }
+
+  @Override
+  public boolean isOpen()
+  {
+    return this.status.get().isOpen();
+  }
+
+  @Override
+  public CompletableFuture<?> closeDevice()
+  {
+    final var future = new CompletableFuture<>();
+    this.executor.execute(() -> {
+      try {
+        final var ctrl = this.controller;
+        if (ctrl != null) {
+          ctrl.close();
+        }
+
+        this.controller = null;
+        future.complete(null);
+        Platform.runLater(() -> this.status.set(DISCONNECTED));
       } catch (final Throwable e) {
         future.completeExceptionally(e);
       }

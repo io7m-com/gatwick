@@ -129,6 +129,7 @@ import com.io7m.gatwick.controller.api.GWPatchReverbTTypeValue;
 import com.io7m.gatwick.controller.api.GWPatchReverbTypeValue;
 import com.io7m.gatwick.controller.api.GWTunerModeValue;
 import com.io7m.gatwick.controller.api.GWTunerTypeValue;
+import com.io7m.gatwick.iovar.GWIOEnumerationInfo;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
@@ -261,27 +262,23 @@ public final class GWEnumerationsTest
       .map(GWEnumerationsTest::toFromIntIdentity);
   }
 
-  private static DynamicTest toFromIntIdentity(
-    final Class<?> enumClass)
+  private static <T extends Enum<T>> DynamicTest toFromIntIdentity(
+    final Class<T> enumClass)
   {
     return DynamicTest.dynamicTest(
       "testToFromIntIdentity_" + enumClass.getName(),
       () -> {
-        final var values =
-          enumClass.getMethod("values");
-        final var ofInt =
-          enumClass.getMethod("ofInt", int.class);
-        final var toInt =
-          enumClass.getMethod("toInt");
+        final var info =
+          GWIOEnumerationInfo.findInfo(enumClass);
 
-        final Object[] valuesResult =
-          (Object[]) values.invoke(enumClass);
+        final var valuesResult =
+          info.valueList();
 
         for (final var v : valuesResult) {
           final int i =
-            (int) toInt.invoke(v);
+            (int) info.toInt(v);
           final var r =
-            ofInt.invoke(enumClass, i);
+            info.fromInt(i);
 
           assertEquals(v, r);
         }
@@ -295,27 +292,25 @@ public final class GWEnumerationsTest
       .map(GWEnumerationsTest::labelUnique);
   }
 
-  private static DynamicTest labelUnique(
-    final Class<?> enumClass)
+  private static <T extends Enum<T>> DynamicTest labelUnique(
+    final Class<T> enumClass)
   {
     return DynamicTest.dynamicTest(
       "testLabelUnique_" + enumClass.getName(),
       () -> {
-        final var values =
-          enumClass.getMethod("values");
-        final var label =
-          enumClass.getMethod("label");
+        final var info =
+          GWIOEnumerationInfo.findInfo(enumClass);
 
-        final Object[] valuesResult =
-          (Object[]) values.invoke(enumClass);
+        final var valuesResult =
+          info.valueList();
 
         final var labels = new HashSet<String>();
         for (final var v : valuesResult) {
-          labels.add((String) label.invoke(v));
+          labels.add(info.label(v));
         }
 
         assertEquals(
-          valuesResult.length,
+          valuesResult.size(),
           labels.size()
         );
       });

@@ -21,8 +21,8 @@ import com.io7m.gatwick.gui.internal.GWStrings;
 import com.io7m.gatwick.gui.internal.icons.GWIconServiceType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import com.io7m.taskrecorder.core.TRStep;
-import com.io7m.taskrecorder.core.TRStepType;
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskItemType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -48,7 +48,7 @@ public final class GWErrorController implements GWScreenControllerType
   @FXML private ImageView errorIcon;
   @FXML private Label errorTaskTitle;
   @FXML private Label errorTaskMessage;
-  @FXML private TreeView<TRStepType> errorDetails;
+  @FXML private TreeView<TRTaskItemType> errorDetails;
 
   /**
    * A controller for the error screen.
@@ -76,16 +76,16 @@ public final class GWErrorController implements GWScreenControllerType
       Objects.requireNonNull(inStage, "stage");
   }
 
-  private static TreeItem<TRStepType> buildTree(
-    final TRStepType node)
+  private static TreeItem<TRTaskItemType> buildTree(
+    final TRTaskItemType node)
   {
     if (node instanceof TRStep step) {
       return new TreeItem<>(step);
     }
 
     if (node instanceof TRTask<?> task) {
-      final var taskNode = new TreeItem<TRStepType>(task);
-      for (final var step : task.steps()) {
+      final var taskNode = new TreeItem<TRTaskItemType>(task);
+      for (final var step : task.items()) {
         taskNode.getChildren().add(buildTree(step));
       }
       return taskNode;
@@ -101,7 +101,7 @@ public final class GWErrorController implements GWScreenControllerType
   {
     this.errorIcon.setImage(this.icons.error16());
 
-    this.errorTaskTitle.setText(this.task.name());
+    this.errorTaskTitle.setText(this.task.description());
     this.errorTaskMessage.setText(this.task.resolution().message());
 
     this.errorDetails.setCellFactory(param -> {

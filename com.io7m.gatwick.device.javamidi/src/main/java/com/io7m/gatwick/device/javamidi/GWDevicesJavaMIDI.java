@@ -26,6 +26,7 @@ import com.io7m.gatwick.device.api.GWDeviceType;
 import com.io7m.gatwick.device.javamidi.internal.GWDeviceJavaMIDI;
 import com.io7m.jdeferthrow.core.ExceptionTracker;
 import com.io7m.taskrecorder.core.TRTask;
+import com.io7m.taskrecorder.core.TRTaskRecorderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +43,7 @@ import java.util.Set;
 
 import static com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes.DEVICE_MIDI_SYSTEM_ERROR;
 import static com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes.DEVICE_NOT_FOUND;
+import static com.io7m.taskrecorder.core.TRNoResult.NO_RESULT;
 
 /**
  * The JavaMIDI device implementation.
@@ -92,7 +94,7 @@ public final class GWDevicesJavaMIDI
   }
 
   private static List<GWDeviceMIDIDescription> detectDevicesCandidatesOpen(
-    final TRTask<List<GWDeviceMIDIDescription>> task,
+    final TRTaskRecorderType<List<GWDeviceMIDIDescription>> task,
     final HashMap<String, PotentialDevice> candidates)
   {
     /*
@@ -107,41 +109,45 @@ public final class GWDevicesJavaMIDI
 
     for (final var entry : candidates.entrySet()) {
       final var name = entry.getKey();
-      final var subTask =
-        task.beginSubtask("Opening device '%s'".formatted(name));
+      try (var subTask =
+             task.beginSubtaskWithoutResult(
+               "Opening device '%s'".formatted(name))) {
 
-      final var value = entry.getValue();
-      try {
-        if (value.transmitter == null || value.receiver == null) {
-          subTask.setFailed(
-            "Device is missing a transmitter or receiver, and so is unsuitable."
-          );
-          continue;
-        }
+        final var value = entry.getValue();
+        try {
+          if (value.transmitter == null || value.receiver == null) {
+            subTask.setTaskFailed(
+              "Device is missing a transmitter or receiver, and so is unsuitable."
+            );
+            continue;
+          }
 
-        try (var device = GWDeviceJavaMIDI.open(
-          new GWDeviceConfiguration(
-            value.description,
-            Duration.ofSeconds(3L),
-            Duration.ofSeconds(3L),
-            3,
-            Duration.ofMillis(100L)
-          ),
-          value.receiver,
-          value.transmitter
-        )) {
-          subTask.setSucceeded(
-            "Device '%s' has been detected as a GT-1000 device.".formatted(name)
-          );
-          detectedDevices.add(device.description().midiDevice());
-        } catch (final GWDeviceException e) {
-          subTask.setFailed(
-            "Device '%s' failed with an exception.".formatted(name),
-            Optional.of(e)
-          );
+          try (var device = GWDeviceJavaMIDI.open(
+            new GWDeviceConfiguration(
+              value.description,
+              Duration.ofSeconds(3L),
+              Duration.ofSeconds(3L),
+              3,
+              Duration.ofMillis(100L)
+            ),
+            value.receiver,
+            value.transmitter
+          )) {
+            subTask.setTaskSucceeded(
+              "Device '%s' has been detected as a GT-1000 device."
+                .formatted(name),
+              NO_RESULT
+            );
+            detectedDevices.add(device.description().midiDevice());
+          } catch (final GWDeviceException e) {
+            subTask.setTaskFailed(
+              "Device '%s' failed with an exception.".formatted(name),
+              Optional.of(e)
+            );
+          }
+        } finally {
+          value.close();
         }
-      } finally {
-        value.close();
       }
     }
 
@@ -220,32 +226,36 @@ public final class GWDevicesJavaMIDI
   }
 
   @Override
-  public TRTask<List<GWDeviceMIDIDescription>> detectDevices()
+  public TRTask<List<GWDeviceMIDIDescription>> detectDevices(
+    final TRTaskRecorderType<?> recorder)
   {
-    final var task =
-      TRTask.<List<GWDeviceMIDIDescription>>create(LOG, "Detecting devices...");
+    try (var subRec =
+           recorder.<List<GWDeviceMIDIDescription>>beginSubtask(
+             "Detecting devices...")) {
 
-    final var deviceInfos =
-      this.backend.getMidiDeviceInfo();
+      final var deviceInfos =
+        this.backend.getMidiDeviceInfo();
 
-    final var candidates =
-      this.detectDevicesCandidates(task, deviceInfos);
-    final var detectedDevices =
-      detectDevicesCandidatesOpen(task, candidates);
+      final var candidates =
+        this.detectDevicesCandidates(subRec, deviceInfos);
+      final var detectedDevices =
+        detectDevicesCandidatesOpen(subRec, candidates);
 
-    final var subTask =
-      task.beginSubtask("Return devices.");
+      if (detectedDevices.isEmpty()) {
+        subRec.setTaskFailed("No suitable devices could be detected.");
+      } else {
+        subRec.setTaskSucceeded(
+          "Detected devices.",
+          List.copyOf(detectedDevices)
+        );
+      }
 
-    if (detectedDevices.isEmpty()) {
-      subTask.setFailed("No suitable devices could be detected.");
+      return subRec.toTask();
     }
-
-    task.setResult(List.copyOf(detectedDevices));
-    return task;
   }
 
   private HashMap<String, PotentialDevice> detectDevicesCandidates(
-    final TRTask<List<GWDeviceMIDIDescription>> task,
+    final TRTaskRecorderType<List<GWDeviceMIDIDescription>> task,
     final MidiDevice.Info[] deviceInfos)
   {
     final var candidates =
@@ -261,56 +271,68 @@ public final class GWDevicesJavaMIDI
 
       final var name =
         deviceInfo.getName();
-      final var subTask =
-        task.beginSubtask(
-          "Checking if device '%s' has the required transmitters and receivers."
-            .formatted(name));
 
-      final MidiDevice device;
-      try {
-        device = this.backend.getMidiDevice(deviceInfo);
-      } catch (final MidiUnavailableException e) {
-        subTask.setFailed(
-          "MIDI device '%s' threw an exception.".formatted(name),
-          Optional.of(e)
-        );
-        continue;
-      }
+      try (var subTask =
+             task.beginSubtaskWithoutResult(
+               "Checking if device '%s' has the required transmitters and receivers."
+                 .formatted(name))) {
 
-      final var maxReceivers = device.getMaxReceivers();
-      if (maxReceivers != 0) {
-        subTask.setSucceeded(
-          "Device has %s receivers and so is considered a candidate device."
-            .formatted(maxReceivers == -1
-                         ? "unlimited"
-                         : Integer.toUnsignedString(maxReceivers))
-        );
-
-        var existing = candidates.get(name);
-        if (existing == null) {
-          existing = new PotentialDevice();
+        final MidiDevice device;
+        try {
+          device = this.backend.getMidiDevice(deviceInfo);
+        } catch (final MidiUnavailableException e) {
+          subTask.setTaskFailed(
+            "MIDI device '%s' threw an exception.".formatted(name),
+            Optional.of(e)
+          );
+          continue;
         }
-        existing.description = description;
-        existing.receiver = device;
-        candidates.put(name, existing);
-      }
 
-      final var maxTransmitters = device.getMaxTransmitters();
-      if (maxTransmitters != 0) {
-        subTask.setSucceeded(
-          "Device has %s transmitters and so is considered a candidate device."
-            .formatted(maxTransmitters == -1
-                         ? "unlimited"
-                         : Integer.toUnsignedString(maxTransmitters))
-        );
+        final var maxReceivers =
+          device.getMaxReceivers();
+        final var maxTransmitters =
+          device.getMaxTransmitters();
 
-        var existing = candidates.get(name);
-        if (existing == null) {
-          existing = new PotentialDevice();
+        if (maxReceivers == 0 && maxTransmitters == 0) {
+          subTask.setTaskFailed("Device has no transmitters or receivers.");
+          continue;
         }
-        existing.description = description;
-        existing.transmitter = device;
-        candidates.put(name, existing);
+
+        if (maxReceivers != 0) {
+          subTask.setTaskSucceeded(
+            "Device has %s receivers and so is considered a candidate device."
+              .formatted(maxReceivers == -1
+                           ? "unlimited"
+                           : Integer.toUnsignedString(maxReceivers)),
+            NO_RESULT
+          );
+
+          var existing = candidates.get(name);
+          if (existing == null) {
+            existing = new PotentialDevice();
+          }
+          existing.description = description;
+          existing.receiver = device;
+          candidates.put(name, existing);
+        }
+
+        if (maxTransmitters != 0) {
+          subTask.setTaskSucceeded(
+            "Device has %s transmitters and so is considered a candidate device."
+              .formatted(maxTransmitters == -1
+                           ? "unlimited"
+                           : Integer.toUnsignedString(maxTransmitters)),
+            NO_RESULT
+          );
+
+          var existing = candidates.get(name);
+          if (existing == null) {
+            existing = new PotentialDevice();
+          }
+          existing.description = description;
+          existing.transmitter = device;
+          candidates.put(name, existing);
+        }
       }
     }
 

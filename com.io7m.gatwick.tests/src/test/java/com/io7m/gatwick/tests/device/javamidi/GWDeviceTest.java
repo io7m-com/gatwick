@@ -21,20 +21,23 @@ import com.io7m.gatwick.device.api.GWDeviceCommandRequestData;
 import com.io7m.gatwick.device.api.GWDeviceCommandSetData;
 import com.io7m.gatwick.device.api.GWDeviceConfiguration;
 import com.io7m.gatwick.device.api.GWDeviceException;
+import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.device.api.GWDeviceResponseRequestData;
 import com.io7m.gatwick.device.api.GWDeviceType;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDI;
 import com.io7m.gatwick.device.javamidi.GWDevicesJavaMIDIDevicesType;
 import com.io7m.gatwick.device.javamidi.internal.GWDeviceMessages;
-import com.io7m.taskrecorder.core.TRFailed;
-import com.io7m.taskrecorder.core.TRSucceeded;
+import com.io7m.taskrecorder.core.TRTaskFailed;
+import com.io7m.taskrecorder.core.TRTaskRecorder;
+import com.io7m.taskrecorder.core.TRTaskSucceeded;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
-import org.mockito.Mockito;
 import org.mockito.internal.verification.Times;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
@@ -72,6 +75,9 @@ import static org.mockito.Mockito.when;
 @Timeout(value = 5L, unit = TimeUnit.SECONDS)
 public final class GWDeviceTest
 {
+  private static final Logger LOG =
+    LoggerFactory.getLogger(GWDeviceTest.class);
+
   private GWDevicesJavaMIDI devices;
   private GWDevicesJavaMIDIDevicesType backend;
   private MidiDevice midiDevice;
@@ -917,12 +923,11 @@ public final class GWDeviceTest
     /* Act */
 
     final var task =
-      this.devices.detectDevices();
+      this.devices.detectDevices(TRTaskRecorder.create(LOG, "Detecting..."));
 
     /* Assert */
 
-    assertTrue(task.resolution() instanceof TRFailed);
-    assertEquals(0, task.result().orElseThrow().size());
+    assertTrue(task.resolution() instanceof TRTaskFailed<List<GWDeviceMIDIDescription>>);
   }
 
   /**
@@ -1132,12 +1137,14 @@ public final class GWDeviceTest
     /* Act */
 
     final var task =
-      this.devices.detectDevices();
+      this.devices.detectDevices(
+        TRTaskRecorder.create(LOG, "Detecting...")
+      );
 
     /* Assert */
 
-    assertTrue(task.resolution() instanceof TRSucceeded);
-    final var returned = task.result().orElseThrow();
+    final TRTaskSucceeded<List<GWDeviceMIDIDescription>> resolution = (TRTaskSucceeded<List<GWDeviceMIDIDescription>>) task.resolution();
+    final var returned = resolution.result();
     assertEquals(defaultMidiDescription(5), returned.get(0));
     assertEquals(1, returned.size());
   }
