@@ -138,4 +138,25 @@ public sealed interface GWGT1KServiceStatusType
       Objects.requireNonNull(device, "device");
     }
   }
+
+  /**
+   * There was some kind of device-related error.
+   *
+   * @param device The device
+   * @param ex     The error
+   */
+
+  record DeviceError(GWControllerType device, Throwable ex)
+    implements GWGT1KServiceStatusOpenType
+  {
+    /**
+     * There was some kind of device-related error.
+     */
+
+    public DeviceError
+    {
+      Objects.requireNonNull(device, "device");
+      Objects.requireNonNull(ex, "ex");
+    }
+  }
 }

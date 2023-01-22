@@ -25,6 +25,7 @@ import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceMIDIDescription;
 import com.io7m.gatwick.gui.internal.GWStrings;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Connected;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.DeviceError;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.OpenFailed;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.PerformingIO;
 import com.io7m.jmulticlose.core.CloseableCollection;
@@ -175,10 +176,9 @@ public final class GWGT1KService implements GWGT1KServiceType
         }
 
         this.controller =
-          this.resources.add(controllers.openController(
-            deviceFactory,
-            configuration
-          ));
+          this.resources.add(
+            controllers.openController(deviceFactory, configuration)
+          );
 
         task.setTaskSucceeded("", this.controller);
         Platform.runLater(() -> this.status.set(new Connected(this.controller)));
@@ -239,6 +239,7 @@ public final class GWGT1KService implements GWGT1KServiceType
         future.complete(null);
         Platform.runLater(() -> this.status.set(new Connected(this.controller)));
       } catch (final Throwable e) {
+        Platform.runLater(() -> this.status.set(new DeviceError(this.controller, e)));
         future.completeExceptionally(e);
       }
     });

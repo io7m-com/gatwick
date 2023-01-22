@@ -23,6 +23,7 @@ import com.io7m.gatwick.gui.internal.GWScreenControllerType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -165,6 +166,25 @@ public final class GWPresetController implements GWScreenControllerType
   {
     this.deviceIsClosedContainer.setVisible(false);
     this.deviceIsOpenContainer.setVisible(true);
+    this.fetchAndUpdateGraph();
+  }
+
+  /**
+   * Fetch the most recent signal chain on the device.
+   */
+
+  private void fetchAndUpdateGraph()
+  {
+    this.gt.executeOnDevice(controller -> {
+      final var chainVar =
+        controller.patchCurrent().chain();
+
+      chainVar.readFromDevice();
+
+      Platform.runLater(() -> {
+        this.blockGraph.chain().setValue(chainVar.get());
+      });
+    });
   }
 
   @Override
@@ -201,6 +221,8 @@ public final class GWPresetController implements GWScreenControllerType
   private void onNodeSelected(
     final GWNodeShape node)
   {
+    this.fetchAndUpdateGraph();
+
     final var dials = this.dialsContainer.getChildren();
     dials.clear();
 

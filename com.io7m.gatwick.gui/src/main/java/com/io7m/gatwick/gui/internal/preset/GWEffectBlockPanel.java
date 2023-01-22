@@ -304,35 +304,14 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
       .setValue(Double.valueOf(6.0));
 
     if (Objects.equals(info.valueClass(), Integer.class)) {
-      final var varInt =
-        (GWIOVariableType<Integer>) variable;
-      final var vInt =
-        varInt.information();
-
-      final var min =
-        vInt.valueMinimumInclusive();
-      final var max =
-        vInt.valueMaximumInclusive();
-
-      dial.setValueConverter(
-        new DialBoundedIntegerConverter(min.intValue(), max.intValue()));
-      dial.setConvertedValue(
-        vInt.valueInitial().doubleValue());
-
-      this.subscriptions.add(
-        variable.subscribe((oldValue, newValue) -> {
-          Platform.runLater(() -> {
-            tooltip.setText(String.format("%s: %s", info.label(), newValue));
-          });
-        })
-      );
-
-      this.configureDialChangeListener(
+      this.createIntegerDial(
+        unsoundCast(variable),
+        info,
         control,
-        varInt,
-        number -> Integer.valueOf(number.intValue()),
-        number -> Double.valueOf(number.doubleValue())
+        tooltip,
+        dial
       );
+      return control;
     }
 
     if (isEnumerated(info.valueClass())) {
@@ -342,14 +321,50 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
         tooltip,
         dial
       );
+      return control;
     }
 
     return control;
   }
 
+  private void createIntegerDial(
+    final GWIOVariableType<Integer> variable,
+    final GWIOVariableInformation<?> info,
+    final DialControlLabelled control,
+    final Tooltip tooltip,
+    final DialControl dial)
+  {
+    final var vInt =
+      variable.information();
+    final var min =
+      vInt.valueMinimumInclusive();
+    final var max =
+      vInt.valueMaximumInclusive();
+
+    dial.setValueConverter(
+      new DialBoundedIntegerConverter(min.intValue(), max.intValue()));
+    dial.setConvertedValue(
+      vInt.valueInitial().doubleValue());
+
+    this.subscriptions.add(
+      variable.subscribe((oldValue, newValue) -> {
+        Platform.runLater(() -> {
+          tooltip.setText(String.format("%s: %s", info.label(), newValue));
+        });
+      })
+    );
+
+    this.configureDialChangeListener(
+      control,
+      variable,
+      number -> Integer.valueOf(number.intValue()),
+      number -> Double.valueOf(number.doubleValue())
+    );
+  }
+
   private static <A, B> B unsoundCast(final A x)
   {
-    return (B) (Object) x;
+    return (B) x;
   }
 
   private <U extends Enum<U>> void createEnumeratedDial(

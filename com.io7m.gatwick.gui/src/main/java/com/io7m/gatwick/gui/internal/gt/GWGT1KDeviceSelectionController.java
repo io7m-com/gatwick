@@ -232,14 +232,23 @@ public final class GWGT1KDeviceSelectionController
         .selectedItemProperty()
         .get();
 
+    final var openTimeout =
+      Duration.ofSeconds(3L);
+    final var messageTimeout =
+      Duration.ofMillis(500L);
+    final var messageSendRetryPause =
+      Duration.ofMillis(100L);
+    final var messageSendTries =
+      3;
+
     this.gt.open(
       detected.deviceFactory(),
       new GWDeviceConfiguration(
         detected.description(),
-        Duration.ofSeconds(3L),
-        Duration.ofSeconds(3L),
-        3,
-        Duration.ofMillis(100L)
+        openTimeout,
+        messageTimeout,
+        messageSendTries,
+        messageSendRetryPause
       )
     );
 

@@ -27,6 +27,7 @@ import com.io7m.gatwick.gui.internal.exec.GWBackgroundExecutorType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KDeviceSelectionController;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Connected;
+import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.DeviceError;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Disconnected;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.OpenFailed;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.PerformingIO;
@@ -49,7 +50,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import org.slf4j.Logger;
@@ -65,8 +65,10 @@ import java.util.ResourceBundle;
 
 import static com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Disconnected.DISCONNECTED;
 import static javafx.animation.Interpolator.EASE_BOTH;
+import static javafx.scene.paint.Color.DARKGREY;
 import static javafx.scene.paint.Color.GOLD;
 import static javafx.scene.paint.Color.LIMEGREEN;
+import static javafx.scene.paint.Color.RED;
 
 /**
  * The main controller that handles screen transitions and dispatching calls to
@@ -176,7 +178,7 @@ public final class GWMainController implements GWScreenControllerType
         this.strings.format("statusDisconnected")
       );
       this.statusProgress.setVisible(false);
-      this.statusConnectionLED.setFill(Color.DARKGREY);
+      this.statusConnectionLED.setFill(DARKGREY);
       this.menuDeviceOpen.setText(this.strings.format("menu.device.open"));
       return;
     }
@@ -186,7 +188,7 @@ public final class GWMainController implements GWScreenControllerType
         this.strings.format("statusFailed")
       );
       this.statusProgress.setVisible(false);
-      this.statusConnectionLED.setFill(Color.RED);
+      this.statusConnectionLED.setFill(RED);
       this.errors.open(failed.task());
       this.menuDeviceOpen.setText(this.strings.format("menu.device.open"));
       return;
@@ -208,6 +210,16 @@ public final class GWMainController implements GWScreenControllerType
       );
       this.statusProgress.setVisible(true);
       this.statusConnectionLED.setFill(GOLD);
+      this.menuDeviceOpen.setText(this.strings.format("menu.device.close"));
+      return;
+    }
+
+    if (status instanceof DeviceError) {
+      this.statusConnectionText.setText(
+        this.strings.format("statusDeviceError")
+      );
+      this.statusProgress.setVisible(false);
+      this.statusConnectionLED.setFill(RED);
       this.menuDeviceOpen.setText(this.strings.format("menu.device.close"));
       return;
     }
