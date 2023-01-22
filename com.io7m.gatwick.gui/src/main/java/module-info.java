@@ -17,6 +17,7 @@
 import com.io7m.gatwick.controller.api.GWControllerFactoryType;
 import com.io7m.gatwick.device.api.GWDeviceFactoryType;
 import com.io7m.gatwick.gui.internal.icons.GWIconEnumerationSetPreamp;
+import com.io7m.gatwick.gui.internal.icons.GWIconEnumerationSetFX;
 import com.io7m.gatwick.gui.internal.icons.GWIconEnumerationSetType;
 
 /**
@@ -46,7 +47,8 @@ open module com.io7m.gatwick.gui
   uses GWDeviceFactoryType;
 
   provides GWIconEnumerationSetType
-    with GWIconEnumerationSetPreamp;
+    with GWIconEnumerationSetPreamp,
+      GWIconEnumerationSetFX;
 
   uses GWIconEnumerationSetType;
 

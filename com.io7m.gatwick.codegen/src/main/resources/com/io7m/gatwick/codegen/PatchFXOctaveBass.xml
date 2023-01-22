@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Structure Name="PatchFXOctaveBass"
+           JavaInterface="GWPatchEffectOctaveBassType"
            ExpectedSize="0x0003"
            xmlns="urn:com.io7m.gatwick:1">
 
   <ParameterIntegerDirect Name="-2OCT"
+                          JavaNameOverride="minus2Oct"
                           Offset="0x0006"
                           Default="50"
                           MinInclusive="0"
                           MaxInclusive="100"/>
 
   <ParameterIntegerDirect Name="-1OCT"
+                          JavaNameOverride="minus1Oct"
                           Offset="0x0007"
                           Default="50"
                           MinInclusive="0"

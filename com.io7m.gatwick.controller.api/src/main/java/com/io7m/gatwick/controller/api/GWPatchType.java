@@ -101,4 +101,22 @@ public interface GWPatchType
    */
 
   GWPatchEffectBlockDistortionType dist2();
+
+  /**
+   * @return The FX1 patch block
+   */
+
+  GWPatchEffectBlockFXType fx1();
+
+  /**
+   * @return The FX2 patch block
+   */
+
+  GWPatchEffectBlockFXType fx2();
+
+  /**
+   * @return The FX3 patch block
+   */
+
+  GWPatchEffectBlockFXType fx3();
 }

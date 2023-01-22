@@ -34,6 +34,7 @@ import com.io7m.repetoir.core.RPServiceDirectoryType;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ComboBox;
@@ -43,6 +44,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -193,9 +196,14 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
      * Create a menu for selecting the effect "type".
      */
 
-    final ComboBox<S> menu =
-      new ComboBox<>(FXCollections.observableList(values));
 
+    final List<S> valuesSorted = new ArrayList<>(values);
+    valuesSorted.sort(Comparator.comparing(enumInfo::label));
+
+    final ObservableList<S> menuValues =
+      FXCollections.observableList(valuesSorted);
+
+    final ComboBox<S> menu = new ComboBox<>(menuValues);
     menu.setPrefWidth(512.0);
     menu.getSelectionModel().select(valueInitial);
 

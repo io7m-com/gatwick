@@ -55,6 +55,7 @@ public final class MakeStructuresMain
         structurePackageName,
         false,
         enumerationPackageName,
+        "com.io7m.gatwick.controller.api",
         definitions
       ));
 

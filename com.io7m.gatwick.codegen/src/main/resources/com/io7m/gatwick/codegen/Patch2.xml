@@ -43,4 +43,64 @@
                       Offset="0x0000_0a00"
                       Type="PatchEfct2"/>
 
+  <StructureReference Name="fx1SlowGearBass"
+                      Offset="0x0000_0700"
+                      Invalid="true"
+                      Type="PatchFXSlowGearBass"/>
+
+  <StructureReference Name="fx2SlowGearBass"
+                      Offset="0x0000_0800"
+                      Invalid="true"
+                      Type="PatchFXSlowGearBass"/>
+
+  <StructureReference Name="fx3SlowGearBass"
+                      Offset="0x0000_0900"
+                      Invalid="true"
+                      Type="PatchFXSlowGearBass"/>
+
+  <StructureReference Name="fx1OctaveBass"
+                      Offset="0x0000_0b00"
+                      Invalid="true"
+                      Type="PatchFXOctaveBass"/>
+
+  <StructureReference Name="fx2OctaveBass"
+                      Offset="0x0000_0c00"
+                      Invalid="true"
+                      Type="PatchFXOctaveBass"/>
+
+  <StructureReference Name="fx3OctaveBass"
+                      Offset="0x0000_0d00"
+                      Invalid="true"
+                      Type="PatchFXOctaveBass"/>
+
+  <StructureReference Name="fx1TouchWahBass"
+                      Offset="0x0000_0e00"
+                      Invalid="true"
+                      Type="PatchFXTWahBass"/>
+
+  <StructureReference Name="fx2TouchWahBass"
+                      Offset="0x0000_0f00"
+                      Invalid="true"
+                      Type="PatchFXTWahBass"/>
+
+  <StructureReference Name="fx3TouchWahBass"
+                      Offset="0x0000_1000"
+                      Invalid="true"
+                      Type="PatchFXTWahBass"/>
+
+  <StructureReference Name="fx1DefretterBass"
+                      Offset="0x0000_1100"
+                      Invalid="true"
+                      Type="PatchFXDefretterBass"/>
+
+  <StructureReference Name="fx2DefretterBass"
+                      Offset="0x0000_1200"
+                      Invalid="true"
+                      Type="PatchFXDefretterBass"/>
+
+  <StructureReference Name="fx3DefretterBass"
+                      Offset="0x0000_1300"
+                      Invalid="true"
+                      Type="PatchFXDefretterBass"/>
+
 </Structure>

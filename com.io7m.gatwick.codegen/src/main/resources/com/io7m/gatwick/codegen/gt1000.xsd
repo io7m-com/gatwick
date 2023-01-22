@@ -23,190 +23,209 @@
     </restriction>
   </simpleType>
 
-  <element name="ParameterRate118">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-    </complexType>
-  </element>
+  <complexType name="ParameterBase"
+               abstract="true">
 
-  <element name="ParameterRate118AndOff">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-    </complexType>
-  </element>
+    <attribute name="Name"
+               type="string"
+               use="required"/>
 
-  <element name="ParameterRate318">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-    </complexType>
-  </element>
+    <attribute name="JavaNameOverride"
+               type="string"
+               use="optional"/>
 
-  <element name="ParameterLowCut">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-    </complexType>
-  </element>
+    <attribute name="Invalid"
+               type="boolean"
+               use="optional">
+      <annotation>
+        <documentation xml:lang="en">
+          This object is known to be invalid and should be ignored at runtime. This has been known to happen due to
+          missing or incorrect information in the specification.
+        </documentation>
+      </annotation>
+    </attribute>
 
-  <element name="ParameterHighCut">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-    </complexType>
-  </element>
+    <attribute name="Offset"
+               type="g:HexInteger"
+               use="required"/>
 
-  <element name="ParameterFractional">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
+  </complexType>
 
-      <attribute name="MinInclusive"
-                 type="double"
-                 use="required"/>
-      <attribute name="MaxInclusive"
-                 type="double"
-                 use="required"/>
-      <attribute name="Default"
-                 type="double"
-                 use="required"/>
+  <complexType name="ParameterRate118Type">
+    <complexContent>
+      <extension base="g:ParameterBase">
 
-      <attribute name="PhysicalMinInclusive"
-                 type="integer"
-                 use="required"/>
-      <attribute name="PhysicalMaxInclusive"
-                 type="integer"
-                 use="required"/>
-    </complexType>
-  </element>
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="ParameterIntegerMapped">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
+  <element name="ParameterRate118"
+           type="g:ParameterRate118Type"/>
 
-      <attribute name="MinInclusive"
-                 type="integer"
-                 use="required"/>
-      <attribute name="MaxInclusive"
-                 type="integer"
-                 use="required"/>
-      <attribute name="Default"
-                 type="integer"
-                 use="required"/>
+  <complexType name="ParameterRate118AndOffType">
+    <complexContent>
+      <extension base="g:ParameterBase">
 
-      <attribute name="PhysicalMinInclusive"
-                 type="integer"
-                 use="required"/>
-      <attribute name="PhysicalMaxInclusive"
-                 type="integer"
-                 use="required"/>
-    </complexType>
-  </element>
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="ParameterIntegerDirect">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
+  <element name="ParameterRate118AndOff"
+           type="g:ParameterRate118AndOffType"/>
 
-      <attribute name="MinInclusive"
-                 type="integer"
-                 use="required"/>
-      <attribute name="MaxInclusive"
-                 type="integer"
-                 use="required"/>
-      <attribute name="Default"
-                 type="integer"
-                 use="required"/>
-    </complexType>
-  </element>
+  <complexType name="ParameterRate318Type">
+    <complexContent>
+      <extension base="g:ParameterBase">
 
-  <element name="ParameterEnumerated">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-      <attribute name="Type"
-                 type="string"
-                 use="required"/>
-    </complexType>
-  </element>
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="ParameterString">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-      <attribute name="Length"
-                 type="unsignedInt"
-                 use="required"/>
-    </complexType>
-  </element>
+  <element name="ParameterRate318"
+           type="g:ParameterRate318Type"/>
 
-  <element name="ParameterChain">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-    </complexType>
-  </element>
+  <complexType name="ParameterLowCutType">
+    <complexContent>
+      <extension base="g:ParameterBase">
 
-  <element name="StructureReference">
-    <complexType>
-      <attribute name="Name"
-                 type="string"
-                 use="required"/>
-      <attribute name="Offset"
-                 type="g:HexInteger"
-                 use="required"/>
-      <attribute name="Type"
-                 type="string"
-                 use="required"/>
-    </complexType>
-  </element>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="ParameterLowCut"
+           type="g:ParameterLowCutType"/>
+
+  <complexType name="ParameterHighCutType">
+    <complexContent>
+      <extension base="g:ParameterBase">
+
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="ParameterHighCut"
+           type="g:ParameterHighCutType"/>
+
+  <complexType name="ParameterFractionalType">
+    <complexContent>
+      <extension base="g:ParameterBase">
+        <attribute name="MinInclusive"
+                   type="double"
+                   use="required"/>
+        <attribute name="MaxInclusive"
+                   type="double"
+                   use="required"/>
+        <attribute name="Default"
+                   type="double"
+                   use="required"/>
+
+        <attribute name="PhysicalMinInclusive"
+                   type="integer"
+                   use="required"/>
+        <attribute name="PhysicalMaxInclusive"
+                   type="integer"
+                   use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="ParameterFractional"
+           type="g:ParameterFractionalType"/>
+
+  <complexType name="ParameterIntegerMappedType">
+    <complexContent>
+      <extension base="g:ParameterBase">
+        <attribute name="MinInclusive"
+                   type="integer"
+                   use="required"/>
+        <attribute name="MaxInclusive"
+                   type="integer"
+                   use="required"/>
+        <attribute name="Default"
+                   type="integer"
+                   use="required"/>
+
+        <attribute name="PhysicalMinInclusive"
+                   type="integer"
+                   use="required"/>
+        <attribute name="PhysicalMaxInclusive"
+                   type="integer"
+                   use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="ParameterIntegerMapped"
+           type="g:ParameterIntegerMappedType"/>
+
+  <complexType name="ParameterIntegerDirectType">
+    <complexContent>
+      <extension base="g:ParameterBase">
+        <attribute name="MinInclusive"
+                   type="integer"
+                   use="required"/>
+        <attribute name="MaxInclusive"
+                   type="integer"
+                   use="required"/>
+        <attribute name="Default"
+                   type="integer"
+                   use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="ParameterIntegerDirect"
+           type="g:ParameterIntegerDirectType"/>
+
+  <complexType name="ParameterEnumeratedType">
+    <complexContent>
+      <extension base="g:ParameterBase">
+        <attribute name="Type"
+                   type="string"
+                   use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="ParameterEnumerated"
+           type="g:ParameterEnumeratedType"/>
+
+  <complexType name="ParameterStringType">
+    <complexContent>
+      <extension base="g:ParameterBase">
+        <attribute name="Length"
+                   type="unsignedInt"
+                   use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="ParameterString"
+           type="g:ParameterStringType"/>
+
+  <complexType name="ParameterChainType">
+    <complexContent>
+      <extension base="g:ParameterBase">
+
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="ParameterChain"
+           type="g:ParameterChainType"/>
+
+  <complexType name="StructureReferenceType">
+    <complexContent>
+      <extension base="g:ParameterBase">
+        <attribute name="Type"
+                   type="string"
+                   use="required"/>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="StructureReference"
+           type="g:StructureReferenceType"/>
 
   <element name="Structure">
     <complexType>
@@ -233,6 +252,10 @@
       <attribute name="Name"
                  type="string"
                  use="required"/>
+
+      <attribute name="JavaInterface"
+                 type="string"
+                 use="optional"/>
 
       <attribute name="ExpectedSize"
                  type="g:HexInteger"

@@ -17,17 +17,18 @@
 
 package com.io7m.gatwick.codegen.internal;
 
-import com.io7m.gatwick.codegen.jaxb.ParameterChain;
-import com.io7m.gatwick.codegen.jaxb.ParameterEnumerated;
-import com.io7m.gatwick.codegen.jaxb.ParameterFractional;
-import com.io7m.gatwick.codegen.jaxb.ParameterHighCut;
-import com.io7m.gatwick.codegen.jaxb.ParameterIntegerDirect;
-import com.io7m.gatwick.codegen.jaxb.ParameterIntegerMapped;
-import com.io7m.gatwick.codegen.jaxb.ParameterLowCut;
-import com.io7m.gatwick.codegen.jaxb.ParameterRate118;
-import com.io7m.gatwick.codegen.jaxb.ParameterRate118AndOff;
-import com.io7m.gatwick.codegen.jaxb.ParameterRate318;
-import com.io7m.gatwick.codegen.jaxb.ParameterString;
+import com.io7m.gatwick.codegen.jaxb.ParameterBase;
+import com.io7m.gatwick.codegen.jaxb.ParameterChainType;
+import com.io7m.gatwick.codegen.jaxb.ParameterEnumeratedType;
+import com.io7m.gatwick.codegen.jaxb.ParameterFractionalType;
+import com.io7m.gatwick.codegen.jaxb.ParameterHighCutType;
+import com.io7m.gatwick.codegen.jaxb.ParameterIntegerDirectType;
+import com.io7m.gatwick.codegen.jaxb.ParameterIntegerMappedType;
+import com.io7m.gatwick.codegen.jaxb.ParameterLowCutType;
+import com.io7m.gatwick.codegen.jaxb.ParameterRate118AndOffType;
+import com.io7m.gatwick.codegen.jaxb.ParameterRate118Type;
+import com.io7m.gatwick.codegen.jaxb.ParameterRate318Type;
+import com.io7m.gatwick.codegen.jaxb.ParameterStringType;
 
 import java.math.BigInteger;
 
@@ -56,39 +57,39 @@ public final class GWParameterSizes
    */
 
   public static long sizeOf(
-    final Object p)
+    final ParameterBase p)
   {
-    if (p instanceof ParameterEnumerated pp) {
+    if (p instanceof ParameterEnumeratedType pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterHighCut pp) {
+    if (p instanceof ParameterHighCutType pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterLowCut pp) {
+    if (p instanceof ParameterLowCutType pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterRate118 pp) {
+    if (p instanceof ParameterRate118Type pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterRate118AndOff pp) {
+    if (p instanceof ParameterRate118AndOffType pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterRate318 pp) {
+    if (p instanceof ParameterRate318Type pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterString pp) {
+    if (p instanceof ParameterStringType pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterIntegerMapped pp) {
+    if (p instanceof ParameterIntegerMappedType pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterIntegerDirect pp) {
+    if (p instanceof ParameterIntegerDirectType pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterFractional pp) {
+    if (p instanceof ParameterFractionalType pp) {
       return sizeOf(pp);
     }
-    if (p instanceof ParameterChain pp) {
+    if (p instanceof ParameterChainType pp) {
       return sizeOf(pp);
     }
 
@@ -98,55 +99,55 @@ public final class GWParameterSizes
   }
 
   private static long sizeOf(
-    final ParameterChain p)
+    final ParameterChainType p)
   {
     return 49L;
   }
 
   private static long sizeOf(
-    final ParameterEnumerated p)
+    final ParameterEnumeratedType p)
   {
     return 1L;
   }
 
   private static long sizeOf(
-    final ParameterHighCut p)
+    final ParameterHighCutType p)
   {
     return 1L;
   }
 
   private static long sizeOf(
-    final ParameterLowCut p)
+    final ParameterLowCutType p)
   {
     return 1L;
   }
 
   private static long sizeOf(
-    final ParameterRate118 p)
+    final ParameterRate118Type p)
   {
     return 1L;
   }
 
   private static long sizeOf(
-    final ParameterRate118AndOff p)
+    final ParameterRate118AndOffType p)
   {
     return 1L;
   }
 
   private static long sizeOf(
-    final ParameterRate318 p)
+    final ParameterRate318Type p)
   {
     return 2L;
   }
 
   private static long sizeOf(
-    final ParameterString p)
+    final ParameterStringType p)
   {
     return p.getLength();
   }
 
   private static long sizeOf(
-    final ParameterIntegerDirect p)
+    final ParameterIntegerDirectType p)
   {
     if (p.getMaxInclusive().compareTo(BIG_1000) >= 0) {
       return 4L;
@@ -158,7 +159,7 @@ public final class GWParameterSizes
   }
 
   private static long sizeOf(
-    final ParameterIntegerMapped p)
+    final ParameterIntegerMappedType p)
   {
     if (p.getPhysicalMaxInclusive().compareTo(BIG_1000) >= 0) {
       return 4L;
@@ -170,7 +171,7 @@ public final class GWParameterSizes
   }
 
   private static long sizeOf(
-    final ParameterFractional p)
+    final ParameterFractionalType p)
   {
     if (p.getPhysicalMaxInclusive().compareTo(BIG_1000) >= 0) {
       return 4L;

@@ -100,9 +100,9 @@ public final class GWPresetController implements GWScreenControllerType
         case EQUALIZER_3 -> null;
         case EQUALIZER_4 -> null;
         case FOOT_VOLUME -> null;
-        case FX_1 -> null;
-        case FX_2 -> null;
-        case FX_3 -> null;
+        case FX_1 -> new GWEffectBlockPanelFX1(this.services);
+        case FX_2 -> new GWEffectBlockPanelFX2(this.services);
+        case FX_3 -> new GWEffectBlockPanelFX3(this.services);
         case FX_4 -> null;
         case LOOPER -> null;
         case MAIN_OUT_L -> null;

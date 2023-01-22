@@ -35,7 +35,6 @@ public final class GWDefinitionCompilerTest
   public void setup()
     throws IOException
   {
-    // this.directory = Paths.get("/tmp/gatout");
     this.directory =
       GWTestDirectories.createTempDirectory();
     this.module =

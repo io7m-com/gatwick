@@ -44,6 +44,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -90,6 +91,7 @@ public final class GWMainController implements GWScreenControllerType
   @FXML private Rectangle statusConnectionLED;
   @FXML private Label statusConnectionText;
   @FXML private Label statusText;
+  @FXML private ProgressBar statusProgress;
   @FXML private MenuBar menuBar;
   @FXML private MenuItem menuDeviceOpen;
 
@@ -173,6 +175,7 @@ public final class GWMainController implements GWScreenControllerType
       this.statusConnectionText.setText(
         this.strings.format("statusDisconnected")
       );
+      this.statusProgress.setVisible(false);
       this.statusConnectionLED.setFill(Color.DARKGREY);
       this.menuDeviceOpen.setText(this.strings.format("menu.device.open"));
       return;
@@ -182,6 +185,7 @@ public final class GWMainController implements GWScreenControllerType
       this.statusConnectionText.setText(
         this.strings.format("statusFailed")
       );
+      this.statusProgress.setVisible(false);
       this.statusConnectionLED.setFill(Color.RED);
       this.errors.open(failed.task());
       this.menuDeviceOpen.setText(this.strings.format("menu.device.open"));
@@ -192,6 +196,7 @@ public final class GWMainController implements GWScreenControllerType
       this.statusConnectionText.setText(
         this.strings.format("statusConnected")
       );
+      this.statusProgress.setVisible(false);
       this.statusConnectionLED.setFill(LIMEGREEN);
       this.menuDeviceOpen.setText(this.strings.format("menu.device.close"));
       return;
@@ -201,6 +206,7 @@ public final class GWMainController implements GWScreenControllerType
       this.statusConnectionText.setText(
         this.strings.format("statusPerformingIO")
       );
+      this.statusProgress.setVisible(true);
       this.statusConnectionLED.setFill(GOLD);
       this.menuDeviceOpen.setText(this.strings.format("menu.device.close"));
       return;

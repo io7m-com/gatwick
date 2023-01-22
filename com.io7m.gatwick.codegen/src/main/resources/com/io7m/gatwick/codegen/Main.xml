@@ -14,6 +14,7 @@
 <xi:include href="OnOff.xml"/>
 <xi:include href="Patch.xml"/>
 <xi:include href="Patch2.xml"/>
+<xi:include href="Patch3.xml"/>
 <xi:include href="PatchAmpCtlBpm1Function.xml"/>
 <xi:include href="PatchAmpCtlBpm2Function.xml"/>
 <xi:include href="PatchAssign.xml"/>

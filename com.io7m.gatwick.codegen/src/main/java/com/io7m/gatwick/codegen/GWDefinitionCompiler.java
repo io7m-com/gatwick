@@ -20,8 +20,9 @@ package com.io7m.gatwick.codegen;
 import com.io7m.gatwick.codegen.internal.GWEnumerations;
 import com.io7m.gatwick.codegen.internal.GWStructures;
 import com.io7m.gatwick.codegen.jaxb.Enumeration;
+import com.io7m.gatwick.codegen.jaxb.ParameterBase;
 import com.io7m.gatwick.codegen.jaxb.Structure;
-import com.io7m.gatwick.codegen.jaxb.StructureReference;
+import com.io7m.gatwick.codegen.jaxb.StructureReferenceType;
 import com.io7m.jaffirm.core.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -217,9 +218,9 @@ public final class GWDefinitionCompiler
   }
 
   private long sizeOfGet(
-    final Object o)
+    final ParameterBase o)
   {
-    if (o instanceof StructureReference ref) {
+    if (o instanceof StructureReferenceType ref) {
       return this.checkStructureSize(this.structures.get(ref.getType()));
     }
     return sizeOf(o);

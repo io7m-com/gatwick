@@ -29,6 +29,7 @@ import java.util.Objects;
  * @param structurePackage   The package name for structure source files
  * @param enumerations       {@code true} if enumerations should be generated
  * @param enumerationPackage The package name for enumeration source files
+ * @param apiPackage         The package containing API interfaces
  * @param definitions        The definitions
  */
 
@@ -38,6 +39,7 @@ public record GWDefinitionCompilerConfiguration(
   String structurePackage,
   boolean enumerations,
   String enumerationPackage,
+  String apiPackage,
   Definitions definitions)
 {
   /**
@@ -48,6 +50,7 @@ public record GWDefinitionCompilerConfiguration(
    * @param structurePackage   The package name for structure source files
    * @param enumerations       {@code true} if enumerations should be generated
    * @param enumerationPackage The package name for enumeration source files
+   * @param apiPackage         The package containing API interfaces
    * @param definitions        The definitions
    */
 
@@ -57,5 +60,6 @@ public record GWDefinitionCompilerConfiguration(
     Objects.requireNonNull(structurePackage, "structurePackage");
     Objects.requireNonNull(enumerationPackage, "enumerationPackage");
     Objects.requireNonNull(definitions, "definitions");
+    Objects.requireNonNull(apiPackage, "apiPackage");
   }
 }

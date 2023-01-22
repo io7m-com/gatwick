@@ -25,4 +25,13 @@
   <suppress files="GWPresetController\.java"
             checks="CyclomaticComplexity"/>
 
+  <suppress files="GWPatchEffectBlockFXType\.java"
+            checks="MissingJavadocMethod"/>
+
+  <suppress files="GWPatchEffectBlockFX\.java"
+            checks="ParameterNumber"/>
+
+  <suppress files="GWEffectBlockPanelFX\.java"
+            checks="CyclomaticComplexity"/>
+
 </suppressions>

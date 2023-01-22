@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Structure Name="Patch3"
+           xmlns="urn:com.io7m.gatwick:1">
+
+  <StructureReference Name="fx1Dist"
+                      Offset="0x0000_1f00"
+                      Type="PatchFXDist"/>
+
+  <StructureReference Name="fx2Dist"
+                      Offset="0x0000_2000"
+                      Type="PatchFXDist"/>
+
+  <StructureReference Name="fx3Dist"
+                      Offset="0x0000_2100"
+                      Type="PatchFXDist"/>
+
+</Structure>

@@ -55,6 +55,7 @@ public final class MakeEnumerationsMain
         structurePackageName,
         true,
         enumerationPackageName,
+        "com.io7m.gatwick.controller.api",
         definitions
       ));
 

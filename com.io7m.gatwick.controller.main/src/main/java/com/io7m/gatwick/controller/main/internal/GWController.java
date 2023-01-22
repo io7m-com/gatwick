@@ -60,8 +60,15 @@ public final class GWController implements GWControllerType
 
     this.memoryMap =
       new StructGT_1000(this.device, this.attributes, 0);
+
     this.patchCurrent =
-      new GWPatch(this.device, this.attributes, this.memoryMap.f_patch);
+      new GWPatch(
+        this.device,
+        this.attributes,
+        this.memoryMap.f_patch,
+        this.memoryMap.f_patchp2,
+        this.memoryMap.f_patchp3
+      );
   }
 
   /**

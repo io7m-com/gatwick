@@ -18,19 +18,20 @@
 package com.io7m.gatwick.codegen.internal;
 
 import com.io7m.gatwick.codegen.GWDefinitionCompilerConfiguration;
-import com.io7m.gatwick.codegen.jaxb.ParameterChain;
-import com.io7m.gatwick.codegen.jaxb.ParameterEnumerated;
-import com.io7m.gatwick.codegen.jaxb.ParameterFractional;
-import com.io7m.gatwick.codegen.jaxb.ParameterHighCut;
-import com.io7m.gatwick.codegen.jaxb.ParameterIntegerDirect;
-import com.io7m.gatwick.codegen.jaxb.ParameterIntegerMapped;
-import com.io7m.gatwick.codegen.jaxb.ParameterLowCut;
-import com.io7m.gatwick.codegen.jaxb.ParameterRate118;
-import com.io7m.gatwick.codegen.jaxb.ParameterRate118AndOff;
-import com.io7m.gatwick.codegen.jaxb.ParameterRate318;
-import com.io7m.gatwick.codegen.jaxb.ParameterString;
+import com.io7m.gatwick.codegen.jaxb.ParameterBase;
+import com.io7m.gatwick.codegen.jaxb.ParameterChainType;
+import com.io7m.gatwick.codegen.jaxb.ParameterEnumeratedType;
+import com.io7m.gatwick.codegen.jaxb.ParameterFractionalType;
+import com.io7m.gatwick.codegen.jaxb.ParameterHighCutType;
+import com.io7m.gatwick.codegen.jaxb.ParameterIntegerDirectType;
+import com.io7m.gatwick.codegen.jaxb.ParameterIntegerMappedType;
+import com.io7m.gatwick.codegen.jaxb.ParameterLowCutType;
+import com.io7m.gatwick.codegen.jaxb.ParameterRate118AndOffType;
+import com.io7m.gatwick.codegen.jaxb.ParameterRate118Type;
+import com.io7m.gatwick.codegen.jaxb.ParameterRate318Type;
+import com.io7m.gatwick.codegen.jaxb.ParameterStringType;
 import com.io7m.gatwick.codegen.jaxb.Structure;
-import com.io7m.gatwick.codegen.jaxb.StructureReference;
+import com.io7m.gatwick.codegen.jaxb.StructureReferenceType;
 import com.io7m.gatwick.device.api.GWDeviceException;
 import com.io7m.gatwick.device.api.GWDeviceType;
 import com.io7m.gatwick.iovar.GWIOAddressableType;
@@ -46,6 +47,7 @@ import com.io7m.gatwick.iovar.GWIORate318Type;
 import com.io7m.gatwick.iovar.GWIOReadableType;
 import com.io7m.gatwick.iovar.GWIOSerializers;
 import com.io7m.gatwick.iovar.GWIOVariable;
+import com.io7m.gatwick.iovar.GWIOVariableContainerType;
 import com.io7m.gatwick.iovar.GWIOVariableInformation;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 import com.io7m.jattribute.core.Attributes;
@@ -56,6 +58,7 @@ import com.io7m.jodist.JavaFile;
 import com.io7m.jodist.MethodSpec;
 import com.io7m.jodist.ParameterizedTypeName;
 import com.io7m.jodist.TypeSpec;
+import com.io7m.jodist.TypeVariableName;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -65,6 +68,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
@@ -78,6 +83,10 @@ public final class GWStructures
 {
   private static final String HIGH_CUT = "HighCut";
   private static final String LOW_CUT = "LowCut";
+  private static final Pattern UNDERSCORE_LOWERCASE =
+    Pattern.compile("_([a-z])");
+  private static final Pattern UNDERSCORE_NUMBER =
+    Pattern.compile("_([0-9])");
 
   private final HashSet<Path> files;
   private final GWDefinitionCompilerConfiguration configuration;
@@ -127,15 +136,23 @@ public final class GWStructures
     final var className =
       ClassName.get(
         this.configuration.structurePackage(),
-        this.structNameOf(structure));
+        this.structNameOf(structure)
+      );
 
-    final var spec =
-      TypeSpec.classBuilder(className);
-
+    final var spec = TypeSpec.classBuilder(className);
+    spec.addSuperinterface(GWIOVariableContainerType.class);
     spec.addSuperinterface(GWIOReadableType.class);
     spec.addField(int.class, "baseAddress", PRIVATE, FINAL);
     spec.addModifiers(PUBLIC);
     spec.addModifiers(FINAL);
+
+    if (structure.getJavaInterface() != null) {
+      spec.addSuperinterface(
+        ClassName.get(
+          this.configuration.apiPackage(), structure.getJavaInterface()
+        )
+      );
+    }
 
     final var constructor =
       MethodSpec.constructorBuilder()
@@ -152,7 +169,6 @@ public final class GWStructures
       spec.addField(this.createField(p));
       constructor.addCode(this.createFieldInitializer(structure, p));
     }
-
     spec.addMethod(constructor.build());
 
     spec.addSuperinterface(GWIOAddressableType.class);
@@ -165,7 +181,12 @@ public final class GWStructures
         .build()
     );
 
+    for (final var p : parameters) {
+      spec.addMethod(this.createGetter(structure, p));
+    }
+
     spec.addMethod(createReadFromDeviceMethod(parameters));
+    spec.addMethod(createVariablesMethod(parameters));
 
     final var javaFile =
       JavaFile.builder(this.configuration.structurePackage(), spec.build())
@@ -174,8 +195,103 @@ public final class GWStructures
     this.files.add(javaFile.writeToPath(this.configuration.outputDirectory()));
   }
 
+  private MethodSpec createGetter(
+    final Structure structure,
+    final ParameterBase p)
+  {
+    try {
+      final var field =
+        this.createField(p);
+
+      final var method =
+        MethodSpec.methodBuilder(methodNameFor(p))
+          .addModifiers(PUBLIC)
+          .returns(field.type);
+
+      method.addCode("return this.$L;", field.name);
+      return method.build();
+    } catch (final Exception e) {
+      throw new IllegalArgumentException(
+        "Encountered an error processing %s: %s: "
+          .formatted(structure.getName(), p),
+        e
+      );
+    }
+  }
+
+  private static String methodNameFor(
+    final ParameterBase p)
+  {
+    return civilizeName(fieldNameFor(p));
+  }
+
+  private static String civilizeName(
+    final String name)
+  {
+    var current = name;
+    current =
+      current.replace("f_", "");
+
+    {
+      final var matcher =
+        UNDERSCORE_LOWERCASE.matcher(current);
+
+      current = matcher.replaceAll(matchResult -> {
+        return matchResult.group()
+          .replace("_", "")
+          .toUpperCase();
+      });
+    }
+
+    {
+      final var matcher =
+        UNDERSCORE_NUMBER.matcher(current);
+
+      current = matcher.replaceAll(matchResult -> {
+        return matchResult.group()
+          .replace("_", "");
+      });
+    }
+
+    return current;
+  }
+
+  private static MethodSpec createVariablesMethod(
+    final List<ParameterBase> parameters)
+  {
+    final var varType =
+      ParameterizedTypeName.get(
+        ClassName.get(GWIOVariableType.class),
+        TypeVariableName.get("?")
+      );
+
+    final var listType =
+      ParameterizedTypeName.get(
+        ClassName.get(List.class),
+        varType
+      );
+
+    final var method =
+      MethodSpec.methodBuilder("variables")
+        .addModifiers(PUBLIC)
+        .addAnnotation(Override.class)
+        .returns(listType);
+
+    method.addCode(
+      "return $T.of($L);",
+      List.class,
+      parameters.stream()
+        .filter(p -> !(p instanceof StructureReferenceType))
+        .map(GWStructures::fieldNameFor)
+        .map("this.%s"::formatted)
+        .collect(Collectors.joining(","))
+    );
+
+    return method.build();
+  }
+
   private static MethodSpec createReadFromDeviceMethod(
-    final List<Object> parameters)
+    final List<ParameterBase> parameters)
   {
     final var method =
       MethodSpec.methodBuilder("readFromDevice")
@@ -194,138 +310,42 @@ public final class GWStructures
   }
 
   private static String fieldNameFor(
-    final ParameterString parameter)
+    final ParameterBase parameter)
   {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterIntegerDirect parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterIntegerMapped parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterFractional parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final StructureReference parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterRate318 parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterRate118 parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterRate118AndOff parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterLowCut parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterHighCut parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterEnumerated parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final ParameterChain parameter)
-  {
-    return fieldName(parameter.getName());
-  }
-
-  private static String fieldNameFor(
-    final Object parameter)
-  {
-    if (parameter instanceof ParameterString p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterIntegerMapped p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterIntegerDirect p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterFractional p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof StructureReference p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterRate318 p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterRate118 p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterRate118AndOff p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterLowCut p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterHighCut p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterEnumerated p) {
-      return fieldNameFor(p);
-    } else if (parameter instanceof ParameterChain p) {
-      return fieldNameFor(p);
+    final var javaName = parameter.getJavaNameOverride();
+    if (javaName != null) {
+      return javaName;
     }
-
-    throw new IllegalStateException(
-      "Unrecognized parameter type: %s".formatted(parameter)
-    );
+    return transformFieldNameFromBasicName(parameter.getName());
   }
 
   private CodeBlock createFieldInitializer(
     final Structure structure,
-    final Object parameter)
+    final ParameterBase parameter)
   {
-    if (parameter instanceof ParameterString p) {
+    if (parameter instanceof ParameterStringType p) {
       return createFieldStringInitializer(structure, p);
-    } else if (parameter instanceof ParameterIntegerMapped p) {
+    } else if (parameter instanceof ParameterIntegerMappedType p) {
       return createFieldIntegerMappedInitializer(structure, p);
-    } else if (parameter instanceof ParameterIntegerDirect p) {
+    } else if (parameter instanceof ParameterIntegerDirectType p) {
       return createFieldIntegerDirectInitializer(structure, p);
-    } else if (parameter instanceof ParameterFractional p) {
+    } else if (parameter instanceof ParameterFractionalType p) {
       return createFieldFractionalInitializer(structure, p);
-    } else if (parameter instanceof StructureReference p) {
+    } else if (parameter instanceof StructureReferenceType p) {
       return this.createFieldStructureReferenceInitializer(structure, p);
-    } else if (parameter instanceof ParameterRate318 p) {
+    } else if (parameter instanceof ParameterRate318Type p) {
       return createFieldRate318Initializer(structure, p);
-    } else if (parameter instanceof ParameterRate118 p) {
+    } else if (parameter instanceof ParameterRate118Type p) {
       return createFieldRate118Initializer(structure, p);
-    } else if (parameter instanceof ParameterRate118AndOff p) {
+    } else if (parameter instanceof ParameterRate118AndOffType p) {
       return createFieldRate118AndOffInitializer(structure, p);
-    } else if (parameter instanceof ParameterLowCut p) {
+    } else if (parameter instanceof ParameterLowCutType p) {
       return this.createFieldLowCutInitializer(structure, p);
-    } else if (parameter instanceof ParameterHighCut p) {
+    } else if (parameter instanceof ParameterHighCutType p) {
       return this.createFieldHighCutInitializer(structure, p);
-    } else if (parameter instanceof ParameterEnumerated p) {
+    } else if (parameter instanceof ParameterEnumeratedType p) {
       return this.createFieldEnumeratedInitializer(structure, p);
-    } else if (parameter instanceof ParameterChain p) {
+    } else if (parameter instanceof ParameterChainType p) {
       return createFieldChainInitializer(structure, p);
     }
 
@@ -335,31 +355,31 @@ public final class GWStructures
   }
 
   private FieldSpec createField(
-    final Object parameter)
+    final ParameterBase parameter)
   {
-    if (parameter instanceof ParameterString p) {
+    if (parameter instanceof ParameterStringType p) {
       return createFieldString(p);
-    } else if (parameter instanceof ParameterIntegerMapped p) {
+    } else if (parameter instanceof ParameterIntegerMappedType p) {
       return createFieldIntegerMapped(p);
-    } else if (parameter instanceof ParameterIntegerDirect p) {
+    } else if (parameter instanceof ParameterIntegerDirectType p) {
       return createFieldIntegerDirect(p);
-    } else if (parameter instanceof ParameterFractional p) {
+    } else if (parameter instanceof ParameterFractionalType p) {
       return createFieldFractional(p);
-    } else if (parameter instanceof StructureReference p) {
+    } else if (parameter instanceof StructureReferenceType p) {
       return this.createFieldStructureReference(p);
-    } else if (parameter instanceof ParameterRate318 p) {
+    } else if (parameter instanceof ParameterRate318Type p) {
       return createFieldRate318(p);
-    } else if (parameter instanceof ParameterRate118 p) {
+    } else if (parameter instanceof ParameterRate118Type p) {
       return createFieldRate118(p);
-    } else if (parameter instanceof ParameterRate118AndOff p) {
+    } else if (parameter instanceof ParameterRate118AndOffType p) {
       return createFieldRate118AndOff(p);
-    } else if (parameter instanceof ParameterLowCut p) {
+    } else if (parameter instanceof ParameterLowCutType p) {
       return this.createFieldLowCut(p);
-    } else if (parameter instanceof ParameterHighCut p) {
+    } else if (parameter instanceof ParameterHighCutType p) {
       return this.createFieldHighCut(p);
-    } else if (parameter instanceof ParameterEnumerated p) {
+    } else if (parameter instanceof ParameterEnumeratedType p) {
       return this.createFieldEnumerated(p);
-    } else if (parameter instanceof ParameterChain p) {
+    } else if (parameter instanceof ParameterChainType p) {
       return createFieldChain(p);
     }
 
@@ -369,7 +389,7 @@ public final class GWStructures
   }
 
   private static FieldSpec createFieldChain(
-    final ParameterChain p)
+    final ParameterChainType p)
   {
     final var varType =
       ParameterizedTypeName.get(
@@ -377,14 +397,14 @@ public final class GWStructures
         ClassName.get(ByteBuffer.class)
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private FieldSpec createFieldEnumerated(
-    final ParameterEnumerated p)
+    final ParameterEnumeratedType p)
   {
     final var enumType =
       GWEnumerations.makeEnumerationClassName(this.configuration, p.getType());
@@ -395,14 +415,14 @@ public final class GWStructures
         enumType
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private FieldSpec createFieldHighCut(
-    final ParameterHighCut p)
+    final ParameterHighCutType p)
   {
     final var enumType =
       GWEnumerations.makeEnumerationClassName(
@@ -414,14 +434,14 @@ public final class GWStructures
         enumType
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private FieldSpec createFieldLowCut(
-    final ParameterLowCut p)
+    final ParameterLowCutType p)
   {
     final var enumType =
       GWEnumerations.makeEnumerationClassName(
@@ -433,14 +453,14 @@ public final class GWStructures
         enumType
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private static FieldSpec createFieldRate118AndOff(
-    final ParameterRate118AndOff p)
+    final ParameterRate118AndOffType p)
   {
     final var varType =
       ParameterizedTypeName.get(
@@ -448,14 +468,14 @@ public final class GWStructures
         ClassName.get(GWIORate119Type.class)
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private static FieldSpec createFieldRate118(
-    final ParameterRate118 p)
+    final ParameterRate118Type p)
   {
     final var varType =
       ParameterizedTypeName.get(
@@ -463,14 +483,14 @@ public final class GWStructures
         ClassName.get(GWIORate118Type.class)
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private static FieldSpec createFieldRate318(
-    final ParameterRate318 p)
+    final ParameterRate318Type p)
   {
     final var varType =
       ParameterizedTypeName.get(
@@ -478,14 +498,14 @@ public final class GWStructures
         ClassName.get(GWIORate318Type.class)
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private FieldSpec createFieldStructureReference(
-    final StructureReference p)
+    final StructureReferenceType p)
   {
     final var targetStruct =
       this.structures.get(p.getType());
@@ -496,14 +516,14 @@ public final class GWStructures
         this.structNameOf(targetStruct)
       );
 
-    return FieldSpec.builder(typeName, fieldName(p.getName()))
+    return FieldSpec.builder(typeName, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private static FieldSpec createFieldIntegerDirect(
-    final ParameterIntegerDirect p)
+    final ParameterIntegerDirectType p)
   {
     final var varType =
       ParameterizedTypeName.get(
@@ -511,14 +531,14 @@ public final class GWStructures
         ClassName.get(Integer.class)
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private static FieldSpec createFieldIntegerMapped(
-    final ParameterIntegerMapped p)
+    final ParameterIntegerMappedType p)
   {
     final var varType =
       ParameterizedTypeName.get(
@@ -526,14 +546,14 @@ public final class GWStructures
         ClassName.get(Integer.class)
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private static FieldSpec createFieldFractional(
-    final ParameterFractional p)
+    final ParameterFractionalType p)
   {
     final var varType =
       ParameterizedTypeName.get(
@@ -541,14 +561,14 @@ public final class GWStructures
         ClassName.get(Double.class)
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
   }
 
   private static FieldSpec createFieldString(
-    final ParameterString p)
+    final ParameterStringType p)
   {
     final var varType =
       ParameterizedTypeName.get(
@@ -556,7 +576,7 @@ public final class GWStructures
         ClassName.get(String.class)
       );
 
-    return FieldSpec.builder(varType, fieldName(p.getName()))
+    return FieldSpec.builder(varType, fieldNameFor(p))
       .addModifiers(PUBLIC)
       .addModifiers(FINAL)
       .build();
@@ -564,7 +584,7 @@ public final class GWStructures
 
   private CodeBlock createFieldEnumeratedInitializer(
     final Structure structure,
-    final ParameterEnumerated p)
+    final ParameterEnumeratedType p)
   {
     final var enumType =
       GWEnumerations.makeEnumerationClassName(this.configuration, p.getType());
@@ -575,7 +595,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
     code.add("  $T.info().serializer(),\n", enumType);
@@ -599,7 +619,7 @@ public final class GWStructures
 
   private CodeBlock createFieldHighCutInitializer(
     final Structure structure,
-    final ParameterHighCut p)
+    final ParameterHighCutType p)
   {
     final var enumType =
       GWEnumerations.makeEnumerationClassName(this.configuration, HIGH_CUT);
@@ -610,7 +630,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
     code.add("  $T.info().serializer(),\n", enumType);
@@ -634,7 +654,7 @@ public final class GWStructures
 
   private CodeBlock createFieldLowCutInitializer(
     final Structure structure,
-    final ParameterLowCut p)
+    final ParameterLowCutType p)
   {
     final var enumType =
       GWEnumerations.makeEnumerationClassName(this.configuration, LOW_CUT);
@@ -645,7 +665,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
     code.add("  $T.info().serializer(),\n", enumType);
@@ -669,7 +689,7 @@ public final class GWStructures
 
   private static CodeBlock createFieldRate118AndOffInitializer(
     final Structure structure,
-    final ParameterRate118AndOff p)
+    final ParameterRate118AndOffType p)
   {
     final var serializers =
       ClassName.get(GWIOSerializers.class);
@@ -679,7 +699,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
     code.add("  $T.rate119Serializer(),\n", serializers);
@@ -705,7 +725,7 @@ public final class GWStructures
 
   private static CodeBlock createFieldRate118Initializer(
     final Structure structure,
-    final ParameterRate118 p)
+    final ParameterRate118Type p)
   {
     final var serializers =
       ClassName.get(GWIOSerializers.class);
@@ -715,7 +735,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
     code.add("  $T.rate118Serializer(),\n", serializers);
@@ -740,7 +760,7 @@ public final class GWStructures
 
   private static CodeBlock createFieldRate318Initializer(
     final Structure structure,
-    final ParameterRate318 p)
+    final ParameterRate318Type p)
   {
     final var serializers =
       ClassName.get(GWIOSerializers.class);
@@ -750,7 +770,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
     code.add("  $T.rate318Serializer(),\n", serializers);
@@ -775,7 +795,7 @@ public final class GWStructures
 
   private static CodeBlock createFieldChainInitializer(
     final Structure structure,
-    final ParameterChain p)
+    final ParameterChainType p)
   {
     final var serializers =
       ClassName.get(GWIOSerializers.class);
@@ -785,7 +805,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
     code.add("  $T.rawSerializer(),\n", serializers);
@@ -814,7 +834,7 @@ public final class GWStructures
 
   private CodeBlock createFieldStructureReferenceInitializer(
     final Structure structure,
-    final StructureReference p)
+    final StructureReferenceType p)
   {
     final var targetStruct =
       this.structures.get(p.getType());
@@ -834,7 +854,7 @@ public final class GWStructures
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
       "this.$L = new $T(inDevice, inAttributes, inBaseAddress + 0x$L);\n",
-      fieldName(p.getName()),
+      fieldNameFor(p),
       typeName,
       offset
     );
@@ -844,7 +864,8 @@ public final class GWStructures
   private record GWSerializers(
     String serializeMethod,
     String deserializeMethod,
-    int size) {
+    int size)
+  {
 
   }
 
@@ -875,7 +896,7 @@ public final class GWStructures
 
   private static CodeBlock createFieldIntegerDirectInitializer(
     final Structure structure,
-    final ParameterIntegerDirect p)
+    final ParameterIntegerDirectType p)
   {
     final var offset =
       Long.toUnsignedString(GWHexIntegers.parseHex(p.getOffset()), 16);
@@ -889,7 +910,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
 
@@ -924,7 +945,7 @@ public final class GWStructures
 
   private static CodeBlock createFieldFractionalInitializer(
     final Structure structure,
-    final ParameterFractional p)
+    final ParameterFractionalType p)
   {
     final var offset =
       Long.toUnsignedString(GWHexIntegers.parseHex(p.getOffset()), 16);
@@ -942,7 +963,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
 
@@ -990,7 +1011,7 @@ public final class GWStructures
 
   private static CodeBlock createFieldIntegerMappedInitializer(
     final Structure structure,
-    final ParameterIntegerMapped p)
+    final ParameterIntegerMappedType p)
   {
     final var offset =
       Long.toUnsignedString(GWHexIntegers.parseHex(p.getOffset()), 16);
@@ -1008,7 +1029,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
 
@@ -1056,7 +1077,7 @@ public final class GWStructures
 
   private static CodeBlock createFieldStringInitializer(
     final Structure structure,
-    final ParameterString p)
+    final ParameterStringType p)
   {
     final var offset =
       Long.toUnsignedString(GWHexIntegers.parseHex(p.getOffset()), 16);
@@ -1064,7 +1085,7 @@ public final class GWStructures
     final var code = CodeBlock.builder();
     code.add("// $L.$L\n", structure.getName(), p.getName());
     code.add(
-      "this.$L = $T.create(\n", fieldName(p.getName()), GWIOVariable.class);
+      "this.$L = $T.create(\n", fieldNameFor(p), GWIOVariable.class);
     code.add("  inDevice,\n");
     code.add("  inAttributes,\n");
     code.add("  $T.stringSerializer(),\n", GWIOSerializers.class);
@@ -1093,7 +1114,7 @@ public final class GWStructures
       .replace("-", "_");
   }
 
-  private static String fieldName(
+  private static String transformFieldNameFromBasicName(
     final String name)
   {
     return "f_" + name.replace(" ", "_")

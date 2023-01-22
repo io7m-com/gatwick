@@ -77,6 +77,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="31.5hz"
+                          JavaNameOverride="band31p5hz"
                           Offset="0x000e"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -85,6 +86,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="63hz"
+                          JavaNameOverride="band63hz"
                           Offset="0x000f"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -93,6 +95,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="125hz"
+                          JavaNameOverride="band125hz"
                           Offset="0x0010"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -101,6 +104,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="250hz"
+                          JavaNameOverride="band250hz"
                           Offset="0x0011"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -109,6 +113,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="500hz"
+                          JavaNameOverride="band500hz"
                           Offset="0x0012"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -117,6 +122,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="1khz"
+                          JavaNameOverride="band1khz"
                           Offset="0x0013"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -125,6 +131,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="2khz"
+                          JavaNameOverride="band2khz"
                           Offset="0x0014"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -133,6 +140,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="4khz"
+                          JavaNameOverride="band4khz"
                           Offset="0x0015"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -141,6 +149,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="8khz"
+                          JavaNameOverride="band8khz"
                           Offset="0x0016"
                           MinInclusive="-20"
                           MaxInclusive="20"
@@ -149,6 +158,7 @@
                           PhysicalMaxInclusive="52"/>
 
   <ParameterIntegerMapped Name="16khz"
+                          JavaNameOverride="band16khz"
                           Offset="0x0017"
                           MinInclusive="-20"
                           MaxInclusive="20"

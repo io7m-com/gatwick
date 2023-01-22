@@ -73,7 +73,8 @@ public final class Compilation
         true,
         "com.io7m.gatwick.generated.structs",
         true,
-        "com.io7m.gatwick.generated.enums",
+        "com.io7m.gatwick.controller.api",
+        "com.io7m.gatwick.controller.api",
         definitions
       ));
 

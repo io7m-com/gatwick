@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -67,7 +68,12 @@
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </Label>
-                              <Rectangle fx:id="statusConnectionLED" fill="DODGERBLUE" height="16.0" stroke="#ffffff3f" strokeType="INSIDE" width="16.0" />
+                              <StackPane>
+                                 <children>
+                                    <Rectangle fx:id="statusConnectionLED" fill="DODGERBLUE" height="16.0" stroke="#ffffff3f" strokeType="INSIDE" width="16.0" />
+                                    <ProgressBar fx:id="statusProgress" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.49" prefHeight="16.0" prefWidth="16.0" />
+                                 </children>
+                              </StackPane>
                            </children>
                         </HBox>
                      </children>

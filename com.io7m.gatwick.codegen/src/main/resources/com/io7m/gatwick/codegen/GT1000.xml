@@ -37,6 +37,12 @@
   <StructureReference Name="patch"
                       Offset="0x1000_0000"
                       Type="Patch"/>
+  <StructureReference Name="patchP2"
+                      Offset="0x1010_0000"
+                      Type="Patch2"/>
+  <StructureReference Name="patchP3"
+                      Offset="0x1020_0000"
+                      Type="Patch3"/>
 
   <StructureReference Name="patch 1"
                       Offset="0x2000_0000"
