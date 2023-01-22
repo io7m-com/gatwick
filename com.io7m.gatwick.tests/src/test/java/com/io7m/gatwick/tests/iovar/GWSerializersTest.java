@@ -17,9 +17,18 @@
 
 package com.io7m.gatwick.tests.iovar;
 
+import com.io7m.gatwick.iovar.GWIORate118Milliseconds;
+import com.io7m.gatwick.iovar.GWIORate118Note;
+import com.io7m.gatwick.iovar.GWIORate118Type;
+import com.io7m.gatwick.iovar.GWIORate318Milliseconds;
+import com.io7m.gatwick.iovar.GWIORate318Note;
+import com.io7m.gatwick.iovar.GWIORate318Type;
 import com.io7m.gatwick.iovar.GWIOSerializers;
+import net.jqwik.api.Arbitraries;
+import net.jqwik.api.Arbitrary;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
+import net.jqwik.api.Provide;
 import net.jqwik.api.constraints.CharRange;
 import net.jqwik.api.constraints.DoubleRange;
 import net.jqwik.api.constraints.IntRange;
@@ -185,5 +194,65 @@ public final class GWSerializersTest
     final var diff = Math.abs(y - x);
     LOG.debug("{} -> {} ({})", x, y, diff);
     assertTrue(diff <= 1.0);
+  }
+
+  @Provide
+  public Arbitrary<GWIORate118Type> rate118()
+  {
+    return Arbitraries.integers()
+      .between(0, 118)
+      .map(x -> {
+        if (x <= 100) {
+          return new GWIORate118Milliseconds(x);
+        } else {
+          return GWIORate118Note.ofInt(x);
+        }
+      });
+  }
+
+  @Property
+  public void testRate118(
+    final @ForAll("rate118") GWIORate118Type x)
+  {
+    final var buffer =
+      ByteBuffer.allocate(1);
+    final var s =
+      GWIOSerializers.rate118Serializer();
+    final var d =
+      GWIOSerializers.rate118Deserializer();
+
+    s.serializeTo(buffer, x);
+    final var y = d.deserializeFrom(buffer);
+    assertEquals(x, y);
+  }
+
+  @Provide
+  public Arbitrary<GWIORate318Type> rate318()
+  {
+    return Arbitraries.integers()
+      .between(0, 318)
+      .map(x -> {
+        if (x <= 300) {
+          return new GWIORate318Milliseconds(x);
+        } else {
+          return GWIORate318Note.ofInt(x);
+        }
+      });
+  }
+
+  @Property
+  public void testRate318(
+    final @ForAll("rate318") GWIORate318Type x)
+  {
+    final var buffer =
+      ByteBuffer.allocate(4);
+    final var s =
+      GWIOSerializers.rate318Serializer();
+    final var d =
+      GWIOSerializers.rate318Deserializer();
+
+    s.serializeTo(buffer, x);
+    final var y = d.deserializeFrom(buffer);
+    assertEquals(x, y);
   }
 }

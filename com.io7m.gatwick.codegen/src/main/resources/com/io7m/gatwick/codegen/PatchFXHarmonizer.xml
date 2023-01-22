@@ -24,7 +24,7 @@
                           MaxInclusive="100"/>
 
   <ParameterRate318 Name="HR1:PRE-DELAY"
-                    Offset="0x0007"/>
+                    Offset="0x0004"/>
 
   <ParameterIntegerDirect Name="HR1:FEEDBACK"
                           Offset="0x0008"
@@ -45,7 +45,7 @@
                           MaxInclusive="100"/>
 
   <ParameterRate318 Name="HR2:PRE-DELAY"
-                    Offset="0x000e"/>
+                    Offset="0x000b"/>
 
   <ParameterIntegerDirect Name="HR1:C"
                           Offset="0x000f"

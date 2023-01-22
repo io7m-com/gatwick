@@ -137,7 +137,7 @@ public final class GWParameterSizes
   private static long sizeOf(
     final ParameterRate318Type p)
   {
-    return 2L;
+    return 4L;
   }
 
   private static long sizeOf(

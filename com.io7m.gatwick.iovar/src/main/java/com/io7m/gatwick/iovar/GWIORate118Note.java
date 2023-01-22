@@ -151,8 +151,10 @@ public enum GWIORate118Note implements GWIORate118Type
   public static GWIORate118Note ofInt(
     final int index)
   {
+    final var trans = index - 101;
     for (final var v : VALUES) {
-      if (v.ordinal() == index) {
+      final var ord = v.ordinal();
+      if (ord == trans) {
         return v;
       }
     }
@@ -216,7 +218,7 @@ public enum GWIORate118Note implements GWIORate118Type
     public int toInt(
       final GWIORate118Note x)
     {
-      return x.ordinal() + 100;
+      return x.ordinal() + 101;
     }
 
     @Override

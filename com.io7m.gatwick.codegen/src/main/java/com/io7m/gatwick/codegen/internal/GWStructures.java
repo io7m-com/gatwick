@@ -704,7 +704,7 @@ public final class GWStructures
     code.add("  inAttributes,\n");
     code.add("  $T.rate119Serializer(),\n", serializers);
     code.add("  $T.rate119Deserializer(),\n", serializers);
-    code.add("  1,\n", serializers);
+    code.add("  $L,\n", GWParameterSizes.sizeOf(p));
 
     code.add(
       "  new $T<>($S, $T.class, $T.$L, $T.$L, $T.last()),\n",
@@ -740,7 +740,7 @@ public final class GWStructures
     code.add("  inAttributes,\n");
     code.add("  $T.rate118Serializer(),\n", serializers);
     code.add("  $T.rate118Deserializer(),\n", serializers);
-    code.add("  1,\n", serializers);
+    code.add("  $L,\n", GWParameterSizes.sizeOf(p));
 
     code.add(
       "  new $T<>($S, $T.class, $T.$L, new $T(0), $T.last()),\n",
@@ -775,7 +775,7 @@ public final class GWStructures
     code.add("  inAttributes,\n");
     code.add("  $T.rate318Serializer(),\n", serializers);
     code.add("  $T.rate318Deserializer(),\n", serializers);
-    code.add("  2,\n", serializers);
+    code.add("  $L,\n", GWParameterSizes.sizeOf(p));
 
     code.add(
       "  new $T<>($S, $T.class, $T.$L, new $T(0), $T.last()),\n",

@@ -64,12 +64,11 @@ public final class GWControllerDemo
 
     try (var controller = controllers.openController(devices, deviceConfiguration)) {
       final var patch = controller.patchCurrent();
-      patch.chain().readFromDevice();
-      final var chainNow = patch.chain().get();
-
-      for (final var e : chainNow.elements()) {
-        LOG.debug("{}", e);
-      }
+      patch.fx1()
+        .harmonizer()
+        .variables()
+        .get(4)
+        .readFromDevice();
     }
   }
 }

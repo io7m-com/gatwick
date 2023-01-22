@@ -197,11 +197,11 @@ public final class GWIOSerializers
   {
     return (buffer, value) -> {
       if (value instanceof GWIORate318Milliseconds milliseconds) {
-        uint8As16Serializer().serializeTo(
+        uint16As32Serializer().serializeTo(
           buffer,
           Integer.valueOf(milliseconds.value()));
       } else if (value instanceof GWIORate318Note note) {
-        uint8As16Serializer().serializeTo(
+        uint16As32Serializer().serializeTo(
           buffer,
           Integer.valueOf(GWIORate318Note.info().toInt(note))
         );
@@ -218,7 +218,11 @@ public final class GWIOSerializers
   public static GWIOVariableDeserializeType<GWIORate318Type> rate318Deserializer()
   {
     return buffer -> {
-      final var i = uint8As16Deserializer().deserializeFrom(buffer).intValue();
+      final var i =
+        uint16As32Deserializer()
+          .deserializeFrom(buffer)
+          .intValue();
+
       if (i <= 300) {
         return new GWIORate318Milliseconds(i);
       }
@@ -234,13 +238,13 @@ public final class GWIOSerializers
   {
     return (buffer, value) -> {
       if (value instanceof GWIORate119Off off) {
-        uint8As16Serializer().serializeTo(buffer, Integer.valueOf(0));
+        uint8Serializer().serializeTo(buffer, Integer.valueOf(0));
       } else if (value instanceof GWIORate119Milliseconds milliseconds) {
-        uint8As16Serializer().serializeTo(
+        uint8Serializer().serializeTo(
           buffer,
           Integer.valueOf(milliseconds.value() + 1));
       } else if (value instanceof GWIORate119Note note) {
-        uint8As16Serializer().serializeTo(
+        uint8Serializer().serializeTo(
           buffer,
           Integer.valueOf(GWIORate119Note.info().toInt(note))
         );
@@ -257,7 +261,7 @@ public final class GWIOSerializers
   public static GWIOVariableDeserializeType<GWIORate119Type> rate119Deserializer()
   {
     return buffer -> {
-      final var i = uint8As16Deserializer().deserializeFrom(buffer).intValue();
+      final var i = uint8Deserializer().deserializeFrom(buffer).intValue();
       if (i == 0) {
         return GWIORate119Off.OFF;
       }

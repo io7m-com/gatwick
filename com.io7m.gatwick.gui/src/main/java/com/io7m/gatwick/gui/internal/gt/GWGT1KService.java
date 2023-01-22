@@ -185,6 +185,7 @@ public final class GWGT1KService implements GWGT1KServiceType
 
         future.complete(task.toTask());
       } catch (final Throwable e) {
+        LOG.debug("open: ", e);
         task.setTaskFailed(e.getMessage(), Optional.of(e));
         Platform.runLater(() -> this.status.set(new OpenFailed(task.toTask())));
         future.completeExceptionally(e);
@@ -211,6 +212,7 @@ public final class GWGT1KService implements GWGT1KServiceType
         final var controllers = findControllers();
         future.complete(controllers.detectDevices(task, deviceFactoryFilter));
       } catch (final Throwable e) {
+        LOG.debug("detectDevices: ", e);
         task.setTaskFailed(e.getMessage(), Optional.of(e));
         future.completeExceptionally(e);
       }
@@ -239,6 +241,7 @@ public final class GWGT1KService implements GWGT1KServiceType
         future.complete(null);
         Platform.runLater(() -> this.status.set(new Connected(this.controller)));
       } catch (final Throwable e) {
+        LOG.debug("executeOnDevice: ", e);
         Platform.runLater(() -> this.status.set(new DeviceError(this.controller, e)));
         future.completeExceptionally(e);
       }
@@ -268,6 +271,7 @@ public final class GWGT1KService implements GWGT1KServiceType
         future.complete(null);
         Platform.runLater(() -> this.status.set(DISCONNECTED));
       } catch (final Throwable e) {
+        LOG.debug("closeDevice: ", e);
         future.completeExceptionally(e);
       }
     });
