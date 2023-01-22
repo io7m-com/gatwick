@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static com.io7m.gatwick.gui.internal.gt.GWGTK1LongRunning.TASK_LONG;
+
 /**
  * A panel for the PFX block.
  */
@@ -96,7 +98,7 @@ public final class GWEffectBlockPanelPFX
   protected void readFromDevice()
   {
     final var service = this.gtService();
-    service.executeOnDevice(ctrl -> {
+    service.executeOnDevice(TASK_LONG, ctrl -> {
       ctrl.patchCurrent()
         .pfx()
         .readFromDevice();

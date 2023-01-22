@@ -25,9 +25,13 @@ import com.io7m.gatwick.device.api.GWDeviceResponseOK;
 import com.io7m.gatwick.device.api.GWDeviceResponseRequestData;
 import com.io7m.gatwick.device.api.GWDeviceResponseType;
 import com.io7m.gatwick.device.api.GWDeviceType;
+import com.io7m.jattribute.core.AttributeReadableType;
+import com.io7m.jattribute.core.AttributeType;
+import com.io7m.jattribute.core.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import static com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes.DEVICE_MIDI_SYSTEM_ERROR;
@@ -43,6 +47,7 @@ public final class GWDeviceFake implements GWDeviceType
 
   private final long id;
   private final GWDeviceDescription description;
+  private final AttributeType<Duration> commandRTT;
 
   /**
    * A fake device.
@@ -58,6 +63,10 @@ public final class GWDeviceFake implements GWDeviceType
     this.id = inId;
     this.description =
       Objects.requireNonNull(inDescription, "newDescription");
+    this.commandRTT =
+      Attributes.create(throwable -> {
+        LOG.error("exception captured: ", throwable);
+      }).create(Duration.ZERO);
   }
 
   @Override
@@ -67,11 +76,19 @@ public final class GWDeviceFake implements GWDeviceType
   }
 
   @Override
+  public AttributeReadableType<Duration> commandRoundTripTime()
+  {
+    return this.commandRTT;
+  }
+
+  @Override
   public <R extends GWDeviceResponseType> R sendCommand(
     final GWDeviceCommandType<R> command)
     throws GWDeviceException
   {
     LOG.trace("sendCommand: {}", command);
+
+    this.commandRTT.set(Duration.ZERO);
 
     if (command instanceof GWDeviceCommandSetData setData) {
       return (R) this.sendCommandSetData(setData);

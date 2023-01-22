@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static com.io7m.gatwick.gui.internal.gt.GWGTK1LongRunning.TASK_LONG;
+
 /**
  * A panel for the preamp block.
  */
@@ -144,8 +146,9 @@ public abstract class GWEffectBlockPanelPreamp
   protected final void readFromDevice()
   {
     final var service = this.gtService();
-    service.executeOnDevice(ctrl -> {
-      this.preamp(ctrl).readFromDevice();
+    service.executeOnDevice(TASK_LONG, ctrl -> {
+      this.preamp(ctrl)
+        .readFromDevice();
     });
   }
 

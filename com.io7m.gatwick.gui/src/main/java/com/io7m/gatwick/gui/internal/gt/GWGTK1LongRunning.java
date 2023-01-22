@@ -14,17 +14,24 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+
+package com.io7m.gatwick.gui.internal.gt;
+
 /**
- * GT-1000 controller (Device API)
+ * Long/short running task.
  */
 
-module com.io7m.gatwick.device.api
+public enum GWGTK1LongRunning
 {
-  requires static org.osgi.annotation.bundle;
-  requires static org.osgi.annotation.versioning;
+  /**
+   * A long-running task.
+   */
 
-  requires transitive com.io7m.taskrecorder.core;
-  requires transitive com.io7m.jattribute.core;
+  TASK_LONG,
 
-  exports com.io7m.gatwick.device.api;
+  /**
+   * A short-running task.
+   */
+
+  TASK_SHORT
 }

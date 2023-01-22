@@ -67,12 +67,14 @@ public interface GWGT1KServiceType extends RPServiceType, AutoCloseable
   /**
    * Execute a function on the device thread.
    *
+   * @param longRunning The long running spec
    * @param runnable The function
    *
    * @return The operation in progress
    */
 
   CompletableFuture<?> executeOnDevice(
+    GWGTK1LongRunning longRunning,
     GWGT1KRunnableType runnable);
 
   /**

@@ -123,10 +123,13 @@ public sealed interface GWGT1KServiceStatusType
   /**
    * The GT-1000 is currently performing I/O.
    *
-   * @param device The device
+   * @param device      The device
+   * @param longRunning Whether the task is long running
    */
 
-  record PerformingIO(GWControllerType device)
+  record PerformingIO(
+    GWControllerType device,
+    GWGTK1LongRunning longRunning)
     implements GWGT1KServiceStatusOpenType
   {
     /**
@@ -136,6 +139,7 @@ public sealed interface GWGT1KServiceStatusType
     public PerformingIO
     {
       Objects.requireNonNull(device, "device");
+      Objects.requireNonNull(longRunning, "longRunning");
     }
   }
 

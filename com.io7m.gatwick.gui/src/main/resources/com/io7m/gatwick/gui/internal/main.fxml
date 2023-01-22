@@ -6,6 +6,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -61,7 +62,17 @@
                         </ImageView>
                         <Label fx:id="statusText" text="Label" HBox.hgrow="ALWAYS" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <HBox alignment="CENTER_RIGHT">
+                        <Label fx:id="statusLatency">
+                           <HBox.margin>
+                              <Insets left="8.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets left="8.0" right="8.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <HBox alignment="CENTER_RIGHT" prefWidth="128.0">
                            <children>
                               <Label fx:id="statusConnectionText" styleClass="statusConnectionText" text="Label">
                                  <HBox.margin>
@@ -75,6 +86,9 @@
                                  </children>
                               </StackPane>
                            </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
                         </HBox>
                      </children>
                      <HBox.margin>

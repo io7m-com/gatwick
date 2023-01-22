@@ -33,6 +33,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import static com.io7m.gatwick.gui.internal.gt.GWGTK1LongRunning.TASK_LONG;
+
 /**
  * A panel for the FX block.
  */
@@ -129,8 +131,45 @@ public abstract class GWEffectBlockPanelFX
   protected final void readFromDevice()
   {
     final var service = this.gtService();
-    service.executeOnDevice(ctrl -> {
-      this.fx(ctrl).readFromDevice();
+    service.executeOnDevice(TASK_LONG, ctrl -> {
+      final var p = this.fx(ctrl);
+      final var type = p.type();
+      type.readFromDevice();
+      switch (type.get()) {
+        case AC_GUITAR_SIM -> p.agSim().readFromDevice();
+        case AC_RESONANCE -> p.acReso().readFromDevice();
+        case AUTO_WAH -> p.autoWah().readFromDevice();
+        case CHORUS -> p.chorus().readFromDevice();
+        case CLASSIC_NEGATIVE_VIBE -> p.classicVibe().readFromDevice();
+        case COMPRESSOR -> p.compressor().readFromDevice();
+        case DEFRETTER -> p.defretter().readFromDevice();
+        case FEEDBACKER -> p.feedbacker().readFromDevice();
+        case FLANGER -> p.flanger().readFromDevice();
+        case HARMONIST -> p.harmonizer().readFromDevice();
+        case HUMANIZER -> p.humanizer().readFromDevice();
+        case OCTAVE -> p.octave().readFromDevice();
+        case OVERTONE -> p.overtone().readFromDevice();
+        case PAN -> p.pan().readFromDevice();
+        case PHASER -> p.phaser().readFromDevice();
+        case PITCH_SHIFTER -> p.pitchShifter().readFromDevice();
+        case RING_MOD -> p.ringModulator().readFromDevice();
+        case ROTARY -> p.rotary().readFromDevice();
+        case SITAR_SIM -> p.sitar().readFromDevice();
+        case SLICER -> p.slicer().readFromDevice();
+        case SLOW_GEAR -> p.slowGear().readFromDevice();
+        case SOUND_HOLD -> p.soundHold().readFromDevice();
+        case S_NEGATIVE_BEND -> p.sBend().readFromDevice();
+        case TOUCH_WAH -> p.touchWah().readFromDevice();
+        case TREMOLO -> p.tremolo().readFromDevice();
+        case VIBRATO -> p.vibrato().readFromDevice();
+        case CHORUS_BASS -> p.chorusBass().readFromDevice();
+        case DEFRETTER_BASS -> p.defretter().readFromDevice();
+        case FLANGER_BASS -> p.flangerBass().readFromDevice();
+        case OCTAVE_BASS -> p.octaveBass().readFromDevice();
+        case SLOW_GEAR_BASS -> p.slowGearBass().readFromDevice();
+        case TOUCH_WAH_BASS -> p.touchWahBass().readFromDevice();
+        case DISTORTION -> p.distortion().readFromDevice();
+      }
     });
   }
 

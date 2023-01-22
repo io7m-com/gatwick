@@ -222,8 +222,10 @@ public final class GWGT1KService implements GWGT1KServiceType
 
   @Override
   public CompletableFuture<?> executeOnDevice(
+    final GWGTK1LongRunning longRunning,
     final GWGT1KRunnableType runnable)
   {
+    Objects.requireNonNull(longRunning, "longRunning");
     Objects.requireNonNull(runnable, "runnable");
 
     final var future = new CompletableFuture<>();
@@ -236,13 +238,19 @@ public final class GWGT1KService implements GWGT1KServiceType
           return;
         }
 
-        Platform.runLater(() -> this.status.set(new PerformingIO(this.controller)));
+        Platform.runLater(() -> {
+          this.status.set(new PerformingIO(this.controller, longRunning));
+        });
         runnable.execute(ctrl);
         future.complete(null);
-        Platform.runLater(() -> this.status.set(new Connected(this.controller)));
+        Platform.runLater(() -> {
+          this.status.set(new Connected(this.controller));
+        });
       } catch (final Throwable e) {
         LOG.debug("executeOnDevice: ", e);
-        Platform.runLater(() -> this.status.set(new DeviceError(this.controller, e)));
+        Platform.runLater(() -> {
+          this.status.set(new DeviceError(this.controller, e));
+        });
         future.completeExceptionally(e);
       }
     });

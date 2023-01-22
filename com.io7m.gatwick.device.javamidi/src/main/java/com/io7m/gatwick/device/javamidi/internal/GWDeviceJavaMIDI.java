@@ -27,6 +27,9 @@ import com.io7m.gatwick.device.api.GWDeviceResponseOK;
 import com.io7m.gatwick.device.api.GWDeviceResponseType;
 import com.io7m.gatwick.device.api.GWDeviceStandardErrorCodes;
 import com.io7m.gatwick.device.api.GWDeviceType;
+import com.io7m.jattribute.core.AttributeReadableType;
+import com.io7m.jattribute.core.AttributeType;
+import com.io7m.jattribute.core.Attributes;
 import com.io7m.jmulticlose.core.CloseableCollection;
 import com.io7m.jmulticlose.core.CloseableCollectionType;
 import org.slf4j.Logger;
@@ -40,6 +43,8 @@ import javax.sound.midi.Receiver;
 import javax.sound.midi.SysexMessage;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HexFormat;
 import java.util.Objects;
 import java.util.concurrent.BrokenBarrierException;
@@ -67,6 +72,9 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
   private final CloseableCollectionType<GWDeviceException> resources;
   private final Receiver receiver;
   private final DeviceMessageReceiver messageReceiver;
+  private final AttributeType<Duration> commandRTT;
+  private Instant timeSendStarted;
+  private Instant timeSendReceived;
 
   /**
    * The JavaMIDI device implementation.
@@ -92,6 +100,15 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
       Objects.requireNonNull(inReceiver, "receiver");
     this.messageReceiver =
       Objects.requireNonNull(inMessageReceiver, "messageReceiver");
+    this.timeSendStarted =
+      Instant.now();
+    this.timeSendReceived =
+      Instant.now();
+
+    this.commandRTT =
+      Attributes.create(throwable -> {
+        LOG.error("error captured by attribute: ", throwable);
+      }).create(Duration.between(this.timeSendStarted, this.timeSendReceived));
   }
 
   /**
@@ -415,6 +432,12 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
   }
 
   @Override
+  public AttributeReadableType<Duration> commandRoundTripTime()
+  {
+    return this.commandRTT;
+  }
+
+  @Override
   public <R extends GWDeviceResponseType> R sendCommand(
     final GWDeviceCommandType<R> command)
     throws GWDeviceException, InterruptedException
@@ -449,6 +472,8 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
     final int attemptMax)
     throws GWDeviceException, InterruptedException
   {
+    this.timeSendStarted = Instant.now();
+
     if (LOG.isTraceEnabled()) {
       LOG.trace(
         "sendCommand ({}/{}) {}",
@@ -503,6 +528,9 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
         DEVICE_TIMED_OUT, "Timed out waiting for message response."
       );
     }
+
+    this.timeSendReceived = Instant.now();
+    this.commandRTT.set(Duration.between(this.timeSendStarted, this.timeSendReceived));
 
     final var response = this.messageReceiver.response;
     if (response == null) {

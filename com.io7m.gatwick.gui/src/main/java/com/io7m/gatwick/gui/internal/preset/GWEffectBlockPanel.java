@@ -53,6 +53,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static com.io7m.gatwick.gui.internal.gt.GWGTK1LongRunning.TASK_SHORT;
+
 /**
  * An abstract panel of controls.
  *
@@ -196,7 +198,6 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
      * Create a menu for selecting the effect "type".
      */
 
-
     final List<S> valuesSorted = new ArrayList<>(values);
     valuesSorted.sort(Comparator.comparing(enumInfo::label));
 
@@ -276,7 +277,8 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
 
         if (newValue != null) {
           final var service = this.gtService();
-          service.executeOnDevice(ctrl -> typeVariable.set(newValue));
+          service.executeOnDevice(TASK_SHORT, ctrl -> typeVariable.set(newValue));
+          this.readFromDevice();
         }
       });
 
@@ -460,7 +462,7 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
           convertFromDial.apply(newValue);
         final var service =
           this.gtService();
-        service.executeOnDevice(ctrl -> variable.set(value));
+        service.executeOnDevice(TASK_SHORT, ctrl -> variable.set(value));
       };
 
     dial.convertedValue().addListener(changeListener);

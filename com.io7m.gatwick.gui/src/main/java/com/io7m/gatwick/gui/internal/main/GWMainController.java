@@ -33,6 +33,7 @@ import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.OpenFailed;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.PerformingIO;
 import com.io7m.gatwick.gui.internal.gt.GWGT1KServiceType;
 import com.io7m.gatwick.gui.internal.preferences.GWPreferencesController;
+import com.io7m.jattribute.core.AttributeSubscriptionType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import com.io7m.repetoir.core.RPServiceEventType;
 import com.io7m.repetoir.core.RPServiceEventType.RPServiceRegistered;
@@ -64,6 +65,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static com.io7m.gatwick.gui.internal.gt.GWGT1KServiceStatusType.Disconnected.DISCONNECTED;
+import static com.io7m.gatwick.gui.internal.gt.GWGTK1LongRunning.TASK_LONG;
 import static javafx.animation.Interpolator.EASE_BOTH;
 import static javafx.scene.paint.Color.DARKGREY;
 import static javafx.scene.paint.Color.GOLD;
@@ -96,10 +98,12 @@ public final class GWMainController implements GWScreenControllerType
   @FXML private ProgressBar statusProgress;
   @FXML private MenuBar menuBar;
   @FXML private MenuItem menuDeviceOpen;
+  @FXML private Label statusLatency;
 
   private ObservableList<Node> children;
   private volatile Node latestPane;
   private GWGT1KServiceType gtService;
+  private AttributeSubscriptionType statusLatencySub;
 
   /**
    * The main controller that handles screen transitions and dispatching calls
@@ -174,6 +178,13 @@ public final class GWMainController implements GWScreenControllerType
     final GWGT1KServiceStatusType status)
   {
     if (status instanceof Disconnected) {
+      if (this.statusLatencySub != null) {
+        this.statusLatencySub.close();
+        this.statusLatencySub = null;
+      }
+
+      this.statusLatency.setText("");
+      this.mainContent.setDisable(false);
       this.statusConnectionText.setText(
         this.strings.format("statusDisconnected")
       );
@@ -184,6 +195,7 @@ public final class GWMainController implements GWScreenControllerType
     }
 
     if (status instanceof OpenFailed failed) {
+      this.mainContent.setDisable(false);
       this.statusConnectionText.setText(
         this.strings.format("statusFailed")
       );
@@ -194,7 +206,20 @@ public final class GWMainController implements GWScreenControllerType
       return;
     }
 
-    if (status instanceof Connected) {
+    if (status instanceof Connected connected) {
+      this.statusLatencySub =
+        connected.device()
+          .device()
+          .commandRoundTripTime()
+          .subscribe((oldValue, newValue) -> {
+        Platform.runLater(() -> {
+          this.statusLatency.setText(
+            String.format("%.2fms", (double) newValue.toMillis())
+          );
+        });
+      });
+
+      this.mainContent.setDisable(false);
       this.statusConnectionText.setText(
         this.strings.format("statusConnected")
       );
@@ -204,7 +229,8 @@ public final class GWMainController implements GWScreenControllerType
       return;
     }
 
-    if (status instanceof PerformingIO) {
+    if (status instanceof PerformingIO io) {
+      this.mainContent.setDisable(io.longRunning() == TASK_LONG);
       this.statusConnectionText.setText(
         this.strings.format("statusPerformingIO")
       );
@@ -215,6 +241,7 @@ public final class GWMainController implements GWScreenControllerType
     }
 
     if (status instanceof DeviceError) {
+      this.mainContent.setDisable(false);
       this.statusConnectionText.setText(
         this.strings.format("statusDeviceError")
       );

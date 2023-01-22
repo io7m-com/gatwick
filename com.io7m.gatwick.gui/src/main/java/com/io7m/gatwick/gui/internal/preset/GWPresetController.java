@@ -38,6 +38,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.io7m.gatwick.controller.api.GWChainElementValue.PEDAL_FX;
+import static com.io7m.gatwick.gui.internal.gt.GWGTK1LongRunning.TASK_LONG;
 
 /**
  * A controller for a single preset.
@@ -175,7 +176,7 @@ public final class GWPresetController implements GWScreenControllerType
 
   private void fetchAndUpdateGraph()
   {
-    this.gt.executeOnDevice(controller -> {
+    this.gt.executeOnDevice(TASK_LONG, controller -> {
       final var chainVar =
         controller.patchCurrent().chain();
 

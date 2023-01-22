@@ -17,6 +17,10 @@
 
 package com.io7m.gatwick.device.api;
 
+import com.io7m.jattribute.core.AttributeReadableType;
+
+import java.time.Duration;
+
 /**
  * A device.
  */
@@ -28,6 +32,12 @@ public interface GWDeviceType extends AutoCloseable
    */
 
   GWDeviceDescription description();
+
+  /**
+   * @return The round trip time of the most recent command
+   */
+
+  AttributeReadableType<Duration> commandRoundTripTime();
 
   /**
    * Send a command to the device.
