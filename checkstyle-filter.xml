@@ -34,4 +34,11 @@
   <suppress files="GWEffectBlockPanelFX\.java"
             checks="CyclomaticComplexity"/>
 
+  <suppress files="GWIORate118Note\.java"
+            checks="CyclomaticComplexity"/>
+  <suppress files="GWIORate318Note\.java"
+            checks="CyclomaticComplexity"/>
+  <suppress files="GWIORate119Note\.java"
+            checks="CyclomaticComplexity"/>
+
 </suppressions>

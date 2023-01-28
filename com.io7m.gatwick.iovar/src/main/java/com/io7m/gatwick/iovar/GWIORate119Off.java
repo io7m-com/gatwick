@@ -60,6 +60,30 @@ public enum GWIORate119Off implements GWIORate119Type
     );
   }
 
+  @Override
+  public int toInt()
+  {
+    return INFO.toInt(this);
+  }
+
+  @Override
+  public GWIORate119Type next()
+  {
+    if (this == INFO.last()) {
+      return this;
+    }
+    return INFO.next(this);
+  }
+
+  @Override
+  public GWIORate119Type previous()
+  {
+    if (this == INFO.first()) {
+      return new GWIORate119Milliseconds(100);
+    }
+    return INFO.previous(this);
+  }
+
   private static final GWIOEnumerationInfoType<GWIORate119Off> INFO =
     new Info();
 
@@ -111,14 +135,14 @@ public enum GWIORate119Off implements GWIORate119Type
     public GWIORate119Off next(
       final GWIORate119Off x)
     {
-      return ofInt((this.toInt(x) + 1) % VALUES.length);
+      return VALUES[x.ordinal() + 1];
     }
 
     @Override
     public GWIORate119Off previous(
       final GWIORate119Off x)
     {
-      return ofInt((this.toInt(x) - 1) % VALUES.length);
+      return VALUES[x.ordinal() - 1];
     }
 
     @Override

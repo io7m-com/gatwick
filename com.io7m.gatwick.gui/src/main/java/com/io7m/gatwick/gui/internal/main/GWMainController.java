@@ -160,6 +160,12 @@ public final class GWMainController implements GWScreenControllerType
         this.openPresetScreen();
       });
     }
+
+    Platform.runLater(() -> {
+      this.mainContent.getScene()
+        .getWindow()
+        .setOnCloseRequest(event -> Platform.runLater(this::shutdown));
+    });
   }
 
   private static String version()
@@ -401,6 +407,13 @@ public final class GWMainController implements GWScreenControllerType
   @FXML
   private void onMenuFileQuitSelected()
   {
+    this.shutdown();
+  }
+
+  private void shutdown()
+  {
+    LOG.debug("shutting down");
+
     try {
       this.services.close();
     } catch (final Throwable e) {

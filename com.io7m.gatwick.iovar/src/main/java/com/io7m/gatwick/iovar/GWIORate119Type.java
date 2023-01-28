@@ -24,5 +24,40 @@ package com.io7m.gatwick.iovar;
 public sealed interface GWIORate119Type
   permits GWIORate119Milliseconds, GWIORate119Note, GWIORate119Off
 {
+  /**
+   * Derive a Rate119 value from the given integer.
+   *
+   * @param x The integer
+   *
+   * @return A Rate119 value
+   */
 
+  static GWIORate119Type ofInt(
+    final int x)
+  {
+    if (x >= 0 && x <= 100) {
+      return new GWIORate119Milliseconds(x);
+    }
+    return GWIORate119Note.ofInt(x);
+  }
+
+  /**
+   * @return This value as an integer
+   *
+   * @see #ofInt(int)
+   */
+
+  int toInt();
+
+  /**
+   * @return The next Rate119 value
+   */
+
+  GWIORate119Type next();
+
+  /**
+   * @return The previous Rate119 value
+   */
+
+  GWIORate119Type previous();
 }

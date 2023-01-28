@@ -14,52 +14,48 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+package com.io7m.gatwick.gui.internal.preset;
 
-package com.io7m.gatwick.iovar;
+import com.io7m.digal.core.DialValueConverterDiscreteType;
+import com.io7m.gatwick.iovar.GWIORate118Type;
 
-/**
- * A duration in milliseconds between 0 and 100.
- *
- * @param value The millisecond value
- */
-
-public record GWIORate119Milliseconds(
-  int value)
-  implements GWIORate119Type
+final class GWIORate118ValueConverter
+  implements DialValueConverterDiscreteType
 {
-  /**
-   * A duration in milliseconds between 0 and 100.
-   *
-   * @param value The millisecond value
-   */
-
-  public GWIORate119Milliseconds(
-    final int value)
+  GWIORate118ValueConverter()
   {
-    this.value = Math.max(0, Math.min(value, 100));
+
   }
 
   @Override
-  public int toInt()
+  public double convertToDial(
+    final long x)
   {
-    return this.value;
+    return (double) x / 118.0;
   }
 
   @Override
-  public GWIORate119Type next()
+  public long convertFromDial(
+    final double x)
   {
-    if (this.value == 100) {
-      return GWIORate119Note.info().first();
-    }
-    return new GWIORate119Milliseconds(this.value + 1);
+    return Math.round(x * 118.0);
   }
 
   @Override
-  public GWIORate119Type previous()
+  public long convertedNext(
+    final long x)
   {
-    if (this.value == 0) {
-      return this;
-    }
-    return new GWIORate119Milliseconds(this.value - 1);
+    return (long) GWIORate118Type.ofInt((int) x)
+      .next()
+      .toInt();
+  }
+
+  @Override
+  public long convertedPrevious(
+    final long x)
+  {
+    return (long) GWIORate118Type.ofInt((int) x)
+      .previous()
+      .toInt();
   }
 }

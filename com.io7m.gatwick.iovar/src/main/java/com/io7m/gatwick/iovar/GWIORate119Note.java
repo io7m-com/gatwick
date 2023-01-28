@@ -161,6 +161,30 @@ public enum GWIORate119Note implements GWIORate119Type
     );
   }
 
+  @Override
+  public int toInt()
+  {
+    return INFO.toInt(this);
+  }
+
+  @Override
+  public GWIORate119Type next()
+  {
+    if (this == INFO.last()) {
+      return this;
+    }
+    return INFO.next(this);
+  }
+
+  @Override
+  public GWIORate119Type previous()
+  {
+    if (this == INFO.first()) {
+      return new GWIORate119Milliseconds(100);
+    }
+    return INFO.previous(this);
+  }
+
   /**
    * @return The first enum value
    */
@@ -189,6 +213,34 @@ public enum GWIORate119Note implements GWIORate119Type
   public static GWIOEnumerationInfoType<GWIORate119Note> info()
   {
     return INFO;
+  }
+
+  /**
+   * @return The graphic label for the note
+   */
+
+  public String graphicLabel()
+  {
+    return switch (this) {
+      case RATE_DOUBLE_WHOLENOTE -> "\uE0A0 DOUBLE WHOLE";
+      case RATE_DOTTED_WHOLENOTE -> "∙\uD834\uDD5D DOTTED WHOLE";
+      case RATE_WHOLE_NOTE -> "\uD834\uDD5D WHOLE";
+      case RATE_DOTTED_HALF_NOTE -> "∙\uD834\uDD5E DOTTED HALF";
+      case RATE_TRIPLET_WHOLE_NOTE -> "3\uD834\uDD5D TRIPLET WHOLE";
+      case RATE_HALF_NOTE -> "∙\uD834\uDD5E HALF";
+      case RATE_DOTTED_QUARTER_NOTE -> "∙♩ DOTTED QUARTER";
+      case RATE_TRIPLET_HALF_NOTE -> "3\uD834\uDD5E TRIPLET HALF";
+      case RATE_QUARTER_NOTE -> "♩ QUARTER";
+      case RATE_DOTTED_8TH_NOTE -> "∙♪ DOTTED 8TH";
+      case RATE_TRIPLET_QUARTER_NOTE -> "3♩ TRIPLET QUARTER";
+      case RATE_8TH_NOTE -> "♪ 8TH";
+      case RATE_DOTTED_16TH_NOTE -> "∙♬ DOTTED 16TH";
+      case RATE_TRIPLET_8TH_NOTE -> "3♪ TRIPLET 8TH";
+      case RATE_16TH_NOTE -> "♬ 16TH";
+      case RATE_DOTTED_32ND_NOTE -> "∙\uD834\uDD62 DOTTED 32ND";
+      case RATE_TRIPLET_16TH_NOTE -> "3♬ TRIPLET 16TH";
+      case RATE_32ND_NOTE -> "\uD834\uDD62 32ND";
+    };
   }
 
   private static final class Info
@@ -230,14 +282,14 @@ public enum GWIORate119Note implements GWIORate119Type
     public GWIORate119Note next(
       final GWIORate119Note x)
     {
-      return ofInt((this.toInt(x) + 1) % VALUES.length);
+      return VALUES[x.ordinal() + 1];
     }
 
     @Override
     public GWIORate119Note previous(
       final GWIORate119Note x)
     {
-      return ofInt((this.toInt(x) - 1) % VALUES.length);
+      return VALUES[x.ordinal() - 1];
     }
 
     @Override

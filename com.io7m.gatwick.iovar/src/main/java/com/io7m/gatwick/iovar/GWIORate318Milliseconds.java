@@ -37,4 +37,28 @@ public record GWIORate318Milliseconds(
   {
     this.value = Math.max(0, Math.min(value, 300));
   }
+
+  @Override
+  public int toInt()
+  {
+    return this.value;
+  }
+
+  @Override
+  public GWIORate318Type next()
+  {
+    if (this.value == 300) {
+      return GWIORate318Note.info().first();
+    }
+    return new GWIORate318Milliseconds(this.value + 1);
+  }
+
+  @Override
+  public GWIORate318Type previous()
+  {
+    if (this.value == 0) {
+      return this;
+    }
+    return new GWIORate318Milliseconds(this.value - 1);
+  }
 }

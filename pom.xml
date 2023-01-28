@@ -35,7 +35,7 @@
   </modules>
 
   <properties>
-    <com.io7m.digal.version>0.0.4</com.io7m.digal.version>
+    <com.io7m.digal.version>0.0.5</com.io7m.digal.version>
     <com.io7m.jade.version>1.0.2</com.io7m.jade.version>
     <com.io7m.junreachable.version>4.0.0</com.io7m.junreachable.version>
     <com.io7m.jxtrand.version>1.1.0</com.io7m.jxtrand.version>

@@ -17,12 +17,48 @@
 package com.io7m.gatwick.iovar;
 
 /**
- * The type of rate values that may be either milliseconds or musical durations.
+ * The type of rate values that may be either milliseconds or musical
+ * durations.
  */
 
 public sealed interface GWIORate118Type
   permits GWIORate118Milliseconds,
   GWIORate118Note
 {
+  /**
+   * Derive a Rate118 value from the given integer.
+   *
+   * @param x The integer
+   *
+   * @return A Rate118 value
+   */
 
+  static GWIORate118Type ofInt(
+    final int x)
+  {
+    if (x >= 0 && x <= 100) {
+      return new GWIORate118Milliseconds(x);
+    }
+    return GWIORate118Note.ofInt(x);
+  }
+
+  /**
+   * @return This value as an integer
+   *
+   * @see #ofInt(int)
+   */
+
+  int toInt();
+
+  /**
+   * @return The next Rate118 value
+   */
+
+  GWIORate118Type next();
+
+  /**
+   * @return The previous Rate118 value
+   */
+
+  GWIORate118Type previous();
 }

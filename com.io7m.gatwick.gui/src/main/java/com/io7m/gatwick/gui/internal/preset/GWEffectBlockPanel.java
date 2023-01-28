@@ -17,7 +17,8 @@
 
 package com.io7m.gatwick.gui.internal.preset;
 
-import com.io7m.digal.core.DialBoundedIntegerConverter;
+import com.io7m.digal.core.DialBoundedDoubleSnappingConverter;
+import com.io7m.digal.core.DialBoundedLongConverter;
 import com.io7m.digal.core.DialControl;
 import com.io7m.digal.core.DialControlLabelled;
 import com.io7m.gatwick.controller.api.GWControllerType;
@@ -26,6 +27,13 @@ import com.io7m.gatwick.gui.internal.icons.GWIconEnumerationSetType;
 import com.io7m.gatwick.gui.internal.icons.GWIconSetServiceType;
 import com.io7m.gatwick.iovar.GWIOEnumerationInfo;
 import com.io7m.gatwick.iovar.GWIOEnumerationInfoType;
+import com.io7m.gatwick.iovar.GWIORate118Note;
+import com.io7m.gatwick.iovar.GWIORate118Type;
+import com.io7m.gatwick.iovar.GWIORate119Note;
+import com.io7m.gatwick.iovar.GWIORate119Off;
+import com.io7m.gatwick.iovar.GWIORate119Type;
+import com.io7m.gatwick.iovar.GWIORate318Note;
+import com.io7m.gatwick.iovar.GWIORate318Type;
 import com.io7m.gatwick.iovar.GWIOVariableInformation;
 import com.io7m.gatwick.iovar.GWIOVariableType;
 import com.io7m.jmulticlose.core.CloseableCollection;
@@ -172,7 +180,7 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
 
     final S valueInitial =
       info.valueInitial();
-    
+
     final Class<S> valueClass =
       info.valueClass();
 
@@ -277,7 +285,9 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
 
         if (newValue != null) {
           final var service = this.gtService();
-          service.executeOnDevice(TASK_SHORT, ctrl -> typeVariable.set(newValue));
+          service.executeOnDevice(
+            TASK_SHORT,
+            ctrl -> typeVariable.set(newValue));
           this.readFromDevice();
         }
       });
@@ -292,7 +302,7 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
     final var control =
       new DialControlLabelled(info.label());
 
-    control.setPrefWidth(96.0);
+    control.setPrefWidth(112.0);
 
     final var tooltip = new Tooltip();
     Tooltip.install(control, tooltip);
@@ -305,10 +315,61 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
     dial.dialRadialGaugeSize()
       .setValue(Double.valueOf(6.0));
 
+    control.textField()
+      .getStyleClass()
+      .add("dialTextField");
+
+    control.textField()
+      .setPadding(new Insets(0.0));
+
+    if (Objects.equals(info.valueClass(), GWIORate118Type.class)) {
+      this.createRate118Dial(
+        unsoundCast(variable),
+        unsoundCast(info),
+        control,
+        tooltip,
+        dial
+      );
+      return control;
+    }
+
+    if (Objects.equals(info.valueClass(), GWIORate318Type.class)) {
+      this.createRate318Dial(
+        unsoundCast(variable),
+        unsoundCast(info),
+        control,
+        tooltip,
+        dial
+      );
+      return control;
+    }
+
+    if (Objects.equals(info.valueClass(), GWIORate119Type.class)) {
+      this.createRate119Dial(
+        unsoundCast(variable),
+        unsoundCast(info),
+        control,
+        tooltip,
+        dial
+      );
+      return control;
+    }
+
     if (Objects.equals(info.valueClass(), Integer.class)) {
       this.createIntegerDial(
         unsoundCast(variable),
-        info,
+        unsoundCast(info),
+        control,
+        tooltip,
+        dial
+      );
+      return control;
+    }
+
+    if (Objects.equals(info.valueClass(), Double.class)) {
+      this.createDoubleDial(
+        unsoundCast(variable),
+        unsoundCast(info),
         control,
         tooltip,
         dial
@@ -319,7 +380,7 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
     if (isEnumerated(info.valueClass())) {
       this.createEnumeratedDial(
         unsoundCast(variable),
-        control,
+        unsoundCast(control),
         tooltip,
         dial
       );
@@ -329,24 +390,191 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
     return control;
   }
 
-  private void createIntegerDial(
-    final GWIOVariableType<Integer> variable,
-    final GWIOVariableInformation<?> info,
+  private void createRate318Dial(
+    final GWIOVariableType<GWIORate318Type> variable,
+    final GWIOVariableInformation<GWIORate318Type> info,
     final DialControlLabelled control,
     final Tooltip tooltip,
     final DialControl dial)
   {
-    final var vInt =
-      variable.information();
+    dial.setValueConverter(new GWIORate318ValueConverter());
+
+    control.valueFormatter()
+      .set(number -> {
+        final var typed =
+          GWIORate318Type.ofInt(number.intValue());
+
+        if (typed instanceof GWIORate318Note note) {
+          return note.graphicLabel();
+        }
+        return number.intValue() + "ms";
+      });
+
+    this.subscriptions.add(
+      variable.subscribe((oldValue, newValue) -> {
+        Platform.runLater(() -> {
+          final String label =
+            control.valueFormatter()
+              .get()
+              .apply(Integer.valueOf(newValue.toInt()));
+
+          tooltip.setText(String.format("%s: %s", info.label(), label));
+        });
+      })
+    );
+
+    this.configureDialChangeListener(
+      control,
+      variable,
+      number -> GWIORate318Type.ofInt(number.intValue()),
+      number -> Double.valueOf(number.toInt())
+    );
+  }
+
+  private void createRate119Dial(
+    final GWIOVariableType<GWIORate119Type> variable,
+    final GWIOVariableInformation<GWIORate119Type> info,
+    final DialControlLabelled control,
+    final Tooltip tooltip,
+    final DialControl dial)
+  {
+    dial.setValueConverter(new GWIORate119ValueConverter());
+
+    control.valueFormatter()
+      .set(number -> {
+        final var typed =
+          GWIORate119Type.ofInt(number.intValue());
+
+        if (typed instanceof GWIORate119Note note) {
+          return note.graphicLabel();
+        }
+        if (typed instanceof GWIORate119Off) {
+          return "OFF";
+        }
+        return number.intValue() + "ms";
+      });
+
+    this.subscriptions.add(
+      variable.subscribe((oldValue, newValue) -> {
+        Platform.runLater(() -> {
+          final String label =
+            control.valueFormatter()
+              .get()
+              .apply(Integer.valueOf(newValue.toInt()));
+
+          tooltip.setText(String.format("%s: %s", info.label(), label));
+        });
+      })
+    );
+
+    this.configureDialChangeListener(
+      control,
+      variable,
+      number -> GWIORate119Type.ofInt(number.intValue()),
+      number -> Double.valueOf(number.toInt())
+    );
+  }
+
+  private void createRate118Dial(
+    final GWIOVariableType<GWIORate118Type> variable,
+    final GWIOVariableInformation<GWIORate118Type> info,
+    final DialControlLabelled control,
+    final Tooltip tooltip,
+    final DialControl dial)
+  {
+    dial.setValueConverter(new GWIORate118ValueConverter());
+
+    control.valueFormatter()
+      .set(number -> {
+        final var typed =
+          GWIORate118Type.ofInt(number.intValue());
+
+        if (typed instanceof GWIORate118Note note) {
+          return note.graphicLabel();
+        }
+        return number.intValue() + "ms";
+      });
+
+    this.subscriptions.add(
+      variable.subscribe((oldValue, newValue) -> {
+        Platform.runLater(() -> {
+          final String label =
+            control.valueFormatter()
+              .get()
+              .apply(Integer.valueOf(newValue.toInt()));
+
+          tooltip.setText(String.format("%s: %s", info.label(), label));
+        });
+      })
+    );
+
+    this.configureDialChangeListener(
+      control,
+      variable,
+      number -> GWIORate118Type.ofInt(number.intValue()),
+      number -> Double.valueOf(number.toInt())
+    );
+  }
+
+  private void createDoubleDial(
+    final GWIOVariableType<Double> variable,
+    final GWIOVariableInformation<Double> info,
+    final DialControlLabelled control,
+    final Tooltip tooltip,
+    final DialControl dial)
+  {
     final var min =
-      vInt.valueMinimumInclusive();
+      info.valueMinimumInclusive();
     final var max =
-      vInt.valueMaximumInclusive();
+      info.valueMaximumInclusive();
 
     dial.setValueConverter(
-      new DialBoundedIntegerConverter(min.intValue(), max.intValue()));
+      new DialBoundedDoubleSnappingConverter(
+        min.doubleValue(),
+        max.doubleValue(),
+        0.5)
+    );
+
+    control.valueFormatter()
+      .set(number -> {
+        return String.format("%.1f", Double.valueOf(number.doubleValue()));
+      });
+
     dial.setConvertedValue(
-      vInt.valueInitial().doubleValue());
+      info.valueInitial().doubleValue());
+
+    this.subscriptions.add(
+      variable.subscribe((oldValue, newValue) -> {
+        Platform.runLater(() -> {
+          tooltip.setText(String.format("%s: %s", info.label(), newValue));
+        });
+      })
+    );
+
+    this.configureDialChangeListener(
+      control,
+      variable,
+      number -> Double.valueOf(number.doubleValue()),
+      number -> Double.valueOf(number.doubleValue())
+    );
+  }
+
+  private void createIntegerDial(
+    final GWIOVariableType<Integer> variable,
+    final GWIOVariableInformation<Integer> info,
+    final DialControlLabelled control,
+    final Tooltip tooltip,
+    final DialControl dial)
+  {
+    final var min =
+      info.valueMinimumInclusive();
+    final var max =
+      info.valueMaximumInclusive();
+
+    dial.setValueConverter(
+      new DialBoundedLongConverter(min.intValue(), max.intValue(), 1L));
+    dial.setConvertedValue(
+      info.valueInitial().doubleValue());
 
     this.subscriptions.add(
       variable.subscribe((oldValue, newValue) -> {
@@ -388,9 +616,10 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
       GWIOEnumerationInfo.findInfo(variable.information().valueClass());
 
     dial.setValueConverter(
-      new DialBoundedIntegerConverter(
+      new DialBoundedLongConverter(
         enumInfo.toInt(min),
-        enumInfo.toInt(max)
+        enumInfo.toInt(max),
+        1L
       )
     );
 
@@ -471,4 +700,5 @@ public abstract class GWEffectBlockPanel<S extends Enum<S>>
       dial.convertedValue().removeListener(changeListener);
     });
   }
+
 }

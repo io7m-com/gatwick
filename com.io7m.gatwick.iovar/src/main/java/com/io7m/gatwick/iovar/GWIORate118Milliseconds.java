@@ -38,4 +38,28 @@ public record GWIORate118Milliseconds(
   {
     this.value = Math.max(0, Math.min(value, 100));
   }
+
+  @Override
+  public int toInt()
+  {
+    return this.value;
+  }
+
+  @Override
+  public GWIORate118Type next()
+  {
+    if (this.value == 100) {
+      return GWIORate118Note.info().first();
+    }
+    return new GWIORate118Milliseconds(this.value + 1);
+  }
+
+  @Override
+  public GWIORate118Type previous()
+  {
+    if (this.value == 0) {
+      return this;
+    }
+    return new GWIORate118Milliseconds(this.value - 1);
+  }
 }
