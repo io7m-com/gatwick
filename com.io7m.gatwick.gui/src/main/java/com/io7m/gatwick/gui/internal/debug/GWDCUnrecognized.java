@@ -14,28 +14,31 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.gatwick.preferences;
 
-import java.util.Objects;
+package com.io7m.gatwick.gui.internal.debug;
 
-/**
- * An immutable set of preferences.
- *
- * @param device The device preferences
- * @param debug  The debug preferences
- */
+import com.io7m.repetoir.core.RPServiceDirectoryType;
 
-public record GWPreferences(
-  GWPreferencesDevice device,
-  GWPreferencesDebug debug)
+import java.io.BufferedWriter;
+import java.util.List;
+
+final class GWDCUnrecognized extends GWDCAbstract
 {
-  /**
-   * An immutable set of preferences.
-   */
-
-  public GWPreferences
+  GWDCUnrecognized(
+    final RPServiceDirectoryType inServices,
+    final String inName,
+    final List<String> inArguments)
   {
-    Objects.requireNonNull(device, "device");
-    Objects.requireNonNull(debug, "debug");
+    super(inServices, inName, inArguments);
+  }
+
+  @Override
+  public void execute(
+    final BufferedWriter writer)
+    throws Exception
+  {
+    writer.write("Unrecognized command: " + this.name());
+    writer.newLine();
+    writer.flush();
   }
 }

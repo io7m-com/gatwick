@@ -20,6 +20,7 @@ package com.io7m.gatwick.gui.internal.splash;
 import com.io7m.gatwick.gui.internal.GWBootCompleted;
 import com.io7m.gatwick.gui.internal.GWScreenControllerType;
 import com.io7m.gatwick.gui.internal.config.GWConfigurationServiceType;
+import com.io7m.gatwick.gui.internal.debug.GWDebugService;
 import com.io7m.gatwick.gui.internal.exec.GWBackgroundExecutorType;
 import com.io7m.gatwick.gui.internal.icons.GWIconSetService;
 import com.io7m.gatwick.gui.internal.icons.GWIconSetServiceType;
@@ -121,6 +122,11 @@ public final class GWSplashController implements GWScreenControllerType
         java.time.Duration.of(10L, ChronoUnit.SECONDS),
         this.attributes
       )
+    );
+
+    this.services.register(
+      GWDebugService.class,
+      GWDebugService.create(this.services)
     );
 
     this.services.register(

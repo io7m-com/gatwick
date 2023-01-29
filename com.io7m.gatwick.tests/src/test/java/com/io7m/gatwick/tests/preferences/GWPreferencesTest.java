@@ -18,6 +18,7 @@
 package com.io7m.gatwick.tests.preferences;
 
 import com.io7m.gatwick.preferences.GWPreferences;
+import com.io7m.gatwick.preferences.GWPreferencesDebug;
 import com.io7m.gatwick.preferences.GWPreferencesDevice;
 import com.io7m.gatwick.preferences.GWPreferencesIO;
 import com.io7m.gatwick.preferences.GWPreferencesService;
@@ -127,6 +128,7 @@ public final class GWPreferencesTest
       <?xml version="1.0" encoding="UTF-8"?>
       <Preferences xmlns="urn:com.io7m.gatwick:preferences:1">
         <Device ShowFakeDevices="false"/>
+        <Debug EnableDebugServer="false" DebugServerPort="30000"/>
       </Preferences>
       """);
 
@@ -141,15 +143,9 @@ public final class GWPreferencesTest
 
       final var prefs0 =
         new GWPreferences(
-          new GWPreferencesDevice(true)
+          new GWPreferencesDevice(false),
+          new GWPreferencesDebug(false, 30000)
         );
-
-      final var prefs1 =
-        new GWPreferences(
-          new GWPreferencesDevice(false)
-        );
-
-      prefs.add(prefs0);
 
       service.preferences()
         .subscribe((oldValue, newValue) -> {
@@ -161,10 +157,11 @@ public final class GWPreferencesTest
         <?xml version="1.0" encoding="UTF-8"?>
         <Preferences xmlns="urn:com.io7m.gatwick:preferences:1">
           <Device ShowFakeDevices="true"/>
+          <Debug EnableDebugServer="true" DebugServerPort="30001"/>
         </Preferences>
         """);
 
-      while (prefs.size() < 3) {
+      while (prefs.size() < 2) {
         Thread.sleep(100L);
       }
 
@@ -173,14 +170,15 @@ public final class GWPreferencesTest
         assertEquals(prefs0, p);
       }
 
-      {
-        final var p = prefs.poll();
-        assertEquals(prefs1, p);
-      }
+      final var prefs1 =
+        new GWPreferences(
+          new GWPreferencesDevice(true),
+          new GWPreferencesDebug(true, 30001)
+        );
 
       {
         final var p = prefs.poll();
-        assertEquals(prefs0, p);
+        assertEquals(prefs1, p);
       }
     }
   }
@@ -202,12 +200,14 @@ public final class GWPreferencesTest
 
     final var prefs0 =
       new GWPreferences(
-        new GWPreferencesDevice(true)
+        new GWPreferencesDevice(true),
+        new GWPreferencesDebug(true, 30000)
       );
 
     final var prefs1 =
       new GWPreferences(
-        new GWPreferencesDevice(false)
+        new GWPreferencesDevice(false),
+        new GWPreferencesDebug(false, 30001)
       );
 
     try (var service =

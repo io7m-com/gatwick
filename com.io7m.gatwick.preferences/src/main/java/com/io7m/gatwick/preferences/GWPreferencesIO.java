@@ -17,6 +17,7 @@
 
 package com.io7m.gatwick.preferences;
 
+import com.io7m.gatwick.preferences.jaxb.Debug;
 import com.io7m.gatwick.preferences.jaxb.Device;
 import com.io7m.gatwick.preferences.jaxb.Preferences;
 import jakarta.xml.bind.JAXBContext;
@@ -82,6 +83,7 @@ public final class GWPreferencesIO
   {
     final var out = new Preferences();
     out.setDevice(packPreferencesDevice(preferences.device()));
+    out.setDebug(packPreferencesDebug(preferences.debug()));
     return out;
   }
 
@@ -91,6 +93,15 @@ public final class GWPreferencesIO
     final var dev = new Device();
     dev.setShowFakeDevices(Boolean.valueOf(device.showFakeDevices()));
     return dev;
+  }
+
+  private static Debug packPreferencesDebug(
+    final GWPreferencesDebug debug)
+  {
+    final var dbg = new Debug();
+    dbg.setEnableDebugServer(Boolean.valueOf(debug.enableDebugServer()));
+    dbg.setDebugServerPort(Integer.valueOf(debug.debugPort()));
+    return dbg;
   }
 
   /**
@@ -143,7 +154,19 @@ public final class GWPreferencesIO
   private static GWPreferences unpackPreferences(
     final Preferences prefs)
   {
-    return new GWPreferences(unpackPreferencesDevice(prefs.getDevice()));
+    return new GWPreferences(
+      unpackPreferencesDevice(prefs.getDevice()),
+      unpackPreferencesDebug(prefs.getDebug())
+    );
+  }
+
+  private static GWPreferencesDebug unpackPreferencesDebug(
+    final Debug debug)
+  {
+    return new GWPreferencesDebug(
+      debug.isEnableDebugServer().booleanValue(),
+      debug.getDebugServerPort().intValue()
+    );
   }
 
   private static GWPreferencesDevice unpackPreferencesDevice(

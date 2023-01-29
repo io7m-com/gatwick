@@ -136,7 +136,8 @@ public final class GWPreferencesService implements GWPreferencesServiceType
   private static GWPreferences defaultPreferences()
   {
     return new GWPreferences(
-      new GWPreferencesDevice(false)
+      new GWPreferencesDevice(false),
+      new GWPreferencesDebug(false, 30000)
     );
   }
 

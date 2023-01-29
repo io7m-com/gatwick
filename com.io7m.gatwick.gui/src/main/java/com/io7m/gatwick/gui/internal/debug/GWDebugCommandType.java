@@ -14,28 +14,25 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.gatwick.preferences;
 
-import java.util.Objects;
+package com.io7m.gatwick.gui.internal.debug;
+
+import java.io.BufferedWriter;
 
 /**
- * An immutable set of preferences.
- *
- * @param device The device preferences
- * @param debug  The debug preferences
+ * A debug command.
  */
 
-public record GWPreferences(
-  GWPreferencesDevice device,
-  GWPreferencesDebug debug)
+public interface GWDebugCommandType
 {
   /**
-   * An immutable set of preferences.
+   * Execute the command, writing the result to {@code writer}.
+   *
+   * @param writer The writer
+   *
+   * @throws Exception On errors
    */
 
-  public GWPreferences
-  {
-    Objects.requireNonNull(device, "device");
-    Objects.requireNonNull(debug, "debug");
-  }
+  void execute(BufferedWriter writer)
+    throws Exception;
 }

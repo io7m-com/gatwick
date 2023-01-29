@@ -17,6 +17,7 @@
 
 package com.io7m.gatwick.gui.internal.preset;
 
+import com.io7m.gatwick.controller.api.GWChain;
 import com.io7m.gatwick.controller.api.GWChainElementValue;
 import com.io7m.gatwick.controller.api.GWControllerType;
 import com.io7m.gatwick.gui.internal.GWScreenControllerType;
@@ -193,7 +194,7 @@ public final class GWPresetController implements GWScreenControllerType
     final URL url,
     final ResourceBundle resourceBundle)
   {
-    this.blockGraph = new GWBlockGraph();
+    this.blockGraph = new GWBlockGraph(GWChain.defaultChain());
 
     this.presetHeader.setBackground(null);
     this.presetHeaderTextShadow.setText("");

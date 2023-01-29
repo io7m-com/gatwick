@@ -67,6 +67,30 @@ public sealed interface GWChainGraphNodeType
      */
 
     GWChainGraphBranchRightLegType right();
+
+    /**
+     * @return The last node of the left branch
+     */
+
+    GWChainGraphNodeType endOfLeftBranch();
+
+    /**
+     * @return The last node of the right branch
+     */
+
+    GWChainGraphNodeType endOfRightBranch();
+
+    /**
+     * @return The number of nodes in the left leg (that aren't the splitter node)
+     */
+
+    int leftLength();
+
+    /**
+     * @return The number of nodes in the right leg (that aren't the mixer node)
+     */
+
+    int rightLength();
   }
 
   /**

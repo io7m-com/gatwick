@@ -44,8 +44,20 @@ public final class GWBlockGraph extends Pane
 
   public GWBlockGraph()
   {
+    this(GWChain.defaultChain());
+  }
+
+  /**
+   * A block graph.
+   *
+   * @param initialChain The initial chain
+   */
+
+  public GWBlockGraph(
+    final GWChain initialChain)
+  {
     this.chain =
-      new SimpleObjectProperty<>(GWChain.defaultChain());
+      new SimpleObjectProperty<>(initialChain);
     this.nodeShapes =
       new EnumMap<>(GWChainElementValue.class);
     this.lines =
@@ -181,8 +193,7 @@ public final class GWBlockGraph extends Pane
     final var graph =
       chainNow.graph();
 
-    final var nodeArranger =
-      new GWNodeArranger(graph, this.nodeShapes);
+    final var nodeArranger = new GWNodeArranger(graph, this.nodeShapes);
     nodeArranger.arrange();
 
     final var lineArranger =

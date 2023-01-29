@@ -29,6 +29,40 @@
     </complexType>
   </element>
 
+  <element name="Debug">
+    <annotation>
+      <documentation>
+        Debug preferences.
+      </documentation>
+    </annotation>
+
+    <complexType>
+      <sequence>
+        <any minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+
+      <attribute name="EnableDebugServer"
+                 type="boolean">
+        <annotation>
+          <documentation>
+            Whether to enable the debug server.
+          </documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="DebugServerPort"
+                 type="unsignedShort">
+        <annotation>
+          <documentation>
+            The debug server TCP port.
+          </documentation>
+        </annotation>
+      </attribute>
+
+      <anyAttribute/>
+    </complexType>
+  </element>
+
   <element name="Preferences">
     <annotation>
       <documentation>
@@ -39,6 +73,9 @@
     <complexType>
       <sequence>
         <element ref="p:Device"
+                 minOccurs="1"
+                 maxOccurs="1"/>
+        <element ref="p:Debug"
                  minOccurs="1"
                  maxOccurs="1"/>
         <any minOccurs="0"

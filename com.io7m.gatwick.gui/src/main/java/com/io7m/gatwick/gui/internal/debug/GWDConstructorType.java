@@ -14,28 +14,31 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.gatwick.preferences;
 
-import java.util.Objects;
+package com.io7m.gatwick.gui.internal.debug;
+
+import com.io7m.repetoir.core.RPServiceDirectoryType;
+
+import java.util.List;
 
 /**
- * An immutable set of preferences.
- *
- * @param device The device preferences
- * @param debug  The debug preferences
+ * A debug command constructor.
  */
 
-public record GWPreferences(
-  GWPreferencesDevice device,
-  GWPreferencesDebug debug)
+public interface GWDConstructorType
 {
   /**
-   * An immutable set of preferences.
+   * Create a command.
+   *
+   * @param inServices  The service directory
+   * @param inName      The command name
+   * @param inArguments The command arguments
+   *
+   * @return A new command
    */
 
-  public GWPreferences
-  {
-    Objects.requireNonNull(device, "device");
-    Objects.requireNonNull(debug, "debug");
-  }
+  GWDebugCommandType create(
+    RPServiceDirectoryType inServices,
+    String inName,
+    List<String> inArguments);
 }

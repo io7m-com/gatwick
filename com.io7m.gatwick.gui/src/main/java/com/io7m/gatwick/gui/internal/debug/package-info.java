@@ -14,28 +14,8 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.gatwick.preferences;
-
-import java.util.Objects;
-
 /**
- * An immutable set of preferences.
- *
- * @param device The device preferences
- * @param debug  The debug preferences
+ * GT-1000 controller (GUI [internals])
  */
 
-public record GWPreferences(
-  GWPreferencesDevice device,
-  GWPreferencesDebug debug)
-{
-  /**
-   * An immutable set of preferences.
-   */
-
-  public GWPreferences
-  {
-    Objects.requireNonNull(device, "device");
-    Objects.requireNonNull(debug, "debug");
-  }
-}
+package com.io7m.gatwick.gui.internal.debug;

@@ -16,26 +16,16 @@
 
 package com.io7m.gatwick.preferences;
 
-import java.util.Objects;
-
 /**
  * An immutable set of preferences.
  *
- * @param device The device preferences
- * @param debug  The debug preferences
+ * @param enableDebugServer Enable the debug server
+ * @param debugPort The debug port
  */
 
-public record GWPreferences(
-  GWPreferencesDevice device,
-  GWPreferencesDebug debug)
+public record GWPreferencesDebug(
+  boolean enableDebugServer,
+  int debugPort)
 {
-  /**
-   * An immutable set of preferences.
-   */
 
-  public GWPreferences
-  {
-    Objects.requireNonNull(device, "device");
-    Objects.requireNonNull(debug, "debug");
-  }
 }

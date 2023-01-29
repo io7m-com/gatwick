@@ -14,7 +14,6 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-
 package com.io7m.gatwick.gui.internal.preset;
 
 import com.io7m.gatwick.controller.api.GWChainElementValue;
@@ -50,172 +49,275 @@ final class GWLineArranger
       new ArrayList<Line>();
   }
 
+  private static final Color BRANCH_RIGHT_EMPTY =
+    Color.WHITE;
+
+  private static final Color BRANCH_LEFT_EMPTY =
+    Color.WHITE;
+
+  private static final Color BRANCH_BOTH_EMPTY =
+    Color.WHITE;
+
+  private static final Color BRANCH_LEFT_NON_EMPTY =
+    Color.WHITE;
+
+  private static final Color BRANCH_RIGHT_NON_EMPTY =
+    Color.WHITE;
+
+  private static final Color JOIN =
+    Color.WHITE;
+
+  private static final Color BLOCK =
+    Color.WHITE;
+
   public List<Line> arrange()
   {
     this.lines.clear();
-    this.arrangeFromNode(this.graph.first());
-    return List.copyOf(this.lines);
-  }
 
-  private void arrangeFromNode(
-    final GWChainGraphNodeType start)
-  {
-    GWChainGraphNodeType current = start;
-    while (current != null) {
-      if (current instanceof GWChainGraphBranchType branch) {
-        current = this.arrangeBranch(branch);
+    for (final var node : this.graph.elements()) {
+      final var element = node.element();
+      final var shape = this.nodeShapes.get(element);
+
+      if (node instanceof GWChainGraphBranchType branch) {
+        this.arrangeBranch(shape, branch);
         continue;
       }
 
-      if (current instanceof GWChainGraphBlockType block) {
-        this.arrangeLineToPrevious(block);
+      if (node instanceof GWChainGraphJoinType join) {
+        this.arrangeJoin(shape, join);
+        continue;
       }
 
-      current = current.next().orElse(null);
+      if (node instanceof GWChainGraphBranchRightLegType) {
+        continue;
+      }
+
+      if (node instanceof GWChainGraphBlockType block) {
+        this.arrangeBlock(shape, block);
+      }
     }
+
+    return List.copyOf(this.lines);
   }
 
-  private GWChainGraphNodeType arrangeBranch(
+  private void arrangeJoin(
+    final GWNodeShape shape,
+    final GWChainGraphJoinType join)
+  {
+    join.next().ifPresent(next -> {
+      final var shapeRight =
+        this.nodeShapes.get(next.element());
+
+      this.createLineTo(
+        JOIN,
+        shape.centerX(),
+        shape.centerY(),
+        shapeRight.centerX(),
+        shapeRight.centerY()
+      );
+    });
+  }
+
+  private void arrangeBlock(
+    final GWNodeShape shape,
+    final GWChainGraphBlockType block)
+  {
+    block.next().ifPresent(next -> {
+
+      /*
+       * If the "next" node is the start of the right leg of a branch,
+       * then we actually want to draw a line to the end of the branch
+       * instead.
+       */
+
+      final GWChainGraphNodeType nextTarget;
+      if (next instanceof GWChainGraphBranchRightLegType right) {
+        final var branch =
+          right.branch();
+        final var endOfRight =
+          branch.endOfRightBranch();
+        final var endOfBranch =
+          endOfRight.next();
+
+        if (endOfBranch.isEmpty()) {
+          return;
+        }
+        nextTarget = endOfBranch.get();
+      } else {
+        nextTarget = next;
+      }
+
+      final var shapeNext =
+        this.nodeShapes.get(nextTarget.element());
+
+      this.createLineTo(
+        BLOCK,
+        shape.centerX(),
+        shape.centerY(),
+        shapeNext.centerX(),
+        shapeNext.centerY()
+      );
+    });
+  }
+
+  private void arrangeBranch(
+    final GWNodeShape shape,
     final GWChainGraphBranchType branch)
   {
-    final var left =
-      branch.left();
-    final var right =
-      branch.right();
+    final var emptyLeft =
+      branch.leftLength() == 0;
+    final var emptyRight =
+      branch.rightLength() == 0;
 
-    this.arrangeLineToPrevious(branch);
+    /*
+     * If both branches are empty, then we need to draw flat line
+     * going from the start of the branch to the node after the end
+     * of the branch.
+     */
 
-    if (Objects.equals(left, right)) {
-      final var mixer =
-        right.next().orElse(null);
-      this.arrangeLineBetweenDirect(
-        this.nodeShapes.get(branch.element()),
-        this.nodeShapes.get(mixer.element())
+    if (emptyLeft && emptyRight) {
+      final var shapeRight =
+        this.nodeShapes.get(
+          branch.right()
+            .next()
+            .orElseThrow()
+            .element()
+        );
+
+      this.createLineTo(
+        BRANCH_BOTH_EMPTY,
+        shape.centerX(),
+        shape.centerY(),
+        shapeRight.centerX(),
+        shapeRight.centerY()
       );
-      return mixer;
-    }
-
-    final var shapeBranch =
-      this.nodeShapes.get(branch.element());
-    final var shapeFirstLeft =
-      this.nodeShapes.get(left.element());
-    final var shapeFirstRight =
-      this.nodeShapes.get(right.next().orElse(right).element());
-
-    /*
-     * Add connecting lines from the branch to the start of the left and
-     * right legs of the branch.
-     */
-
-    final var bcx = shapeBranch.centerX();
-    final var bcy = shapeBranch.centerY();
-    final var lcx = shapeFirstLeft.centerX();
-    final var lcy = shapeFirstLeft.centerY();
-    this.addLine(bcx, bcy, lcx, lcy);
-
-    final var rcy = shapeFirstRight.centerY();
-    this.addLine(bcx, bcy, bcx, rcy);
-
-    final var rcx = shapeFirstRight.centerX();
-    this.addLine(bcx, rcy, rcx, rcy);
-
-    final var endL =
-      this.arrangeBranchLegLeft(left)
-        .previous()
-        .orElse(null);
-
-    final var mixer =
-      this.arrangeBranchLegRight(right);
-
-    final var endR =
-      mixer.previous()
-        .orElse(null);
-
-    final var shapeMixer =
-      this.nodeShapes.get(mixer.element());
-    final var shapeEndLeft =
-      this.nodeShapes.get(endL.element());
-    final var shapeEndRight =
-      this.nodeShapes.get(endR.element());
-
-    /*
-     * Add connecting lines from the ends of the left and right branch legs
-     * to the mixer node.
-     */
-
-    {
-      final var elcx = shapeEndLeft.centerX();
-      final var elcy = shapeEndLeft.centerY();
-      final var mcx = shapeMixer.centerX();
-      final var mcy = shapeMixer.centerY();
-      this.addLine(elcx, elcy, mcx, mcy);
-    }
-
-    {
-      final var ercx = shapeEndRight.centerX();
-      final var ercy = shapeEndRight.centerY();
-      final var mcx = shapeMixer.centerX();
-      final var mcy = shapeMixer.centerY();
-      this.addLine(ercx, ercy, mcx, ercy);
-      this.addLine(mcx, mcy, mcx, ercy);
-    }
-
-    return mixer;
-  }
-
-  private GWChainGraphNodeType arrangeBranchLegRight(
-    final GWChainGraphBranchRightLegType start)
-  {
-    GWChainGraphNodeType current = start;
-    while (current != null) {
-      if (current instanceof GWChainGraphJoinType) {
-        return current;
-      }
-
-      if (current instanceof GWChainGraphBlockType block) {
-        this.arrangeLineToPrevious(block);
-      }
-
-      current = current.next().orElse(null);
-    }
-    return current;
-  }
-
-  private void arrangeLineToPrevious(
-    final GWChainGraphNodeType current)
-  {
-    final var shapeCurrent =
-      this.nodeShapes.get(current.element());
-
-    final var previous =
-      current.previous().orElse(null);
-
-    if (previous == null) {
       return;
     }
 
-    var suitable = previous instanceof GWChainGraphBlockType;
-    suitable |= previous instanceof GWChainGraphJoinType;
+    /*
+     * If the left branch is empty, then we need to draw flat line
+     * going from the start of the branch to the node after the end
+     * of the branch.
+     */
 
-    if (suitable) {
-      final var shapePrevious =
-        this.nodeShapes.get(previous.element());
-      this.arrangeLineBetweenDirect(shapeCurrent, shapePrevious);
+    if (emptyLeft) {
+      final var endOfRight =
+        branch.endOfRightBranch()
+          .element();
+      final var shapeRight =
+        this.nodeShapes.get(endOfRight);
+
+      this.createLineTo(
+        BRANCH_LEFT_EMPTY,
+        shape.centerX(),
+        shape.centerY(),
+        shapeRight.centerX(),
+        shapeRight.centerY()
+      );
+    } else {
+      final var shapeRight =
+        this.nodeShapes.get(
+          branch.next()
+            .orElseThrow()
+            .element()
+        );
+      this.createLineTo(
+        BRANCH_LEFT_NON_EMPTY,
+        shape.centerX(),
+        shape.centerY(),
+        shapeRight.centerX(),
+        shapeRight.centerY()
+      );
+    }
+
+    /*
+     * If the right branch is empty, then we need to draw a segmented
+     * line going through the (invisible) node that marks the start
+     * of the right branch.
+     */
+
+    if (emptyRight) {
+      final var endOfBranch =
+        branch.endOfRightBranch();
+
+      final var shapeTarget0 =
+        this.nodeShapes.get(branch.right().element());
+      final var shapeTarget1 =
+        this.nodeShapes.get(endOfBranch.element());
+
+      this.createLineTo(
+        BRANCH_RIGHT_EMPTY,
+        shape.centerX(),
+        shape.centerY(),
+        shapeTarget0.centerX(),
+        shapeTarget0.centerY()
+      );
+      this.createLineTo(
+        BRANCH_RIGHT_EMPTY,
+        shapeTarget0.centerX(),
+        shapeTarget0.centerY(),
+        shapeTarget1.centerX(),
+        shapeTarget1.centerY()
+      );
+    } else {
+      final var shapeRight =
+        this.nodeShapes.get(
+          branch.right()
+            .element()
+        );
+      this.createLineTo(
+        BRANCH_RIGHT_NON_EMPTY,
+        shape.centerX(),
+        shape.centerY(),
+        shapeRight.centerX(),
+        shapeRight.centerY()
+      );
     }
   }
 
-  private void arrangeLineBetweenDirect(
-    final GWNodeShape shapeCurrent,
-    final GWNodeShape shapePrevious)
+  private void createLineTo(
+    final Color color,
+    final double p0x,
+    final double p0y,
+    final double p1x,
+    final double p1y)
   {
-    final var p0x = shapePrevious.centerX();
-    final var p0y = shapePrevious.centerY();
-    final var p1x = shapeCurrent.centerX();
-    final var p1y = shapeCurrent.centerY();
-    this.addLine(p0x, p0y, p1x, p1y);
+    final var e0cx = (long) (Math.floor(p0x) + 0.5);
+    final var e0cy = (long) (Math.floor(p0y) + 0.5);
+    final var e1cx = (long) (Math.floor(p1x) + 0.5);
+    final var e1cy = (long) (Math.floor(p1y) + 0.5);
+
+    /*
+     * The destination point is below the starting point. Create
+     * an L shape.
+     */
+
+    if (e1cy > e0cy) {
+      this.addLine(color, e0cx, e0cy, e0cx, e1cy);
+      this.addLine(color, e0cx, e1cy, e1cx, e1cy);
+      return;
+    }
+
+    /*
+     * The destination point is above the starting point. Create
+     * an inverted L shape.
+     */
+
+    if (e1cy < e0cy) {
+      this.addLine(color, e0cx, e0cy, e1cx, e0cy);
+      this.addLine(color, e1cx, e0cy, e1cx, e1cy);
+      return;
+    }
+
+    /*
+     * Otherwise, create a flat horizontal line.
+     */
+
+    this.addLine(color, e0cx, e0cy, e1cx, e1cy);
   }
 
   private void addLine(
+    final Color color,
     final double p0x,
     final double p0y,
     final double p1x,
@@ -226,32 +328,9 @@ final class GWLineArranger
     final var e1cx = Math.floor(p1x) + 0.5;
     final var e1cy = Math.floor(p1y) + 0.5;
     final var line = new Line(e0cx, e0cy, e1cx, e1cy);
-    line.setFill(Color.WHITE);
-    line.setStroke(Color.WHITE);
+    line.setFill(color);
+    line.setStroke(color);
+    line.setStrokeWidth(2.0);
     this.lines.add(line);
-  }
-
-  private GWChainGraphNodeType arrangeBranchLegLeft(
-    final GWChainGraphNodeType start)
-  {
-    GWChainGraphNodeType current = start;
-    while (current != null) {
-      if (current instanceof GWChainGraphBranchType branch) {
-        if (!current.equals(start)) {
-          current = this.arrangeBranch(branch);
-          continue;
-        }
-      }
-
-      if (current instanceof GWChainGraphBlockType block) {
-        this.arrangeLineToPrevious(block);
-      }
-
-      if (current instanceof GWChainGraphBranchRightLegType) {
-        return current;
-      }
-      current = current.next().orElse(null);
-    }
-    return current;
   }
 }

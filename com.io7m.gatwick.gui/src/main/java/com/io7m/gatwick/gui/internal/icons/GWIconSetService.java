@@ -75,6 +75,12 @@ public final class GWIconSetService
   }
 
   @Override
+  public String toString()
+  {
+    return String.format("[GWIconSetService 0x%08x]", this.hashCode());
+  }
+
+  @Override
   public <S extends Enum<S>> GWIconEnumerationSetType<S> iconSetFor(
     final Class<S> clazz)
   {

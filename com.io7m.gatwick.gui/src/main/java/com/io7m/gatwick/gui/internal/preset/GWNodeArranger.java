@@ -18,20 +18,37 @@
 package com.io7m.gatwick.gui.internal.preset;
 
 import com.io7m.gatwick.controller.api.GWChainElementValue;
-import com.io7m.gatwick.controller.api.GWChainGraphNodeType;
+import com.io7m.gatwick.controller.api.GWChainGraphNodeType.GWChainGraphBranchRightLegType;
+import com.io7m.gatwick.controller.api.GWChainGraphNodeType.GWChainGraphBranchType;
+import com.io7m.gatwick.controller.api.GWChainGraphNodeType.GWChainGraphJoinType;
 import com.io7m.gatwick.controller.api.GWChainGraphType;
-import com.io7m.jaffirm.core.Postconditions;
 
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Optional;
+
+import static java.lang.Math.max;
 
 final class GWNodeArranger
 {
   private final GWChainGraphType graph;
   private final EnumMap<GWChainElementValue, GWNodeShape> nodeShapes;
   private final EnumSet<GWChainElementValue> processed;
-  private final GWXOffsetStack xStack;
+  private final HashMap<GWChainElementValue, State> states;
+
+  private static final class State
+  {
+    private int x;
+    private int depth;
+
+    State()
+    {
+
+    }
+  }
 
   GWNodeArranger(
     final GWChainGraphType inGraph,
@@ -41,131 +58,169 @@ final class GWNodeArranger
       Objects.requireNonNull(inGraph, "graph");
     this.nodeShapes =
       Objects.requireNonNull(inNodeShapes, "chainNodes");
-    this.xStack =
-      new GWXOffsetStack();
     this.processed =
       EnumSet.allOf(GWChainElementValue.class);
+    this.states =
+      new HashMap<>();
   }
 
   public void arrange()
   {
-    this.arrangeFromNode(this.graph.first());
-
-    Postconditions.checkPostconditionV(
-      this.processed,
-      this.processed.isEmpty(),
-      "Processed elements must be empty"
-    );
-  }
-
-  private void arrangeFromNode(
-    final GWChainGraphNodeType start)
-  {
-    GWChainGraphNodeType current = start;
-    while (current != null) {
-      if (current instanceof GWChainGraphNodeType.GWChainGraphBranchType branch) {
-        current = this.arrangeBranch(branch);
-        continue;
-      }
-
-      if (current instanceof GWChainGraphNodeType.GWChainGraphBlockType) {
-        this.doSingleNodeLayout(current);
-      }
-
-      current = current.next().orElse(null);
+    for (final var value : this.processed) {
+      this.states.put(value, new State());
     }
-  }
 
-  private GWChainGraphNodeType arrangeBranch(
-    final GWChainGraphNodeType.GWChainGraphBranchType branch)
-  {
-    this.doSingleNodeLayout(branch);
+    /*
+     * Determine the depths of each node based on the branch they
+     * appear in.
+     */
 
-    this.xStack.push();
-    final var endL =
-      this.arrangeBranchLegLeft(branch.left());
-    final var endLx =
-      this.xStack.peek();
-    this.doSingleNodeLayout(endL);
-    this.xStack.pop();
-
-    this.xStack.push();
-    final var endR =
-      this.arrangeBranchLegRight(branch.right());
-    final var endRx =
-      this.xStack.peek();
-
-    final var maxOffset = Math.max(endLx, endRx);
-    this.xStack.pop();
-    this.xStack.set(maxOffset);
-
-    this.doSingleNodeLayout(endR);
-    return endR.next().orElse(null);
-  }
-
-  private GWChainGraphNodeType arrangeBranchLegRight(
-    final GWChainGraphNodeType.GWChainGraphBranchRightLegType start)
-  {
-    GWChainGraphNodeType current = start;
-    while (current != null) {
-      if (current instanceof GWChainGraphNodeType.GWChainGraphJoinType) {
-        return current;
+    {
+      int depth = 0;
+      for (final var node : this.graph.elements()) {
+        final var element = node.element();
+        final var state = this.states.get(element);
+        if (node instanceof GWChainGraphJoinType) {
+          --depth;
+        }
+        if (node instanceof GWChainGraphBranchRightLegType) {
+          ++depth;
+        }
+        state.depth = depth;
       }
-
-      if (current instanceof GWChainGraphNodeType.GWChainGraphBlockType) {
-        this.doSingleNodeLayout(current);
-      }
-
-      current = current.next().orElse(null);
     }
-    return current;
-  }
 
-  private GWChainGraphNodeType arrangeBranchLegLeft(
-    final GWChainGraphNodeType start)
-  {
-    GWChainGraphNodeType current = start;
-    while (current != null) {
-      if (current instanceof GWChainGraphNodeType.GWChainGraphBranchType branch) {
-        if (current.equals(start)) {
-          this.doSingleNodeLayout(branch);
+    /*
+     * Determine the horizontal offsets of each node.
+     */
+
+    {
+      final var memorizer = new XOffsetMemorizer();
+      for (final var node : this.graph.elements()) {
+        final var element = node.element();
+        final var state = this.states.get(element);
+        final var shape = this.nodeShapes.get(element);
+
+        if (node instanceof GWChainGraphBranchType) {
+          state.x = memorizer.startBranchLeft(shape);
+        } else if (node instanceof GWChainGraphBranchRightLegType) {
+          state.x = memorizer.startBranchRight();
+        } else if (node instanceof GWChainGraphJoinType) {
+          state.x = memorizer.finishBranch(shape);
         } else {
-          current = this.arrangeBranch(branch);
-          continue;
+          state.x = memorizer.addNode(shape);
         }
       }
-
-      if (current instanceof GWChainGraphNodeType.GWChainGraphBlockType) {
-        this.doSingleNodeLayout(current);
-      }
-
-      if (current instanceof GWChainGraphNodeType.GWChainGraphBranchRightLegType) {
-        return current;
-      }
-      current = current.next().orElse(null);
     }
-    return current;
+
+    /*
+     * Configure all the node shapes.
+     */
+
+    for (final var node : this.graph.elements()) {
+      final var element = node.element();
+      final var state = this.states.get(element);
+      final var shape = this.nodeShapes.get(element);
+      shape.setLayoutX(state.x);
+      shape.setLayoutY(state.depth * 48.0);
+    }
   }
 
-  private void doSingleNodeLayout(
-    final GWChainGraphNodeType node)
+  private static final class XOffsetMemorizer
   {
-    this.processed.remove(node.element());
+    private final LinkedList<BranchState> branches;
 
-    final var shape =
-      this.nodeShapes.get(node.element());
+    private static final class BranchState
+    {
+      private final int xStart;
+      private int xMax;
+      private int xNow;
+      private GWNodeShape branchStart;
 
-    final var depth =
-      node.depth();
-    final var x =
-      this.xStack.peek();
+      BranchState(
+        final int inXStart)
+      {
+        this.xStart = inXStart;
+        this.xMax = inXStart;
+        this.xNow = inXStart;
+      }
 
-    final var y =
-      (double) depth * shape.getHeight();
+      BranchState(
+        final GWNodeShape inBranchStart,
+        final int inXStart)
+      {
+        this(inXStart);
+        this.branchStart = inBranchStart;
+        this.add((int) inBranchStart.getWidth());
+      }
 
-    this.xStack.set(x + shape.getWidth());
+      void add(
+        final int x)
+      {
+        this.setX(this.xNow + x);
+      }
 
-    shape.setLayoutX(x);
-    shape.setLayoutY(y);
+      void resetX()
+      {
+        final var offset =
+          Optional.ofNullable(this.branchStart)
+            .stream()
+            .mapToInt(s -> (int) s.getWidth())
+            .findFirst()
+            .orElse(0);
+
+        this.setX(this.xStart + offset);
+      }
+
+      void setX(
+        final int x)
+      {
+        this.xNow = x;
+        this.xMax = max(this.xMax, this.xNow);
+      }
+    }
+
+    XOffsetMemorizer()
+    {
+      this.branches = new LinkedList<>();
+      this.branches.add(new BranchState(0));
+    }
+
+    int startBranchLeft(
+      final GWNodeShape branch)
+    {
+      final var branchNow = this.branches.peek();
+      final var x = branchNow.xNow;
+      final var branchNew = new BranchState(branch, branchNow.xNow);
+      this.branches.push(branchNew);
+      return x;
+    }
+
+    int startBranchRight()
+    {
+      final var branchNow = this.branches.peek();
+      branchNow.resetX();
+      return branchNow.xNow;
+    }
+
+    int finishBranch(
+      final GWNodeShape shape)
+    {
+      final var branchThen = this.branches.pop();
+      final var branchNow = this.branches.peek();
+      branchNow.setX(branchThen.xMax);
+      final var x = branchNow.xNow;
+      branchNow.add((int) shape.getWidth());
+      return x;
+    }
+
+    int addNode(
+      final GWNodeShape shape)
+    {
+      final var branchNow = this.branches.peek();
+      final var x = branchNow.xNow;
+      branchNow.add((int) shape.getWidth());
+      return x;
+    }
   }
 }

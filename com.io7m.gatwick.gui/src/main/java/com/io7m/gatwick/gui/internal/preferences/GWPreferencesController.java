@@ -23,6 +23,7 @@ import com.io7m.gatwick.gui.internal.GWScreenControllerFactory;
 import com.io7m.gatwick.gui.internal.GWScreenControllerType;
 import com.io7m.gatwick.gui.internal.GWStrings;
 import com.io7m.gatwick.preferences.GWPreferences;
+import com.io7m.gatwick.preferences.GWPreferencesDebug;
 import com.io7m.gatwick.preferences.GWPreferencesDevice;
 import com.io7m.gatwick.preferences.GWPreferencesServiceType;
 import com.io7m.jattribute.core.AttributeSubscriptionType;
@@ -60,18 +61,21 @@ public final class GWPreferencesController implements GWScreenControllerType
   private AttributeSubscriptionType preferencesSubscription;
   private EnumMap<Section, Pane> panes;
 
+  @FXML private CheckBox debuggingEnableServer;
+  @FXML private CheckBox devicesShowFake;
+  @FXML private ListView<Section> paneList;
+  @FXML private Pane paneDebugging;
+  @FXML private Pane paneDevices;
+  @FXML private Pane paneDirectories;
+  @FXML private TextField directoryCache;
   @FXML private TextField directoryConfiguration;
   @FXML private TextField directoryData;
-  @FXML private TextField directoryCache;
-  @FXML private Pane paneDirectories;
-  @FXML private Pane paneDevices;
-  @FXML private ListView<Section> paneList;
-  @FXML private CheckBox devicesShowFake;
 
   private enum Section
   {
     DEVICES,
-    DIRECTORIES
+    DIRECTORIES,
+    DEBUGGING
   }
 
   /**
@@ -150,6 +154,8 @@ public final class GWPreferencesController implements GWScreenControllerType
     this.panes = new EnumMap<>(Section.class);
     this.panes.put(Section.DIRECTORIES, this.paneDirectories);
     this.panes.put(Section.DEVICES, this.paneDevices);
+    this.panes.put(Section.DEBUGGING, this.paneDebugging);
+
     this.panes.values().forEach(pane -> {
       pane.managedProperty().bind(pane.visibleProperty());
       pane.setVisible(false);
@@ -221,6 +227,9 @@ public final class GWPreferencesController implements GWScreenControllerType
       case DIRECTORIES -> {
         yield this.strings.format("preferences.directories");
       }
+      case DEBUGGING -> {
+        yield this.strings.format("preferences.debugging");
+      }
     };
   }
 
@@ -230,6 +239,11 @@ public final class GWPreferencesController implements GWScreenControllerType
     this.devicesShowFake.setSelected(
       newPreferences.device()
         .showFakeDevices()
+    );
+
+    this.debuggingEnableServer.setSelected(
+      newPreferences.debug()
+        .enableDebugServer()
     );
   }
 
@@ -248,7 +262,9 @@ public final class GWPreferencesController implements GWScreenControllerType
   {
     final var newPreferences =
       new GWPreferences(
-        new GWPreferencesDevice(this.devicesShowFake.isSelected()));
+        new GWPreferencesDevice(this.devicesShowFake.isSelected()),
+        new GWPreferencesDebug(this.debuggingEnableServer.isSelected(), 30000)
+      );
 
     this.preferences.preferencesUpdate(ignored -> {
       return newPreferences;

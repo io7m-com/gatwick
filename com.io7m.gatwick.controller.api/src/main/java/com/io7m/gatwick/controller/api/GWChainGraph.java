@@ -190,6 +190,78 @@ public final class GWChainGraph implements GWChainGraphType
     {
       return this.right;
     }
+
+    @Override
+    public GWChainGraphNodeType endOfLeftBranch()
+    {
+      GWChainGraphNodeType current = this;
+
+      while (true) {
+        final var nextNode =
+          current.next()
+            .orElse(null);
+
+        if (nextNode == null) {
+          return current;
+        }
+        if (nextNode.element() == this.splittingElement()) {
+          return current;
+        }
+        current = nextNode;
+      }
+    }
+
+    @Override
+    public GWChainGraphNodeType endOfRightBranch()
+    {
+      GWChainGraphNodeType current = this.right;
+
+      while (true) {
+        final var nextNode =
+          current.next()
+            .orElse(null);
+
+        if (nextNode == null) {
+          return current;
+        }
+        if (nextNode.element() == this.closingElement()) {
+          return nextNode;
+        }
+        current = nextNode;
+      }
+    }
+
+    @Override
+    public int leftLength()
+    {
+      int length = 0;
+      GWChainGraphNodeType current = this.left();
+      while (current.element() != this.splittingElement()) {
+        ++length;
+
+        current = current.next().orElse(null);
+        if (current == null) {
+          break;
+        }
+      }
+      return length;
+    }
+
+    @Override
+    public int rightLength()
+    {
+      int length = -1;
+      GWChainGraphNodeType current = this.right();
+      while (current.element() != this.closingElement()) {
+        ++length;
+
+        current = current.next().orElse(null);
+        if (current == null) {
+          break;
+        }
+      }
+      return length;
+    }
   }
 
   private static final class GWChainGraphBranchRightLeg
@@ -558,8 +630,8 @@ public final class GWChainGraph implements GWChainGraphType
    *
    * @return A graph
    *
-   * @throws GWChainGraphValidityException If the list of elements does not result in
-   *                                  a valid graph
+   * @throws GWChainGraphValidityException If the list of elements does not
+   *                                       result in a valid graph
    */
 
   public static GWChainGraphType create(
