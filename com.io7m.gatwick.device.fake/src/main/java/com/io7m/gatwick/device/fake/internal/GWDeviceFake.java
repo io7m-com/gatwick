@@ -66,7 +66,7 @@ public final class GWDeviceFake implements GWDeviceType
     this.commandRTT =
       Attributes.create(throwable -> {
         LOG.error("exception captured: ", throwable);
-      }).create(Duration.ZERO);
+      }).fromFunction(() -> Duration.ZERO);
   }
 
   @Override

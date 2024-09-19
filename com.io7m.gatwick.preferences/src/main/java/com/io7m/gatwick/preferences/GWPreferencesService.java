@@ -103,7 +103,7 @@ public final class GWPreferencesService implements GWPreferencesServiceType
       loadPreferences(directories);
 
     final var prefsAttribute =
-      attributes.create(preferences);
+      attributes.withValue(preferences);
 
     final var service =
       new GWPreferencesService(

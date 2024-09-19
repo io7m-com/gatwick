@@ -108,7 +108,7 @@ public final class GWDeviceJavaMIDI implements GWDeviceType
     this.commandRTT =
       Attributes.create(throwable -> {
         LOG.error("error captured by attribute: ", throwable);
-      }).create(Duration.between(this.timeSendStarted, this.timeSendReceived));
+      }).fromFunction(() -> Duration.between(this.timeSendStarted, this.timeSendReceived));
   }
 
   /**

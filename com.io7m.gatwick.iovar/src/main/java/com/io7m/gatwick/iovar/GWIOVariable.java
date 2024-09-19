@@ -67,7 +67,7 @@ public final class GWIOVariable<T> implements GWIOVariableType<T>
       Objects.requireNonNull(inDeserializer, "inDeserializer");
     this.attribute =
       Objects.requireNonNull(inAttributes, "inAttributes")
-        .create(inInfo.valueInitial());
+        .fromFunction(inInfo::valueInitial);
     this.info =
       Objects.requireNonNull(inInfo, "inInfo");
 
