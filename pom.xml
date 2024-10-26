@@ -49,7 +49,7 @@
     <!-- Third-party dependencies. -->
     <javafx.version>19.0.2.1</javafx.version>
     <jqwik.version>1.9.1</jqwik.version>
-    <junit.version>5.11.2</junit.version>
+    <org.junit.version>5.11.2</org.junit.version>
   </properties>
 
   <licenses>
@@ -127,14 +127,11 @@
         <version>${jqwik.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>${junit.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
-        <version>${junit.version}</version>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${org.junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.osgi</groupId>
