@@ -49,7 +49,7 @@
     <!-- Third-party dependencies. -->
     <javafx.version>19.0.2.1</javafx.version>
     <jqwik.version>1.9.2</jqwik.version>
-    <org.junit.version>5.12.2</org.junit.version>
+    <org.junit.version>5.13.0</org.junit.version>
   </properties>
 
   <licenses>
